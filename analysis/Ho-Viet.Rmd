@@ -13,6 +13,7 @@ library(markdown)
 
 knitr::opts_chunk$set(echo = FALSE, 
                       cache=TRUE,
+                      autodep = TRUE,
                       tidy.opts=list(width.cutoff=60),
                       tidy=TRUE,
                       fig.width = 33,
@@ -38,6 +39,9 @@ load("data/hoviet.RData")
 # Top Họ cả nước
 
 ```{r, results='hide', message=FALSE, warning=FALSE}
+data_ho_overall <- data_ho_overall %>%
+  mutate(pro.pop=(songuoi/sum(songuoi))*100)
+
 data_ho_top1000 <- data_ho_overall %>%
   arrange(desc(songuoi))
 data_ho_top1000 <- head(data_ho_top1000, n=1000)
@@ -47,12 +51,8 @@ data_ho_top500 <- data_ho_overall %>%
 data_ho_top500 <- head(data_ho_top500, n=500)
 
 data_ho_top200 <- data_ho_overall %>%
-  arrange(desc(songuoi))
-data_ho_top200 <- head(data_ho_top200, n=200) %>%
-  mutate(rank = dense_rank(desc(songuoi)),
-         group=NA,
-         group=ifelse(rank %in% c(1:50), 1, ifelse(rank %in% c(51:100), 2, ifelse(rank %in% c(101:150), 3, ifelse(rank %in% c(151:200), 4, group)))),
-         group=factor(group, levels = c(1,2,3,4), labels = c("1-50","51-100","101-150","151-200")))
+  arrange(desc(pro.pop))
+data_ho_top200 <- head(data_ho_top200, n=200)
 
 data_ho_top150 <- data_ho_overall %>%
   arrange(desc(songuoi))
@@ -63,7 +63,7 @@ data_ho_top100 <- data_ho_overall %>%
 data_ho_top100 <- data_ho_top100 %>% slice(51:100)
 
 data_ho_top50 <- data_ho_overall %>%
-  arrange(desc(songuoi))
+  arrange(desc(pro.pop))
 data_ho_top50 <- head(data_ho_top50, n=50)
 
 data_ho_top20 <- data_ho_overall %>%
@@ -76,17 +76,17 @@ data_ho_top10 <- head(data_ho_top10, n=10)
 ```
 
 ```{r}
-ggplot(data = data_ho_top50, aes(x = reorder(Ho, songuoi, decreasing=F), y =songuoi)) +
+ggplot(data = data_ho_top50, aes(x = reorder(Ho, songuoi, decreasing=F), y =pro.pop)) +
   geom_bar(stat = "identity", fill="red", width = 0.75) +
-  #geom_text(aes(label = songuoi, y = songuoi + 50), size = 3) +
+  geom_text(aes(label = paste(round(pro.pop, 1), "%", sep = ""), y = pro.pop + 1), size = 10) +
   scale_x_discrete(name = NULL) +
-  scale_y_continuous(name = NULL, breaks = seq(from = 0, to = 30000000, by = 5000000)) +
+  scale_y_continuous(name = NULL, breaks = seq(from = 0, to = 40, by = 10)) +
   theme_bw() +
   theme(axis.text.x = element_text(size = 30),
         axis.text.y = element_text(size = 30),
         plot.title = element_text(size = 45),
         panel.grid.major = element_blank()) + coord_flip() +
-  ggtitle("Top 50 họ có số người cao nhất")
+  ggtitle("Top 50 họ có tỉ lệ cao nhất")
 ```
 
 # Phân bố dòng họ cả nước
