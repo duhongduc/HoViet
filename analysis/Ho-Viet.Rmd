@@ -82,9 +82,9 @@ ggplot(data = data_ho_top50, aes(x = reorder(Ho, songuoi, decreasing=F), y =song
   scale_x_discrete(name = NULL) +
   scale_y_continuous(name = NULL, breaks = seq(from = 0, to = 30000000, by = 5000000)) +
   theme_bw() +
-  theme(axis.text.x = element_text(size = 20),
-        axis.text.y = element_text(size = 20),
-        plot.title = element_text(size = 30),
+  theme(axis.text.x = element_text(size = 30),
+        axis.text.y = element_text(size = 30),
+        plot.title = element_text(size = 45),
         panel.grid.major = element_blank()) + coord_flip() +
   ggtitle("Top 50 họ có số người cao nhất")
 ```
