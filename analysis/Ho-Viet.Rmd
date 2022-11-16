@@ -243,7 +243,8 @@ ggplot() + geom_sf() + geom_sf(data=mai_plot, aes(fill=pro.pop), color=NA) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(mai_plot$prop.mai[1],1), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
-  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 30))
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Mai")
 ```
 
 ### Phân bố mật độ
@@ -257,7 +258,8 @@ ggplot() + geom_sf() + geom_sf(data=mai_plotf, aes(fill=songuoi_km), color=NA) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(mai_plotf$prop.mai[1],1), "% dân số", sep = "")) +
   scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
   theme_bw() +
-  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 30))
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Mai")
 ```
 
 ## Phùng
@@ -293,7 +295,8 @@ ggplot() + geom_sf() + geom_sf(data=phung_plot, aes(fill=pro.pop), color=NA) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(phung_plot$prop.phung[1],1), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
-  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 30))
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Phùng")
 
 # fig <- ggplotly(
 #   ggplot(bui_plot) +
@@ -318,5 +321,6 @@ ggplot() + geom_sf() + geom_sf(data=phung_plotf, aes(fill=songuoi_km), color=NA)
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(phung_plotf$prop.phung[1],1), "% dân số", sep = "")) +
   scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
   theme_bw() +
-  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 30))
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Phùng")
 ```
