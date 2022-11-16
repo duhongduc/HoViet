@@ -1,0 +1,153 @@
+---
+title: "Họ Việt"
+author: "Duc Du"
+date: '`r format(Sys.time(), "%d %B, %Y")`'
+output: html_document
+---
+
+```{r setup, include=FALSE, message=FALSE, warning=FALSE}
+rm(list = ls(all.names = TRUE))
+library(rmarkdown)
+library(knitr)
+library(markdown)
+
+knitr::opts_chunk$set(echo = FALSE, 
+                      cache=TRUE,
+                      tidy.opts=list(width.cutoff=60),
+                      tidy=TRUE,
+                      fig.width = 33,
+                      fig.height = 49)
+
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(data.table)
+library(lubridate)
+library(viridis)
+library(sf)
+library(ggpubr)
+
+options(scipen=999, digits = 3)
+options(max.print=1000000)
+```
+
+```{r load data, message=FALSE, warning=FALSE}
+load("data/hoviet.RData")
+```
+
+# Top Họ cả nước
+
+```{r, results='hide', message=FALSE, warning=FALSE}
+data_ho_top1000 <- data_ho_overall %>%
+  arrange(desc(songuoi))
+data_ho_top1000 <- head(data_ho_top1000, n=1000)
+
+data_ho_top500 <- data_ho_overall %>%
+  arrange(desc(songuoi))
+data_ho_top500 <- head(data_ho_top500, n=500)
+
+data_ho_top200 <- data_ho_overall %>%
+  arrange(desc(songuoi))
+data_ho_top200 <- head(data_ho_top200, n=200) %>%
+  mutate(rank = dense_rank(desc(songuoi)),
+         group=NA,
+         group=ifelse(rank %in% c(1:50), 1, ifelse(rank %in% c(51:100), 2, ifelse(rank %in% c(101:150), 3, ifelse(rank %in% c(151:200), 4, group)))),
+         group=factor(group, levels = c(1,2,3,4), labels = c("1-50","51-100","101-150","151-200")))
+
+data_ho_top150 <- data_ho_overall %>%
+  arrange(desc(songuoi))
+data_ho_top150 <- data_ho_top150 %>% slice(101:150)
+
+data_ho_top100 <- data_ho_overall %>%
+  arrange(desc(songuoi))
+data_ho_top100 <- data_ho_top100 %>% slice(51:100)
+
+data_ho_top50 <- data_ho_overall %>%
+  arrange(desc(songuoi))
+data_ho_top50 <- head(data_ho_top50, n=50)
+
+data_ho_top20 <- data_ho_overall %>%
+  arrange(desc(songuoi))
+data_ho_top20 <- head(data_ho_top20, n=20)
+
+data_ho_top10 <- data_ho_overall %>%
+  arrange(desc(songuoi))
+data_ho_top10 <- head(data_ho_top10, n=10)
+```
+
+```{r}
+ggplot(data = data_ho_top50, aes(x = reorder(Ho, songuoi, decreasing=F), y =songuoi)) +
+  geom_bar(stat = "identity", fill="red", width = 0.75) +
+  #geom_text(aes(label = songuoi, y = songuoi + 50), size = 3) +
+  scale_x_discrete(name = NULL) +
+  scale_y_continuous(name = NULL, breaks = seq(from = 0, to = 30000000, by = 5000000)) +
+  theme_bw() +
+  theme(axis.text.x = element_text(size = 20),
+        axis.text.y = element_text(size = 20),
+        plot.title = element_text(size = 30),
+        panel.grid.major = element_blank()) + coord_flip() +
+  ggtitle("Top 50 họ có số người cao nhất")
+```
+
+# Phân bố dòng họ tính đến xã
+
+## Phùng
+
+Phùng (馮) là một họ cổ. Nó đứng thứ 27 trong danh sách các họ ở Trung Quốc đại lục ngày nay. 
+
+Họ Phùng có nguồn gốc xa xưa là dân du mục ở Tân Cương. Vào khoảng 4000 năm về trước họ Phùng xuất hiện ở vùng Thiểm Tây như một quốc gia. 
+https://www.newton.com.tw/wiki/%E9%A6%AE%E5%A7%93
+https://kknews.cc/history/qq4j2r.html
+
+Có thể đã có một dòng người di cư vào khoảng hơn 3000 năm về trước theo dòng sông Thao về tới được khu vực mà nay là Phùng Nguyên. Có lẽ Phùng Nguyên là nơi được coi là phát tích của họ Phùng. 
+
+3000 năm về trước, Phùng Nguyên là một cái gò nhỏ ở cuối sông Thao trước khi gặp sông Đà. Theo thời gian do phù sa bồi lấp mà Phùng Nguyên trở thành đất liền. Ở đây người ta tìm thấy các di vật Nha Chương.
+
+Dựa theo phân tích của Đức Dư về dòng họ ở Việt Nam 
+https://duhongduc.shinyapps.io/HoViet/...
+chúng ta có thể nhận thấy họ Phùng ở khu vực ngay chân núi Ba Vì. Đây là vùng đất cổ và là nơi các cơn mưa từ Ba Vì đổ xuống gây ngập lụt. Đó có thể là cội nguồn của truyền thuyết Sơn Tinh Thủy Tinh. 
+
+Chúng ta có thể nhận thấy dòng họ Phùng chiếm vị trí sâu về phía chân núi, sau đó là họ Lý ở dải đất gần với biển hơn kéo dài từ vùng Đền Đô qua Từ Liêm, tiếp sau nữa là nhà Trần. 
+
+Đây có thể là sự hình thành ra cấu trúc không gian văn hóa vua Hùng (phụ hệ) trong tổng thể văn hóa mẫu hệ ở đồng bằng Bắc Bộ. 
+
+### Phân bố tỉ lệ
+
+```{r}
+# library(plotly)
+
+phung_sf <- dat_sf %>% mutate(prop.phung=(sum(subset(., Ho=="Phùng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phùng")
+phung_plot <- phung_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.phung, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=phung_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(phung_plot$prop.phung[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 30))
+
+# fig <- ggplotly(
+#   ggplot(bui_plot) +
+#     geom_sf(aes(fill = pro.pop), lwd=0) +
+#     # geom_sf(data=river3, col="white") +
+#     scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+#     annotate(geom="text", x=108, y=23, color="red", label= paste(round(bui_plot$prop.bui[1],1), "% dân số", sep = "")) +
+#     theme_bw()
+# )
+# 
+# fig
+```
+
+### Phân bố mật độ
+
+```{r}
+phung_sff <- dat_sff %>% mutate(prop.phung=(sum(subset(., Ho=="Phùng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phùng")
+phung_plotf <- phung_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.phung, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=phung_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(phung_plotf$prop.phung[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 30))
+```
