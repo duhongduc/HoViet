@@ -12,7 +12,7 @@ navbar:
   right:
   - icon: fab fa-github
     text: Source code
-    href: https://github.com/HoViet/HoViet
+    href: https://github.com/duhongduc/HoViet
 output:
   workflowr::wflow_html:
     toc: yes
