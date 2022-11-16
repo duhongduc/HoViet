@@ -89,7 +89,176 @@ ggplot(data = data_ho_top50, aes(x = reorder(Ho, songuoi, decreasing=F), y =song
   ggtitle("Top 50 họ có số người cao nhất")
 ```
 
-# Phân bố dòng họ tính đến xã
+# Phân bố dòng họ cả nước
+
+## Mai
+
+Mai Hắc Đế (梅黑帝; 670 – 723). 
+
+Dã sử kể rằng
+Mai An Tiêm vốn là con nuôi của Hùng Vương thứ XVII, được vua quý mến gả mị nương tức là nàng Ba cho. Sau vì làm phật ý vua, An Tiêm bị đày ra đảo hoang, tương truyền nay là vùng Nga Sơn, Thanh Hóa. Tại đây, An Tiêm cùng vợ chăm chỉ làm ăn. Một hôm, An Tiêm nhặt được hạt giống cây lạ do chim mang tới, anh đem gieo trồng và cuối cùng gây được giống dưa hấu quý, nhiều người tìm đến trao đổi, tiếng đồn khắp xa gần. Vua biết tin, xuống chiếu gọi về cho phục chức cũ. An Tiêm được coi là ông tổ của nghề trồng dưa hấu tại Việt Nam.
+
+Đền thờ Mai An Tiêm dưới chân núi Mai An Tiêm ở Nga Sơn
+Ngày nay, tại xã Nga Phú, huyện Nga Sơn, có một dãy núi mang tên Mai An Tiêm, tương truyền chính là hòn đảo xưa kia vợ chồng An Tiêm đi đày. Dưới chân núi này có đền thờ ông và được nhân dân địa phương tổ chức lễ hội vào ngày 12 đến 15 tháng Ba âm lịch hàng năm.
+Tên thật của Mai Hắc Đế (梅黑帝; 670 – 723) là Mai Thúc Loan (梅叔鸞), người lãnh đạo thành công cuộc khởi nghĩa chống lại sự chiếm đóng của nhà Đường ở Việt Nam và xưng Đế. 
+
+Mai Thúc Loan sinh vào năm Canh Ngọ (670) tại thôn Ngọc Trừng, Hoan Châu, nay thuộc huyện Nam Đàn, Nghệ An. Theo Việt Điện U Linh (do Lý Tế Xuyên soạn năm 1329), cha của Mai Thúc Loan là Mai Hoàn, mẹ là Mai An Hòa nguyên gốc Lộc Hà, Hà Tĩnh, lưu lạc sang vùng Nam Đàn, Nghệ An.
+
+Theo sách Việt Sử Tiêu Án (Ngô Thì Sĩ viết năm 1775), Mai Thúc Loan là người làng Hương Lãm, huyện Nam Đường, nay là thị trấn Nam Đàn, tỉnh Nghệ An, dân lập đền thờ ông ở thôn chợ Sa Nam
+Dịch nghĩa phần nói về Mai Hắc Đế trong "Cựu Đường Thư, Liệt truyện 134, Hoạn quan, Quyển 184". 
+
+Những năm đầu niên hiệu Khai Nguyên (713-741), thủ lĩnh An Nam là Mai Huyền Thành làm phản, tự xưng là "Vua Đen" (Hắc Đế), chiêu tập quân 32 châu, ngoài liên kết với các nước Lâm Ấp, Chân Lạp và Kim Lân, giữ vùng biển nam, quân số có đến 40 vạn, đánh phá phủ thành An Nam. Tháng 7, mùa thu năm Khai Nguyên thứ 10, (Hoàng đế) Đường Huyền Tông, ra lời chiếu sai hoạn quan Tả Giám môn Vệ tướng quân là Dương Tư Húc và quan Đô hộ là Quang Sở Khách đem quân dánh dẹp. Tư Húc đến Lĩnh Nam, chiêu mộ con em bọn thủ lĩnh ở đó, người và ngựa được hơn mười vạn, theo đường cũ của Mã Viện mà tiến đánh bất ngờ. Bọn Huyền Thành chợt nghe tin quân (của Tư Húc) đến, hoảng sợ không nghĩ được kế gì, liền bị quan quân bắt hoặc chém chết tại trận, giết hết phe đảng, dồn xác chết thành đống rồi rút quân về.
+Cuộc khởi nghĩa nổ ra tại Rú Đụn, còn gọi là Hùng Sơn (Nghệ An). Mai Thúc Loan lên ngôi vua, lấy hiệu là Mai Hắc Đế. Theo Việt điện u linh, Mai Hắc Đế mang mệnh thủy tức là nước, mà nước được tượng trưng là màu đen. Vì vậy, ông lấy hiệu là Hắc Đế để hợp với mệnh của mình. Một số nguồn cũng cho hay, ông lấy hiệu là Mai Hắc Đế vì ông có màu da đen. Ông cho xây thành lũy, lập kinh đô Vạn An (thuộc thị trấn Nam Đàn hiện nay), tích cực rèn tập tướng sỹ. Cuộc nổi dậy của ông được hưởng ứng rộng rãi ở trong nước và có cả sự liên kết với Lâm Ấp và Chân Lạp.
+
+Do phân bố dòng họ có dạng phân bố chuẩn. Xét trên sơ đồ phân bố dòng họ do Đức Dư tổng hợp theo dữ liệu của TCTK, chúng ta có thể khẳng định:
+1- Sự kiện về dòng họ vua Mai Hắc Đế là có thật
+2- Dòng họ của Mai Hắc Đế phát tích ở vùng Nga Sơn thuộc Thanh Hóa, nơi có đền thờ Mai An Tiêm. Vào thời Mai Hắc Đế vùng này là bờ biển. 
+
+Có vẻ như dã sử về Mai An Tiêm có chứa ở trong nó một phần nào đó sự thật. Không biết sự thật ấy có liên quan tới Mai Hắc Đế không.
+Về nguyên nhân cuộc khởi nghĩa do Mai Thúc Loan lãnh đạo là sự phản kháng chống lại sự áp bức của chính quyền đô hộ Phương Bắc, Nhà Hán. Cuộc khởi nghĩa có lẽ đã xảy ra, bắt đầu ở vùng có mỏ khai thác thiếc, thuộc khu vực Nghệ An, Thanh Hóa, Hòa Bình.
+Thiếc có thể là mối liên hệ giữa các cuộc khởi nghĩa từ Mai Thúc Loan tới Ngô Quyền. Thậm chí có thể là từ Lý Bí. 
+
+Trước hết chúng ta truy tìm ngược lại đồ cống nạp cho Nhà Đường. 
+Trong truyện 西门庆择吉佳期　应伯爵追欢喜庆 có đề cập tới "Bạch Lạp"
+”妇人因指道：“奴这床后茶叶箱内，还藏三四十斤沉香、二百斤白蜡、两罐子水银、八十斤胡椒。你明日都搬出来，替我卖了银子，凑著你盖房子使。
+Dịch nghĩa 
+"Người phụ nữ nói," Trong hộp trà phía sau chiếc giường này, vẫn còn ba 34 lạng trầm hương, 200 lạng 白蜡 (白蠟), hai lọ thủy ngân, và 80 lạng 胡椒 (hạt tiêu). Ngày mai anh bán lấy tiền cho em và cùng anh xây nhà.
+Trong truyện 愿同穴一时丧礼盛　守孤灵半夜口脂香
+có đoạn đề cập tới 白蜡 là 
+”有二青衣官吏跪下，毡包内捧出一对金段、一根沉香、两根白蜡、一分绵纸。黄主事道：“此乃宋公致赙之仪。那两封，是两司八府官员办酒分资──两司官十二员、府官八员，计二十二分，共一百零六两。
+dịch nghĩa 
+"Có hai viên chức quỳ xuống dâng hai miếng vàng, một miếng trầm hương, hai miếng sáp trắng, và một mẩu giấy để trong túi nỉ. Sư Hoàng nói: "Đây là nghi thức của Tống gia. Hai bức thư đó là để cho hai vị quan và tám quan xử uống rượu, trả công. ... " 
+Ngày nay từ Bạch Lạp 白蜡 (白蠟) đều được hiểu là sáp ong. Tuy nhiên với bối cảnh như các đoạn văn trên thì có thể Bạch Lạp 白蜡 là kim loại quý màu trắng. Bạc 银 và Gang Trắng 白铁 được dùng ở  Tây Hán, Tống và Thanh khá lâu trước Công Nguyên, vì thế không thể có sự nhầm lẫn về con chữ. Vậy có lẽ Bạch Lạp 白蜡 là thiếc. 
+Tìm trong Thái Bình hoàn vũ kí 太平寰宇記 (quyển 171) dòng 65 trong https://ctext.org/wiki.pl?if=gb&chapter=185380
+phần  維基 -> 太平寰宇記 -> 卷一百七十一 
+với nội dung
+土産
+貢白蠟　紫緋　騏麟竭　無名異
+dịch 
+Thổ sản: cống gồm bạch lạp 貢白蠟 (sáp trắng), tử phi, sừng tê, và nhiều thứ lạ không biết tên. 
+Xem ra 貢白蠟 cống bạch lạp ở trong mục cống thổ sản (sản vật từ đất) thì gần như hàm ý là cống quặng. 
+Trong phân tích này chúng ta tạm cho 白蠟 là thiếc.  
+Hợp kim thiếc với đồng khiến cho đồng cứng hơn. Như vậy thời kỳ nhà Đường đã tiến hành khai thác Thiếc ở các mỏ lộ thiên. Nếu vậy thì khả năng 白蠟 là thiếc được dùng để cống nạp. Cũng có thể do bị áp bức mà người dân ở khu vực này đã phản kháng khởi nghĩa. 
+
+Chúng ta đi tìm hiểu nhu cầu luyện kim vào thời kỳ này. 
+Tài liệu về vị trí của các mỏ thiếc lộ thiên và sa khoáng ở Vn
+https://thuvienphapluat.vn/.../Quyet-dinh-05-2008-QD-BCT...
+https://hieuluat.vn/.../quyet-dinh-956-qd-ttg-thu-tuong...
+
+Mỏ thiếc Hồ Kín ở tọa độ (19.904399, 105.324138) Thường Xuân thuộc Thanh Hoa cách Lam Kinh khoảng 9km và đều năm bên bờ sông Chu.  
+Các hạt bụi núi lửa nhỏ hơn một micron, nhỏ hơn độ dày của một sợi tóc người khoảng một trăm lần. Nhưng chúng rộng hơn một chút so với bước sóng của ánh sáng đỏ, vì vậy khi bị tán xạ, chúng sẽ hấp thụ ánh sáng đỏ trong khi cho phép các màu khác đi qua. Điều này dẫn đến Mặt Trăng có màu xanh và ánh sáng mặt trời không tới được bề mặt trái đất. Như thế bụi mịn làm thay đổi nhiệt độ trên bề mặt trái đất khiến cho đồng hồ sinh học bị thay đổi. Điều này dẫn đến mất mùa và bệnh tật. 
+Vào thời điểm năm 536 đến 545 đã có các đợt phun trào núi lửa với tổng sức mạnh nhiều nghìn megatonne. Chính các đợt phun trào núi lửa này đã làm suy yếu nhà Lương, là nguyên nhân sâu xa dẫn đến cuộc khởi nghĩa của Lý Bí, và sự hình thành ra nhà nước Vạn Xuân.
+Cuộc khai quật được tiến hành trong khoảng thời gian từ năm 1991 đến 2007 đã khám phá 10500 bộ xương thời Trung cổ tại chợ Spitalfields ở phía đông London (Anh). Sau khi tiến hành xác định tuổi xương bằng phương pháp carbon phóng xạ, các chuyên gia của Bảo tàng Khảo cổ học London đã đi đến kết luận "đó là hài cốt của những nạn nhân trong đợt phun trào núi lửa hồi thế kỷ 13" - một trong những thảm họa núi lửa lớn nhất 10 nghìn năm qua.
+
+Các nhà khoa học nói rằng đợt phun trào lớn đến nỗi khí sulfur đã tạo ra một tấm màn sường mù khô che phủ tầng bình lưu của trái đất, ngăn chặn ánh sáng mặt trời, thay đổi khí quyển và làm mát bề mặt trái đất, gây ra nạn đói, bệnh dịch và chết chóc. Địa điểm núi lửa chưa rõ ở đâu nhưng sự ảnh hưởng là toàn cầu và sức mạnh của đợt phun mạnh hơn gấp 8 lần so với đợt phun trào của núi Krakatoa (Indonesia) hồi năm 1883.
+
+Krakatau là một đảo núi lửa thuộc vành đai lửa Thái Bình Dương. Cấu trúc địa lý của đảo đã thay đổi ít nhất hai lần, sau hai vụ phun trào núi lửa vào năm 535 và năm 1883.
+27 tháng 8 năm 1883, vụ phun của núi lửa Krakatoa (Krakatau) có sức nổ của một quả bom 200 megatonne, giết chết hơn 36 nghìn người và làm nhiệt độ bề mặt trên toàn Trái Đất giảm trung bình 0.6°C trong nhiều tháng liên tiếp. Dư chấn của vụ nổ cũng đã tạo nên một cơn sóng thần cao tới 30m gây ra tình trạng lạnh bất thường kéo dài 4 năm sau vụ nổ. Tuyết rơi kỷ lục đã được ghi nhận trên toàn thế giới.
+
+Vào năm 2013 tại Colle Gnifetti Glacier trên dãy núi Alps của Thụy Sĩ người ta đã khoan lấy mẫu cột băng dài 72m. Cột băng có đã ghi lại sự hiện diện trong suốt 2000 năm về tình trạng bụi bặm từ núi lửa, bão cát Sahara và các hoạt động của con người rơi xuống trung tâm châu Âu. Nhóm nghiên cứu đã dùng tia laser cắt dọc theo chiều dài cột băng ra những lát băng mỏng 120 micron, ứng một vài ngày hoặc vài tuần tuyết rơi. Mỗi lát được phân tích ra khoảng một chục thành tố. Phương pháp tiếp cận này cho phép nhóm nghiên cứu xác định các cơn bão, phun trào núi lửa và ô nhiễm bụi chì chi tiết đến từng tháng hoặc thậm chí ít hơn, trong suốt 2000 năm qua. Laura Hartman, sinh viên tốt nghiệp Đại học UM đã tìm thấy hai hạt thủy tinh núi lửa cực nhỏ trong cột băng sâu 72m này. Lớp băng ứng với thời điểm mùa xuân năm 536. Qua nghiên cứu Laura và Kurbatov nhận thấy hai hạt thủy tin trên giống như các hạt thủy tinh núi lửa được tìm thấy trước đó trong các hồ và vũng than bùn ở châu Âu và trong lõi băng ở Greenland. Nhóm nghiên cứu cho rằng từ đầu năm 536 cho tới 541 đã có nhiều đợt phun trào núi lửa tại Iceland và tro núi lửa phủ đầy Bắc Bán Cầu. Lớp tro đã làm mờ mặt Trời trong trong nhiều tháng khiến cho nhiệt độ mùa hè giảm xuống bớt 1.5°C đến 2.5°C. Mười năm từ 536 tới 545 là thời kỳ lạnh nhất trong suốt 2000 năm qua. 
+
+Để so sánh.  Vụ phun của núi lửa Krakatoa (Krakatau) năm 1883 có sức nổ của một quả bom 200 megatonne, giết chết hơn 36 nghìn người mà nhiệt độ bề mặt trên toàn Trái Đất chỉ giảm trung bình 0.6°C trong nhiều tháng, thì có thể thấy quy mô của các đợt phun trào núi lửa từ năm 536 cho tới 541 khiến cho nhiệt độ giảm bớt từ 1.5°C đến 2.5°C trong mười năm từ 536 tới 545 lớn đến thế nào.
+Kết hợp với nhà sử học Kyle Harper nhóm nghiên cứu đã tìm thấy tương ứng sự kiện thay đổi thời tiết này với những sự kiện có trong các biên niên sử. Cụ thể biên niên sử của Gaelic Ailen có ghi "Mất mùa vào năm 536". Biên niên sử của Ulster cũng có ghi "mất mùa những năm 536–539". Biên niên sử của Inisfallen có ghi “Nhiệt độ thấp, thậm chí có tuyết trong mùa hè vào tháng 8 ở Trung Quốc. Mất mùa trên diện rộng”. Vào năm 541 cho tới 543 bệnh dịch hạch “Justinian” đã giết chết 35% –55% dân số và đẩy nhanh sự sụp đổ của Đế Chế Đông La Mã. Như vậy là sự kiện núi lửa phun vào các năm 536 cho tới 541 đã để lại hậu quả là mất mùa, đói rét, dịch bệnh ở khắp các vùng phía nửa Bắc Bán Cầu như Ireland, Scandinavia, Mesopotamia và Trung Quốc.
+
+Sự ảnh hưởng này được ghi nhận lịch sử các triều đại thay đổi liên tục
+• 549-551 -- Lương Giản Văn Đế: 2 năm
+• 552-555 -- Lương Nguyên Đế: 3 năm
+• 555-557 -- Lương Kính Đế: 2 năm
+• 555-562 -- Lương Tuyên Đế: 7 năm
+• 585-587 -- Lương Hiếu Tĩnh Đế: 2 năm
+
+Như vậy do các vụ nổ phun núi lửa Krakatau và các núi lửa vùng Iceland từ năm 536 tới 546 mà đói rét đã tàn phá và làm suy yếu Phương Bắc. Chế độ đô hộ của Phương Bắc đối với Việt Nam trở nên tàn khốc hơn. Chính do đói rét tàn phá làm suy yếu Phương Bắc mà cuộc khởi nghĩa của Lý Nam Đế đã thành công, làm sống lại dân tộc Việt Nam. Đại Việt Sử Ký toàn thư viết “Tháng Giêng năm 544, Lý Nam Đế lên ngôi vua tự xưng là Nam Việt Đế, đóng đô tại Long Biên, dựng quốc hiệu là Vạn Xuân”. Cuộc khởi nghĩa của Lý Nam Đế bắt đầu từ năm 541, là thời điểm Nhà Lương bị mất mùa vì thời tiết thay đổi cục bộ do bụi tro núi lửa ở Bắc Âu. Phải 4 năm sau, mãi tới năm 545 nhà Lương mới điều được quân sang trấn áp. Tuy nhiên tới năm 550 đội quân Nhà Lương này đã bị đánh bại. Nhà nước Vạn Xuân tồn tại được khoảng 70 năm cho tới năm 602.
+
+Dịch bệnh và mất mùa khiến Nhà Lương sụp đổ. Nhà Tùy lên thay, đưa quân sang đánh chiếm Vạn Xuân. Do ở xa khu vực núi lửa phun mà vào đầu những năm 600 kinh tế Trung Quốc đã hồi phục.  Kinh tế thế giới đình trệ đến tận năm 640 mới có tín hiệu hồi phục. Tín hiệu hồi phục là việc tìm thấy bụi chì tăng đột biến trong lõi băng, đánh dấu sự hồi sinh của hoạt động khai thác bạc làm tiền tệ. Đỉnh chì thứ hai, vào năm 660, đánh dấu việc sự gia tăng của thương mại. Việc sử dụng bạc với số lượng lớn cho thấy quy mô giao thương toàn cầu là lớn. Hai pho tượng Phật khổng lồ tại Bamiyan, nằm trên tuyến đường độc đạo giữa các dãy núi cao 4000m, nối liên Trung Á với Ấn Độ. Với quy mô và kích cỡ hai pho tượng, pho tượng cao 58m – tạc năm 507 – trước thời kỳ núi lửa phun, và pho tượng cao 38m – tạc năm 554 – sau khi kinh tế thế giới đã hồi phục, cho thấy song song với mở rộng giao thương buôn bán toàn cầu là sự bành trướng tôn giáo.
+Lượng chì có trong không khí là chỉ số cho thấy gành luyện kim trên thế giới hồi phục. 
+https://agupubs.onlinelibrary.wiley.com/.../2017GH000064
+
+Như thế rất có thể do sự bóc lột của nhà Đường đã dẫn tới cuộc khởi nghĩa của Mai Thúc Loan. 
+Tôi rất muốn khảo sát lại các sự kiện lịch sử trong khoảng thời gian từ năm 700 cho tới trước năm 1000. Tôi cho rằng dòng họ của các đời vua trong khoảng thời gian này tương đối ổn định, vì sự kiện tiêu diệt lẫn nhau gần như là không có. Như thế vùng đất nơi Đại Việt Sử Ký Toàn Thư ghi nhận là nơi phát tích một dòng vua sẽ xuất hiện mật độ dòng họ của vua là lớn nhất. Do có sự di dân nên tỷ lệ dòng họ ở vùng đất phía Nam mang tính trung bình. Do văn hóa làng xã nên, ngoại trừ Hà Nội, tỷ lệ dòng họ ở các vùng miền Bắc là rất ổn định. 
+
+Đây là các sự liện liên quan tới các họ như Mai, Khúc, Dương, Kiều, Ngô, Đinh, Đỗ...   
+A. Phần định danh. 
+Và xã Đường Lâm ở Sơn Tây ngày nay là một địa danh mới chỉ xuất hiện sau 1945 trên cơ sở hợp nhất một số làng của tổng Cam Thịnh, còn Đường Lâm cổ - năm 669 thời Đường Cao Tông, cùng với 2 huyện An Viễn và Phúc Lộc thuộc châu Phúc Lộc, 757 thời Đường Túc Tông đổi thành quận Đường Lâm, 758 bỏ quận lập lại châu Phúc Lộc - thuộc vùng tây nam Châu Ái. "Tân Đường Thư" có ghi: trong tất cả các châu, quận An Nam chỉ có 2 vùng cống nạp bạch lạp (thiếc trắng) là Phong Châu và Đường Lâm. Từ Đèo Ngang trở ra chỉ có hai vùng có mỏ thiếc sa khoáng là Tuyên Quang (đời Đường thuộc Phong Châu) và mỏ thiếc Bù Me, gần núi Bù Chò thuộc các huyện Thường Xuân, Thọ Xuân (Tây Nam Thanh Hóa), một phần ăn sang Quỳ Hợp, Quế Phong miền Tây Nghệ An.
+Xét về khả năng chỉ có vùng Tuyên Quang - Thái Nguyên và Thanh Hóa - Nghệ An có thể là Đường Lâm. 
+
+A. Phần Sử Liệu
+
+Đoạn viết sau là thể hiện của Đại Việt Sử Ký Toàn Thư.
+
+Họ Mai Hắc Đế
+Mai Thúc Loan 670 - 722, thôn Ngọc Trừng, Hoan Châu (nay thuộc huyện Nam Đàn, Nghệ An). Theo Việt điện u linh, cha của Mai Thúc Loan là Mai Hoàn, mẹ là Mai An Hòa nguyên gốc Lộc Hà, Hà Tĩnh, lưu lạc sang vùng Nam Đàn, Nghệ An. Theo sách Việt sử tiêu án, Mai Thúc Loan là người làng Hương Lãm, huyện Nam Đường, nay là thị trấn Nam Đàn, tỉnh Nghệ An, dân lập đền thờ ông ở thôn chợ Sa Nam. 
+Năm 722, Mai Thúc Loan đánh Tống Bình (Hà Nội nay) xưng là Hắc Đế, bên ngoài liên kết với người Lâm Ấp, Chân Lạp, số quân nói là 30 vạn. Vua Đường sai nội thị tả giám môn vệ tướng quân là Dương Tư Húc và Đô hộ là Quang Sở Khách đánh dẹp yên được.
+
+Họ Trương, Họ Cao.
+Thành nằm ở vị trí giữa Thành Hà Nội và sông Tô Lịch, thuộc quận Ba Đình của Hà Nội hiện nay. Đại La ban đầu do Trương Bá Nghi đắp vào năm 767 và được tu bổ Triệu Xương năm 791, Trương Chu 824, Lý Nguyên Gia dời phủ trị tới bên sông Tô Lịch, đắp một cái thành nhỏ, gọi là La Thành. La Thành được Cao Biền cho đắp lại to lớn hơn. Theo sử cũ thì La Thành do Cao Biền cho đắp có chu vi 6.6km; cao 8.67m, chân thành rộng 8.33m.
+
+Họ Phùng 
+Năm 791, Phùng Hưng dấy binh vây đánh An Nam đô hộ phủ Cao Chính Bình. Phùng Hưng là người ở Đường Lâm thuộc huyện Phúc Lộc Giao Châu (Nay là xã Cam Lâm, huyện Ba Vì, tỉnh Hà Tây.)
+
+Họ Ngô 
+"Ngô Quyền sinh ngày 12 tháng 3 năm Đinh Tỵ (17 tháng 4 năm 898) trong một dòng họ hào trưởng có thế lực ở châu Đường Lâm, Ái Châu. Cha là Ngô Mân làm chức châu mục Đường Lâm."
+"Một hào trưởng người Ái Châu (thuộc Thanh Hóa ngày nay) là Dương Đình Nghệ nuôi 3000 con nuôi, mưu đồ khôi phục. Ngô Quyền lớn lên làm nha tướng cho Dương Đình Nghệ, được Dương Đình Nghệ gả con gái cho và giao quyền cai quản Ái châu, đất bản bộ của họ Dương. Năm 931, Dương Đình Nghệ phát binh từ Thanh Hóa ra Bắc đánh đuổi quân Nam Hán, đánh bại Lý Tiến và quân cứu viện do Trần Bảo chỉ huy, chiếm giữ bờ cõi nước Việt, xưng là Tiết độ sứ. Năm 937, hào trưởng đất Phong Châu là Kiều Công Tiễn sát hại Dương Đình Nghệ, trở thành vị Tĩnh Hải quân Tiết độ sứ cuối cùng trong thời kì Tự chủ. Nhưng Công Tiễn lại không có chỗ dựa chính trị vững chắc, hành động tranh giành quyền lực của ông bị phản đối bởi nhiều thế lực địa phương và thậm chí nội bộ họ Kiều cũng chia rẽ trầm trọng. Bị cô lập, Công Tiễn vội vã cầu cứu nhà Nam Hán. Ngô Quyền nhanh chóng tập hợp lực lượng, kéo quân ra Bắc, giết chết Kiều Công Tiễn rồi chuẩn bị quyết chiến với quân Nam Hán. Thắng lợi của Ngô Quyền trên sông Bạch Đằng vào năm 938 đã đặt dấu chấm hết cho mọi âm mưu xâm lược Tĩnh Hải quân của nhà Nam Hán, đồng thời cũng kết thúc thời kì Bắc thuộc của Việt Nam. Năm 939, Ngô Quyền xưng vương, đóng đô ở Cổ Loa, lập ra nhà Ngô. Ngô Vương qua đời ở tuổi 47, trị vì được 6 năm. Sau cái chết của ông, nhà Ngô suy yếu nhanh chóng, không khống chế được các thế lực cát cứ địa phương và sụp đổ vào năm 965."
+
+B. Phần phân tích phân bố dòng họ. 
+Ở phần này chúng ta sử dụng CSDL về dòng họ trong số học sinh phổ thông của cả nước để truy tìm nơi phát tích của các dòng họ cổ xưa. Việc phân tích được thực hiện thông qua tỷ lệ phần trăm của các họ trong khu vực.
+Chúng ta theo dõi dòng họ Dương thì thấy tâm mật độ dòng họ cao nhất là ở vùng Thái Nguyên và giảm dần theo khoảng cách tới tâm tăng lên. 
+
+Họ Mai (Mai Hắc Đế 670 - 722)
+Toàn quốc 0.86%, Miền Bắc 0.59%, Miền Trung 1.03%, Miền Nam 0.93%, Thái Nguyên 0.49%, Vĩnh Phúc 0.14%, Hà Nam 0.48%, Hưng Yên 0.5%, Hà Nội 0.36%, Ninh Bình 1.47%, Tuyên Quang 0.26%, Phú Thọ 0.44%, Hải Dương 0.38%, Nam Định 2.0%, Hòa Bình 0.14%, Thanh Hóa 2.4%, Nghệ An 0.38%, Đồng Nai 1.24%.
+Kết hợp với sử liệu chúng ta thấy nơi phát tích dòng họ Mai, cụ thể là Mai Hắc Đế có thể là ở vùng từ Thanh Hóa tới Nam Định. 
+
+Họ Dương (Dương Đình Nghệ 874 – 937)
+Toàn quốc 1.4%, ở Miền Bắc là 1.65, Miền Trung 1.1%, Miền Nam 1.49, Thái Nguyên 6.19%, Vĩnh Phúc 2.69%, Hà Nam 1.8%, Hưng Yên 1.6%, Hà Nội 1.58%, Ninh Bình 1.34%, Tuyên Quang 1.4%, Phú Thọ 0.95%, Hải Dương 0.88%, Nam Định 0.68%, Hòa Bình 0.61%, Thanh Hóa 0.76%. Nghệ An 0.68%.
+Dòng họ Dương có thể là ở vùng Thái Nguyên - Vĩnh Phúc. 
+Vậy Đường Lâm <=> Tuyên Quang - Thái Nguyên 
+
+Họ Ngô (Ngô Quyền 898-944)
+Toàn quốc 1.66%, Miền Bắc là 1.7%, Miền Trung 1.64%, Miền Nam 1.49%, Thái Nguyên 2.24%, Hà Nội 2.14%, Vĩnh Phúc 1.48%, Hà Nam 2.21%, Hưng Yên 1.47%, Ninh Bình 0.91, Tuyên Quang 0.84, Phú Thọ 1.23%, Hải Dương 1.34%, Nam Định 2.2%, Hòa Bình 0.44%, Thanh Hóa 1.19%. 
+Dòng họ Ngô có thể ở vùng thuộc tam giác Thái Nguyên - Hà Nội - Hà Nam. 
+Đường Lâm <=> Tuyên Quang - Thái Nguyên 
+Khả năng Ngô Quyền là người vùng Đường Lâm (Thái Nguyên) là rất lớn. Như thế việc Dương Đình Nghệ ở vùng đất Thanh Hóa xem ra không hợp lắm. Kết hợp thống kê lại với nhau chúng ta có thể nhận thấy có khả năng cả hai ông Dương Đình Nghệ và Ngô Quyền đều ở vùng đất Thái Nguyên.  
+
+Vậy rõ ràng ở đây có một yếu tố gì đó, hoặc là Đại Việt Sử Ký Toàn Thư đã có sai sót về địa danh, hoặc là đã có một sự kiện chưa rõ nào đó.
+Cấu trúc Làng Xã rất ổn định, việc cưỡng chế các vùng dân cư có tính lịch sử nhập vào với Hà Nội gây ra rất nhiều rắc rối cho thống kê này. Nếu có được phân bố chi tiết hơn tới Huyện thì chúng ta có thể nhận ra được vết của lịch sử.
+Có bạn nào có dữ liệu thì cho tôi xin.
+"Trong tất cả các châu, quận An Nam chỉ có 2 vùng cống nạp bạch lạp (thiếc trắng) là Phong Châu và Đường Lâm". 
+
+Từ Đèo Ngang trở ra chỉ có hai vùng có mỏ thiếc sa khoáng là Tuyên Quang (đời Đường thuộc Phong Châu) và mỏ thiếc Bù Me, gần núi Bù Chò thuộc các huyện Thường Xuân, Thọ Xuân (Tây Nam Thanh Hóa), một phần ăn sang Quỳ Hợp, Quế Phong miền Tây Nghệ An.
+Sơn Dương (Tuyên Quang) và Đại Từ (Thái Nguyên) là những vùng có nhiều mỏ thiếc lộ thiên. Nếu các dữ liệu chi tiết về dòng họ Ngô và Dương mà tạo ra phân bố với các tâm điểm ở hai vùng có mỏ thiếc, phía Thái Nguyên và Thanh Hóa, thì có thể phải xem lại vị trí của Đường Lâm nay.
+
+Đường Lâm ở Sơn Tây ngày nay là một địa danh mới chỉ xuất hiện sau 1945 trên cơ sở hợp nhất một số làng của tổng Cam Thịnh, còn Đường Lâm cổ - năm 669 thời Đường Cao Tông, cùng với 2 huyện An Viễn và Phúc Lộc thuộc châu Phúc Lộc, 757 thời Đường Túc Tông đổi thành quận Đường Lâm, 758 bỏ quận lập lại châu Phúc Lộc - thuộc vùng tây nam Châu Ái. "Tân Đường Thư" có ghi: trong tất cả các châu, quận An Nam chỉ có 2 vùng cống nạp bạch lạp (thiếc trắng) là Phong Châu và Đường Lâm. Từ Đèo Ngang trở ra chỉ có hai vùng có mỏ thiếc sa khoáng là Tuyên Quang (đời Đường thuộc Phong Châu) và mỏ thiếc Bù Me, gần núi Bù Chò thuộc các huyện Thường Xuân, Thọ Xuân (Tây Nam Thanh Hóa), một phần ăn sang Quỳ Hợp, Quế Phong miền Tây Nghệ An.
+
+Họ Dương đến Dương Đình Nghệ đã nhiều đời làm hào trưởng ở đất Dương Xá, Ái Châu. Khởi tổ họ Ngô là Ngô Nhật Đại quê ở Ái Châu, tham gia khởi nghĩa Mai Thúc Loan, khởi nghĩa thất bại quay về Ái Châu lập nghiệp, 5 đời sau sinh ra Ngô Quyền. Quê của Ngô Quyền cách quê của Dương Đình Nghệ chỉ khoảng 40km theo đường sông Chu, họ Ngô nhiều đời là châu mục khống chế cả một vùng biên viễn ngay sau lưng họ Dương, điều này lý giải vì sao Ngô Quyền quê ở Đường Lâm lại lấy con gái Dương Đình Nghệ, quê Dương Xá và được Dương Đình Nghệ tin tưởng giao luôn binh quyền ở Ái Châu, sau mới đem quân từ Ái Châu ra Đại La diệt Kiều Công Tiễn. Đinh Bộ Lĩnh, Lê Hoàn đều là cháu rể Dương Đình Nghệ.
+
+Vậy có thể đưa ra kết luận "Các cuộc khởi nghĩa dẫn đến việc thiết lập các triều đại Vua ở Đại Việt liên quan tới việc chống lại sự áp bức bóc lột của phương Bắc trong việc khai mỏ thiếc". Tuy nhiên chúng ta cần phải có bằng chứng về việc khai thác thiếc vào thời kỳ từ năm 700 cho tới 900. Liệu có thể tìm ra được dấu vết khai mỏ không?
+
+### Phân bố tỉ lệ
+
+```{r}
+mai_sf <- dat_sf %>% mutate(prop.mai=(sum(subset(., Ho=="Mai")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Mai")
+mai_plot <- mai_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.mai, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=mai_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(mai_plot$prop.mai[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 30))
+```
+
+### Phân bố mật độ
+
+```{r}
+mai_sff <- dat_sff %>% mutate(prop.mai=(sum(subset(., Ho=="Mai")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Mai")
+mai_plotf <- mai_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.mai, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=mai_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(mai_plotf$prop.mai[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 30))
+```
 
 ## Phùng
 
