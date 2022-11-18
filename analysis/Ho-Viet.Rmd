@@ -27,6 +27,8 @@ library(lubridate)
 library(viridis)
 library(sf)
 library(ggpubr)
+library(flextable)
+library(scales)
 
 options(scipen=999, digits = 3)
 options(max.print=1000000)
@@ -36,7 +38,7 @@ options(max.print=1000000)
 load("data/hoviet.RData")
 ```
 
-# Top Họ cả nước
+# Tổng họ Việt Nam
 
 ```{r, results='hide', message=FALSE, warning=FALSE}
 data_ho_overall <- data_ho_overall %>%
@@ -75,6 +77,8 @@ data_ho_top10 <- data_ho_overall %>%
 data_ho_top10 <- head(data_ho_top10, n=10)
 ```
 
+## Top 50 họ cả nước
+
 ```{r}
 ggplot(data = data_ho_top50, aes(x = reorder(Ho, songuoi, decreasing=F), y =pro.pop)) +
   geom_bar(stat = "identity", fill="red", width = 0.75) +
@@ -87,6 +91,67 @@ ggplot(data = data_ho_top50, aes(x = reorder(Ho, songuoi, decreasing=F), y =pro.
         plot.title = element_text(size = 45),
         panel.grid.major = element_blank()) + coord_flip() +
   ggtitle("Top 50 họ có tỉ lệ cao nhất")
+```
+
+```{r}
+data_ho_top200 <- data_ho_overall %>%
+  mutate(pro.pop=round(pro.pop, 2)) %>%
+  arrange(desc(pro.pop))
+data_ho_top200 <- head(data_ho_top200, n=200)
+
+songuoi<-as.matrix(dat_sf$songuoi)
+NAME_1 <- dat_sf$NAME_1
+Ho <- dat_sf$Ho
+data_ho_tinh_sum <- aggregate(songuoi, data.frame(NAME_1, Ho), sum) %>% setDT() %>%
+  rename(songuoi=V1)
+data_ho_tinh_sum <- data_ho_tinh_sum %>%
+  group_by(NAME_1) %>%
+  mutate(danso=sum(songuoi)) %>% ungroup() %>%
+  mutate(pro.pop=round((songuoi/danso)*100,2)) %>% 
+  filter(Ho %in% data_ho_top200$Ho) %>%
+  select(NAME_1, Ho, pro.pop)
+
+data_ho_tinh_wide <- data_ho_tinh_sum %>% spread(NAME_1, pro.pop)
+
+data_ho_top200 <- merge(data_ho_top200 %>% select(Ho, pro.pop), data_ho_tinh_wide, by="Ho")
+data_ho_top200[is.na(data_ho_top200)] <- 0
+data_ho_top200 <- data_ho_top200 %>%
+  arrange(desc(pro.pop)) %>%
+  rename("Họ"=Ho,
+         "Cả nước"=pro.pop)
+```
+
+## 200 họ đông nhất Việt Nam theo cả nước và tỉnh
+
+```{r, fig.width=300, fig.height=33}
+options(width = 300)
+mycolor <- function(x) {
+  output <- ifelse(x == 0, "#FFFFFF",
+                   ifelse(x < 1, "#6baed6",
+                          ifelse(x < 5, "#fee5d9",
+                                 ifelse(x < 10, "#fcae91",
+                                        ifelse(x < 30, "#fb6a4a",
+                                               ifelse(x < 60, "#cb181d", "#FFFFFF"))))))
+  return(output)
+}
+
+mytab_cum <- function(label) {
+  ft <- flextable(data_ho_top200) %>%
+    fontsize(size = 7, part = "all") %>%
+    set_caption(caption = label) %>%
+    set_table_properties(width=1, layout = "autofit")
+
+h_header <- max( dim_pretty(ft, part = "header")$widths)
+
+ft %>%
+  bg(bg = mycolor) %>%
+  valign(valign = "center", part = "header") %>%
+  height(height = h_header * 0.8, part = "header") %>%
+  hrule(i = 1, rule = "exact", part = "all") %>%
+  width(width = 300)
+}
+
+mytab_cum(label = NULL)
 ```
 
 # Phân bố dòng họ cả nước
@@ -324,3 +389,1618 @@ ggplot() + geom_sf() + geom_sf(data=phung_plotf, aes(fill=songuoi_km), color=NA)
   theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
   ggtitle("Phùng")
 ```
+
+## A 
+
+### Phân bố tỉ lệ
+
+```{r}
+a_sf <- dat_sf %>% mutate(prop.a=(sum(subset(., Ho=="A")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="A")
+a_plot <- a_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.a, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=a_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(a_plot$prop.a[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("A")
+```
+
+### Phân bố mật độ
+
+```{r}
+a_sff <- dat_sff %>% mutate(prop.a=(sum(subset(., Ho=="A")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="A")
+a_plotf <- a_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.a, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=a_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(a_plotf$prop.a[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("A")
+```
+
+## An
+
+### Phân bố tỉ lệ
+
+```{r}
+an_sf <- dat_sf %>% mutate(prop.an=(sum(subset(., Ho=="An")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="An")
+an_plot <- an_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.an, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=an_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(an_plot$prop.an[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("An")
+```
+
+### Phân bố mật độ
+
+```{r}
+an_sff <- dat_sff %>% mutate(prop.an=(sum(subset(., Ho=="An")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="An")
+an_plotf <- an_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.an, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=an_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(an_plotf$prop.an[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("An")
+```
+
+## Âu
+
+### Phân bố tỉ lệ
+
+```{r}
+au_sf <- dat_sf %>% mutate(prop.au=(sum(subset(., Ho=="Âu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Âu")
+au_plot <- au_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.au, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=au_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(au_plot$prop.au[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Âu")
+```
+
+### Phân bố mật độ
+
+```{r}
+au_sff <- dat_sff %>% mutate(prop.au=(sum(subset(., Ho=="Âu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Âu")
+au_plotf <- au_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.au, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=au_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(au_plotf$prop.au[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Âu")
+```
+
+## Bạc
+
+### Phân bố tỉ lệ
+
+```{r}
+bac_sf <- dat_sf %>% mutate(prop.bac=(sum(subset(., Ho=="Bạc")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Bạc")
+bac_plot <- bac_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.bac, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=bac_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(bac_plot$prop.bac[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Bạc")
+```
+
+### Phân bố mật độ
+
+```{r}
+bac_sff <- dat_sff %>% mutate(prop.bac=(sum(subset(., Ho=="Bạc")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Bạc")
+bac_plotf <- bac_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.bac, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=bac_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(bac_plotf$prop.bac[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Bạc")
+```
+
+## Bạch
+
+### Phân bố tỉ lệ
+
+```{r}
+bach_sf <- dat_sf %>% mutate(prop.bach=(sum(subset(., Ho=="Bạch")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Bạch")
+bach_plot <- bach_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.bach, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=bach_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(bach_plot$prop.bach[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Bạch")
+```
+
+### Phân bố mật độ
+
+```{r}
+bach_sff <- dat_sff %>% mutate(prop.bach=(sum(subset(., Ho=="Bạch")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Bạch")
+bach_plotf <- bach_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.bach, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=bach_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(bach_plotf$prop.bach[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Bạch")
+```
+
+## Bàn
+
+### Phân bố tỉ lệ
+
+```{r}
+ban_sf <- dat_sf %>% mutate(prop.ban=(sum(subset(., Ho=="Bàn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Bàn")
+ban_plot <- ban_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.ban, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=ban_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(ban_plot$prop.ban[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Bàn")
+```
+
+### Phân bố mật độ
+
+```{r}
+ban_sff <- dat_sff %>% mutate(prop.ban=(sum(subset(., Ho=="Bàn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Bàn")
+ban_plotf <- ban_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.ban, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=ban_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(ban_plotf$prop.ban[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Bàn")
+```
+
+## Bành
+
+### Phân bố tỉ lệ
+
+```{r}
+banh_sf <- dat_sf %>% mutate(prop.banh=(sum(subset(., Ho=="Bành")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Bành")
+banh_plot <- banh_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.banh, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=banh_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(banh_plot$prop.banh[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Bành")
+```
+
+### Phân bố mật độ
+
+```{r}
+banh_sff <- dat_sff %>% mutate(prop.banh=(sum(subset(., Ho=="Bành")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Bành")
+banh_plotf <- banh_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.banh, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=banh_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(banh_plotf$prop.banh[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Bành")
+```
+
+## Bế
+
+### Phân bố tỉ lệ
+
+```{r}
+be_sf <- dat_sf %>% mutate(prop.be=(sum(subset(., Ho=="Bế")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Bế")
+be_plot <- be_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.be, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=be_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(be_plot$prop.be[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Bế")
+```
+
+### Phân bố mật độ
+
+```{r}
+be_sff <- dat_sff %>% mutate(prop.be=(sum(subset(., Ho=="Bế")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Bế")
+be_plotf <- be_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.be, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=be_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(be_plotf$prop.be[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Bế")
+```
+
+## Biện
+
+### Phân bố tỉ lệ
+
+```{r}
+bien_sf <- dat_sf %>% mutate(prop.bien=(sum(subset(., Ho=="Biện")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Biện")
+bien_plot <- bien_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.bien, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=bien_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(bien_plot$prop.bien[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Biện")
+```
+
+### Phân bố mật độ
+
+```{r}
+bien_sff <- dat_sff %>% mutate(prop.bien=(sum(subset(., Ho=="Biện")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Biện")
+bien_plotf <- bien_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.bien, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=bien_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(bien_plotf$prop.bien[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Biện")
+```
+
+## Bùi
+
+### Phân bố tỉ lệ
+
+```{r}
+bui_sf <- dat_sf %>% mutate(prop.bui=(sum(subset(., Ho=="Bùi")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Bùi")
+bui_plot <- bui_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.bui, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=bui_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(bui_plot$prop.bui[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Bùi")
+```
+
+### Phân bố mật độ
+
+```{r}
+bui_sff <- dat_sff %>% mutate(prop.bui=(sum(subset(., Ho=="Bùi")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Bùi")
+bui_plotf <- bui_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.bui, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=bui_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(bui_plotf$prop.bui[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Bùi")
+```
+
+## Cà
+
+### Phân bố tỉ lệ
+
+```{r}
+ca_sf <- dat_sf %>% mutate(prop.ca=(sum(subset(., Ho=="Cà")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Cà")
+ca_plot <- ca_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.ca, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=ca_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(ca_plot$prop.ca[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Cà")
+```
+
+### Phân bố mật độ
+
+```{r}
+ca_sff <- dat_sff %>% mutate(prop.ca=(sum(subset(., Ho=="Cà")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Cà")
+ca_plotf <- ca_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.ca, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=ca_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(ca_plotf$prop.ca[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Cà")
+```
+
+## Cầm
+
+### Phân bố tỉ lệ
+
+```{r}
+cam_sf <- dat_sf %>% mutate(prop.cam=(sum(subset(., Ho=="Cầm")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Cầm")
+cam_plot <- cam_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.cam, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=cam_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(cam_plot$prop.cam[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Cầm")
+```
+
+### Phân bố mật độ
+
+```{r}
+cam_sff <- dat_sff %>% mutate(prop.cam=(sum(subset(., Ho=="Cầm")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Cầm")
+cam_plotf <- cam_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.cam, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=cam_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(cam_plotf$prop.cam[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Cầm")
+```
+
+## Cấn
+
+### Phân bố tỉ lệ
+
+```{r}
+can_sf <- dat_sf %>% mutate(prop.can=(sum(subset(., Ho=="Cấn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Cấn")
+can_plot <- can_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.can, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=can_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(can_plot$prop.can[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Cấn")
+```
+
+### Phân bố mật độ
+
+```{r}
+can_sff <- dat_sff %>% mutate(prop.can=(sum(subset(., Ho=="Cấn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Cấn")
+can_plotf <- can_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.can, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=can_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(can_plotf$prop.can[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Cấn")
+```
+
+## Cao
+
+### Phân bố tỉ lệ
+
+```{r}
+cao_sf <- dat_sf %>% mutate(prop.cao=(sum(subset(., Ho=="Cao")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Cao")
+cao_plot <- cao_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.cao, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=cao_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(cao_plot$prop.cao[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Cao")
+```
+
+### Phân bố mật độ
+
+```{r}
+cao_sff <- dat_sff %>% mutate(prop.cao=(sum(subset(., Ho=="Cao")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Cao")
+cao_plotf <- cao_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.cao, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=cao_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(cao_plotf$prop.cao[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Cao")
+```
+
+## Chang
+
+### Phân bố tỉ lệ
+
+```{r}
+chang_sf <- dat_sf %>% mutate(prop.chang=(sum(subset(., Ho=="Chang")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Chang")
+chang_plot <- chang_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.chang, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=chang_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(chang_plot$prop.chang[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Chang")
+```
+
+### Phân bố mật độ
+
+```{r}
+chang_sff <- dat_sff %>% mutate(prop.chang=(sum(subset(., Ho=="Chang")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Chang")
+chang_plotf <- chang_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.chang, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=chang_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(chang_plotf$prop.chang[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Chang")
+```
+
+## Chảo
+
+### Phân bố tỉ lệ
+
+```{r}
+chao_sf <- dat_sf %>% mutate(prop.chao=(sum(subset(., Ho=="Chảo")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Chảo")
+chao_plot <- chao_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.chao, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=chao_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(chao_plot$prop.chao[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Chảo")
+```
+
+### Phân bố mật độ
+
+```{r}
+chao_sff <- dat_sff %>% mutate(prop.chao=(sum(subset(., Ho=="Chảo")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Chảo")
+chao_plotf <- chao_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.chao, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=chao_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(chao_plotf$prop.chao[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Chảo")
+```
+
+## Châu
+
+### Phân bố tỉ lệ
+
+```{r}
+chau_sf <- dat_sf %>% mutate(prop.chau=(sum(subset(., Ho=="Châu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Châu")
+chau_plot <- chau_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.chau, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=chau_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(chau_plot$prop.chau[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Châu")
+```
+
+### Phân bố mật độ
+
+```{r}
+chau_sff <- dat_sff %>% mutate(prop.chau=(sum(subset(., Ho=="Châu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Châu")
+chau_plotf <- chau_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.chau, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=chau_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(chau_plotf$prop.chau[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Châu")
+```
+
+## Chế
+
+### Phân bố tỉ lệ
+
+```{r}
+che_sf <- dat_sf %>% mutate(prop.che=(sum(subset(., Ho=="Chế")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Chế")
+che_plot <- che_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.che, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=che_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(che_plot$prop.che[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Chế")
+```
+
+### Phân bố mật độ
+
+```{r}
+che_sff <- dat_sff %>% mutate(prop.che=(sum(subset(., Ho=="Chế")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Chế")
+che_plotf <- che_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.che, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=che_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(che_plotf$prop.che[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Chế")
+```
+
+## Chìu
+
+### Phân bố tỉ lệ
+
+```{r}
+chiu_sf <- dat_sf %>% mutate(prop.chiu=(sum(subset(., Ho=="Chìu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Chìu")
+chiu_plot <- chiu_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.chiu, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=chiu_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(chiu_plot$prop.chiu[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Chìu")
+```
+
+### Phân bố mật độ
+
+```{r}
+chiu_sff <- dat_sff %>% mutate(prop.chiu=(sum(subset(., Ho=="Chìu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Chìu")
+chiu_plotf <- chiu_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.chiu, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=chiu_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(chiu_plotf$prop.chiu[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Chìu")
+```
+
+## Chu
+
+### Phân bố tỉ lệ
+
+```{r}
+chu_sf <- dat_sf %>% mutate(prop.chu=(sum(subset(., Ho=="Chu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Chu")
+chu_plot <- chu_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.chu, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=chu_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(chu_plot$prop.chu[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Chu")
+```
+
+### Phân bố mật độ
+
+```{r}
+chu_sff <- dat_sff %>% mutate(prop.chu=(sum(subset(., Ho=="Chu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Chu")
+chu_plotf <- chu_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.chu, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=chu_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(chu_plotf$prop.chu[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Chu")
+```
+
+## Chử
+
+### Phân bố tỉ lệ
+
+```{r}
+chu2_sf <- dat_sf %>% mutate(prop.chu2=(sum(subset(., Ho=="Chử")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Chử")
+chu2_plot <- chu2_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.chu2, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=chu2_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(chu2_plot$prop.chu2[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Chử")
+```
+
+### Phân bố mật độ
+
+```{r}
+chu2_sff <- dat_sff %>% mutate(prop.chu2=(sum(subset(., Ho=="Chử")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Chử")
+chu2_plotf <- chu2_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.chu2, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=chu2_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(chu2_plotf$prop.chu2[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Chử")
+```
+
+## Cù
+
+### Phân bố tỉ lệ
+
+```{r}
+cu_sf <- dat_sf %>% mutate(prop.cu=(sum(subset(., Ho=="Cù")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Cù")
+cu_plot <- cu_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.cu, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=cu_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(cu_plot$prop.cu[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Cù")
+```
+
+### Phân bố mật độ
+
+```{r}
+cu_sff <- dat_sff %>% mutate(prop.cu=(sum(subset(., Ho=="Cù")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Cù")
+cu_plotf <- cu_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.cu, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=cu_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(cu_plotf$prop.cu[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Cù")
+```
+
+## Cư
+
+### Phân bố tỉ lệ
+
+```{r}
+cu2_sf <- dat_sf %>% mutate(prop.cu2=(sum(subset(., Ho=="Cư")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Cư")
+cu2_plot <- cu2_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.cu2, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=cu2_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(cu2_plot$prop.cu2[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Cư")
+```
+
+### Phân bố mật độ
+
+```{r}
+cu2_sff <- dat_sff %>% mutate(prop.cu2=(sum(subset(., Ho=="Cư")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Cư")
+cu2_plotf <- cu2_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.cu2, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=cu2_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(cu2_plotf$prop.cu2[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Cư")
+```
+
+## Cứ
+
+### Phân bố tỉ lệ
+
+```{r}
+cu1_sf <- dat_sf %>% mutate(prop.cu1=(sum(subset(., Ho=="Cứ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Cứ")
+cu1_plot <- cu1_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.cu1, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=cu1_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(cu1_plot$prop.cu1[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Cứ")
+```
+
+### Phân bố mật độ
+
+```{r}
+cu1_sff <- dat_sff %>% mutate(prop.cu1=(sum(subset(., Ho=="Cứ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Cứ")
+cu1_plotf <- cu1_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.cu1, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=cu1_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(cu1_plotf$prop.cu1[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Cứ")
+```
+
+## Đàm
+
+### Phân bố tỉ lệ
+
+```{r}
+dam_sf <- dat_sf %>% mutate(prop.dam=(sum(subset(., Ho=="Đàm")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đàm")
+dam_plot <- dam_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.dam, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=dam_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(dam_plot$prop.dam[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Đàm")
+```
+
+### Phân bố mật độ
+
+```{r}
+dam_sff <- dat_sff %>% mutate(prop.dam=(sum(subset(., Ho=="Đàm")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đàm")
+dam_plotf <- dam_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.dam, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=dam_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(dam_plotf$prop.dam[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Đàm")
+```
+
+## Đặng
+
+### Phân bố tỉ lệ
+
+```{r}
+dang_sf <- dat_sf %>% mutate(prop.dang=(sum(subset(., Ho=="Đặng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đặng")
+dang_plot <- dang_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.dang, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=dang_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(dang_plot$prop.dang[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Đặng")
+```
+
+### Phân bố mật độ
+
+```{r}
+dang_sff <- dat_sff %>% mutate(prop.dang=(sum(subset(., Ho=="Đặng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đặng")
+dang_plotf <- dang_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.dang, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=dang_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(dang_plotf$prop.dang[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Đặng")
+```
+
+## Danh
+
+### Phân bố tỉ lệ
+
+```{r}
+danh_sf <- dat_sf %>% mutate(prop.danh=(sum(subset(., Ho=="Danh")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Danh")
+danh_plot <- danh_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.danh, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=danh_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(danh_plot$prop.danh[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Danh")
+```
+
+### Phân bố mật độ
+
+```{r}
+danh_sff <- dat_sff %>% mutate(prop.danh=(sum(subset(., Ho=="Danh")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Danh")
+danh_plotf <- danh_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.danh, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=danh_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(danh_plotf$prop.danh[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Danh")
+```
+
+## Đào
+
+### Phân bố tỉ lệ
+
+```{r}
+dao_sf <- dat_sf %>% mutate(prop.dao=(sum(subset(., Ho=="Đào")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đào")
+dao_plot <- dao_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.dao, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=dao_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(dao_plot$prop.dao[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Đào")
+```
+
+### Phân bố mật độ
+
+```{r}
+dao_sff <- dat_sff %>% mutate(prop.dao=(sum(subset(., Ho=="Đào")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đào")
+dao_plotf <- dao_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.dao, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=dao_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(dao_plotf$prop.dao[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Đào")
+```
+
+## Đậu
+
+### Phân bố tỉ lệ
+
+```{r}
+dau_sf <- dat_sf %>% mutate(prop.dau=(sum(subset(., Ho=="Đậu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đậu")
+dau_plot <- dau_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.dau, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=dau_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(dau_plot$prop.dau[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Đậu")
+```
+
+### Phân bố mật độ
+
+```{r}
+dau_sff <- dat_sff %>% mutate(prop.dau=(sum(subset(., Ho=="Đậu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đậu")
+dau_plotf <- dau_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.dau, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=dau_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(dau_plotf$prop.dau[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Đậu")
+```
+
+## Diệp
+
+### Phân bố tỉ lệ
+
+```{r}
+diep_sf <- dat_sf %>% mutate(prop.diep=(sum(subset(., Ho=="Diệp")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Diệp")
+diep_plot <- diep_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.diep, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=diep_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(diep_plot$prop.diep[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Diệp")
+```
+
+### Phân bố mật độ
+
+```{r}
+diep_sff <- dat_sff %>% mutate(prop.diep=(sum(subset(., Ho=="Diệp")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Diệp")
+diep_plotf <- diep_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.diep, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=diep_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(diep_plotf$prop.diep[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Diệp")
+```
+
+## Điêu
+
+### Phân bố tỉ lệ
+
+```{r}
+dieu_sf <- dat_sf %>% mutate(prop.dieu=(sum(subset(., Ho=="Điêu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Điêu")
+dieu_plot <- dieu_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.dieu, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=dieu_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(dieu_plot$prop.dieu[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Điêu")
+```
+
+### Phân bố mật độ
+
+```{r}
+dieu_sff <- dat_sff %>% mutate(prop.dieu=(sum(subset(., Ho=="Điêu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Điêu")
+dieu_plotf <- dieu_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.dieu, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=dieu_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(dieu_plotf$prop.dieu[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Điêu")
+```
+
+## Điểu
+
+### Phân bố tỉ lệ
+
+```{r}
+dieu2_sf <- dat_sf %>% mutate(prop.dieu2=(sum(subset(., Ho=="Điểu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Điểu")
+dieu2_plot <- dieu2_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.dieu2, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=dieu2_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(dieu2_plot$prop.dieu2[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Điểu")
+```
+
+### Phân bố mật độ
+
+```{r}
+dieu2_sff <- dat_sff %>% mutate(prop.dieu2=(sum(subset(., Ho=="Điểu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Điểu")
+dieu2_plotf <- dieu2_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.dieu2, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=dieu2_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(dieu2_plotf$prop.dieu2[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Điểu")
+```
+
+## Đinh
+
+### Phân bố tỉ lệ
+
+```{r}
+dinh_sf <- dat_sf %>% mutate(prop.dinh=(sum(subset(., Ho=="Đinh")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đinh")
+dinh_plot <- dinh_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.dinh, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=dinh_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(dinh_plot$prop.dinh[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Đinh")
+```
+
+### Phân bố mật độ
+
+```{r}
+dinh_sff <- dat_sff %>% mutate(prop.dinh=(sum(subset(., Ho=="Đinh")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đinh")
+dinh_plotf <- dinh_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.dinh, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=dinh_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(dinh_plotf$prop.dinh[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Đinh")
+```
+
+## Đô
+
+### Phân bố tỉ lệ
+
+```{r}
+do1_sf <- dat_sf %>% mutate(prop.do1=(sum(subset(., Ho=="Đô")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đô")
+do1_plot <- do1_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.do1, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=do1_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(do1_plot$prop.do1[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Đô")
+```
+
+### Phân bố mật độ
+
+```{r}
+do1_sff <- dat_sff %>% mutate(prop.do1=(sum(subset(., Ho=="Đô")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đô")
+do1_plotf <- do1_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.do1, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=do1_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(do1_plotf$prop.do1[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Đô")
+```
+
+## Đỗ
+
+### Phân bố tỉ lệ
+
+```{r}
+do_sf <- dat_sf %>% mutate(prop.do=(sum(subset(., Ho=="Đỗ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đỗ")
+do_plot <- do_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.do, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=do_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(do_plot$prop.do[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Đỗ")
+```
+
+### Phân bố mật độ
+
+```{r}
+do_sff <- dat_sff %>% mutate(prop.do=(sum(subset(., Ho=="Đỗ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đỗ")
+do_plotf <- do_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.do, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=do_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(do_plotf$prop.do[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Đỗ")
+```
+
+## Doãn
+
+### Phân bố tỉ lệ
+
+```{r}
+doan1_sf <- dat_sf %>% mutate(prop.doan1=(sum(subset(., Ho=="Doãn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Doãn")
+doan1_plot <- doan1_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.doan1, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=doan1_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(doan1_plot$prop.doan1[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Doãn")
+```
+
+### Phân bố mật độ
+
+```{r}
+doan1_sff <- dat_sff %>% mutate(prop.doan1=(sum(subset(., Ho=="Doãn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Doãn")
+doan1_plotf <- doan1_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.doan1, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=doan1_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(doan1_plotf$prop.doan1[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Doãn")
+```
+
+## Đoàn
+
+### Phân bố tỉ lệ
+
+```{r}
+doan_sf <- dat_sf %>% mutate(prop.doan=(sum(subset(., Ho=="Đoàn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đoàn")
+doan_plot <- doan_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.doan, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=doan_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(doan_plot$prop.doan[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Đoàn")
+```
+
+### Phân bố mật độ
+
+```{r}
+doan_sff <- dat_sff %>% mutate(prop.doan=(sum(subset(., Ho=="Đoàn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đoàn")
+doan_plotf <- doan_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.doan, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=doan_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(doan_plotf$prop.doan[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Đoàn")
+```
+
+## Đới
+
+### Phân bố tỉ lệ
+
+```{r}
+doi_sf <- dat_sf %>% mutate(prop.doi=(sum(subset(., Ho=="Đới")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đới")
+doi_plot <- doi_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.doi, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=doi_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(doi_plot$prop.doi[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Đới")
+```
+
+### Phân bố mật độ
+
+```{r}
+doi_sff <- dat_sff %>% mutate(prop.doi=(sum(subset(., Ho=="Đới")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đới")
+doi_plotf <- doi_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.doi, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=doi_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(doi_plotf$prop.doi[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Đới")
+```
+
+## Đồng
+
+### Phân bố tỉ lệ
+
+```{r}
+dong_sf <- dat_sf %>% mutate(prop.dong=(sum(subset(., Ho=="Đồng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đồng")
+dong_plot <- dong_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.dong, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=dong_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(dong_plot$prop.dong[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Đồng")
+```
+
+### Phân bố mật độ
+
+```{r}
+dong_sff <- dat_sff %>% mutate(prop.dong=(sum(subset(., Ho=="Đồng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đồng")
+dong_plotf <- dong_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.dong, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=dong_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(dong_plotf$prop.dong[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Đồng")
+```
+
+## Dư
+
+### Phân bố tỉ lệ
+
+```{r}
+du_sf <- dat_sf %>% mutate(prop.du=(sum(subset(., Ho=="Dư")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Dư")
+du_plot <- du_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.du, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=du_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(du_plot$prop.du[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Dư")
+```
+
+### Phân bố mật độ
+
+```{r}
+du_sff <- dat_sff %>% mutate(prop.du=(sum(subset(., Ho=="Dư")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Dư")
+du_plotf <- du_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.du, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=du_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(du_plotf$prop.du[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Dư")
+```
+
+## Dương
+
+### Phân bố tỉ lệ
+
+```{r}
+duong_sf <- dat_sf %>% mutate(prop.duong=(sum(subset(., Ho=="Dương")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Dương")
+duong_plot <- duong_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.duong, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=duong_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(duong_plot$prop.duong[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Dương")
+```
+
+### Phân bố mật độ
+
+```{r}
+duong_sff <- dat_sff %>% mutate(prop.duong=(sum(subset(., Ho=="Dương")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Dương")
+duong_plotf <- duong_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.duong, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=duong_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(duong_plotf$prop.duong[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Dương")
+```
+
+## Đường
+
+### Phân bố tỉ lệ
+
+```{r}
+duong2_sf <- dat_sf %>% mutate(prop.duong2=(sum(subset(., Ho=="Đường")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đường")
+duong2_plot <- duong2_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.duong2, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=duong2_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(duong2_plot$prop.duong2[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Đường")
+```
+
+### Phân bố mật độ
+
+```{r}
+duong2_sff <- dat_sff %>% mutate(prop.duong2=(sum(subset(., Ho=="Đường")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đường")
+duong2_plotf <- duong2_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.duong2, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=duong2_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(duong2_plotf$prop.duong2[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Đường")
+```
+
+## Giang
+
+### Phân bố tỉ lệ
+
+```{r}
+giang_sf <- dat_sf %>% mutate(prop.giang=(sum(subset(., Ho=="Giang")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Giang")
+giang_plot <- giang_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.giang, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=giang_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(giang_plot$prop.giang[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Giang")
+```
+
+### Phân bố mật độ
+
+```{r}
+giang_sff <- dat_sff %>% mutate(prop.giang=(sum(subset(., Ho=="Giang")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Giang")
+giang_plotf <- giang_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.giang, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=giang_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(giang_plotf$prop.giang[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Giang")
+```
+
+## Giàng
+
+### Phân bố tỉ lệ
+
+```{r}
+giang2_sf <- dat_sf %>% mutate(prop.giang2=(sum(subset(., Ho=="Giàng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Giàng")
+giang2_plot <- giang2_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.giang2, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=giang2_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(giang2_plot$prop.giang2[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Giàng")
+```
+
+### Phân bố mật độ
+
+```{r}
+giang2_sff <- dat_sff %>% mutate(prop.giang2=(sum(subset(., Ho=="Giàng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Giàng")
+giang2_plotf <- giang2_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.giang2, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=giang2_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(giang2_plotf$prop.giang2[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Giàng")
+```
+
+## Giáp
+
+### Phân bố tỉ lệ
+
+```{r}
+giap_sf <- dat_sf %>% mutate(prop.giap=(sum(subset(., Ho=="Giáp")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Giáp")
+giap_plot <- giap_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.giap, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=giap_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(giap_plot$prop.giap[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Giáp")
+```
+
+### Phân bố mật độ
+
+```{r}
+giap_sff <- dat_sff %>% mutate(prop.giap=(sum(subset(., Ho=="Giáp")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Giáp")
+giap_plotf <- giap_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.giap, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=giap_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(giap_plotf$prop.giap[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Giáp")
+```
+
+## H
+
+### Phân bố tỉ lệ
+
+```{r}
+h_sf <- dat_sf %>% mutate(prop.h=(sum(subset(., Ho=="H")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="H")
+h_plot <- h_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.h, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=h_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(h_plot$prop.h[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("H")
+```
+
+### Phân bố mật độ
+
+```{r}
+h_sff <- dat_sff %>% mutate(prop.h=(sum(subset(., Ho=="H")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="H")
+h_plotf <- h_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.h, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=h_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(h_plotf$prop.h[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("H")
+```
+
+## H'
+
+### Phân bố tỉ lệ
+
+```{r}
+h1_sf <- dat_sf %>% mutate(prop.h1=(sum(subset(., Ho=="H'")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="H'")
+h1_plot <- h1_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.h1, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=h1_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(h1_plot$prop.h1[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("H'")
+```
+
+### Phân bố mật độ
+
+```{r}
+h1_sff <- dat_sff %>% mutate(prop.h1=(sum(subset(., Ho=="H'")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="H'")
+h1_plotf <- h1_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.h1, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=h1_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(h1_plotf$prop.h1[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("H'")
+```
+
+## Ha
+
+### Phân bố tỉ lệ
+
+```{r}
+ha1_sf <- dat_sf %>% mutate(prop.ha1=(sum(subset(., Ho=="Ha")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ha")
+ha1_plot <- ha1_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.ha1, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=ha1_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(ha1_plot$prop.ha1[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Ha")
+```
+
+### Phân bố mật độ
+
+```{r}
+ha1_sff <- dat_sff %>% mutate(prop.ha1=(sum(subset(., Ho=="Ha")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ha")
+ha1_plotf <- ha1_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.ha1, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=ha1_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(ha1_plotf$prop.ha1[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Ha")
+```
+
+## Hà
+
+### Phân bố tỉ lệ
+
+```{r}
+ha_sf <- dat_sf %>% mutate(prop.ha=(sum(subset(., Ho=="Hà")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hà")
+ha_plot <- ha_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.ha, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=ha_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(ha_plot$prop.ha[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Hà")
+```
+
+### Phân bố mật độ
+
+```{r}
+ha_sff <- dat_sff %>% mutate(prop.ha=(sum(subset(., Ho=="Hà")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hà")
+ha_plotf <- ha_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.ha, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=ha_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(ha_plotf$prop.ha[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Hà")
+```
+
+## Hạ
+
+### Phân bố tỉ lệ
+
+```{r}
+ha2_sf <- dat_sf %>% mutate(prop.ha2=(sum(subset(., Ho=="Hạ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hạ")
+ha2_plot <- ha2_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.ha2, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=ha2_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(ha2_plot$prop.ha2[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Hạ")
+```
+
+### Phân bố mật độ
+
+```{r}
+ha2_sff <- dat_sff %>% mutate(prop.ha2=(sum(subset(., Ho=="Hạ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hạ")
+ha2_plotf <- ha2_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.ha2, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=ha2_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(ha2_plotf$prop.ha2[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Hạ")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
