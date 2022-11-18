@@ -117,14 +117,15 @@ data_ho_top200 <- merge(data_ho_top200 %>% select(Ho, pro.pop), data_ho_tinh_wid
 data_ho_top200[is.na(data_ho_top200)] <- 0
 data_ho_top200 <- data_ho_top200 %>%
   arrange(desc(pro.pop)) %>%
-  rename("Họ"=Ho,
+  rownames_to_column() %>%
+  rename("TT"=rowname,
+         "Họ"=Ho,
          "Cả nước"=pro.pop)
 ```
 
 ## 200 họ đông nhất Việt Nam theo cả nước và tỉnh
 
-```{r, fig.width=300, fig.height=33}
-options(width = 300)
+```{r, fig.width=49, fig.height=33}
 mycolor <- function(x) {
   output <- ifelse(x == 0, "#FFFFFF",
                    ifelse(x < 1, "#6baed6",
@@ -144,11 +145,11 @@ mytab_cum <- function(label) {
 h_header <- max( dim_pretty(ft, part = "header")$widths)
 
 ft %>%
-  bg(bg = mycolor) %>%
+  bg(j=c(-1), bg = mycolor) %>%
   valign(valign = "center", part = "header") %>%
   height(height = h_header * 0.8, part = "header") %>%
   hrule(i = 1, rule = "exact", part = "all") %>%
-  width(width = 300)
+  width(width = 49)
 }
 
 mytab_cum(label = NULL)
