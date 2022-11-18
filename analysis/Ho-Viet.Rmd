@@ -29,13 +29,15 @@ library(sf)
 library(ggpubr)
 library(flextable)
 library(scales)
+library(ggtext)
+library(glue)
 
 options(scipen=999, digits = 3)
 options(max.print=1000000)
 ```
 
 ```{r load data, message=FALSE, warning=FALSE}
-load("data/hoviet.RData")
+load("../data/hoviet.RData")
 ```
 
 # Tổng họ Việt Nam
@@ -93,6 +95,429 @@ ggplot(data = data_ho_top50, aes(x = reorder(Ho, songuoi, decreasing=F), y =pro.
   ggtitle("Top 50 họ có tỉ lệ cao nhất")
 ```
 
+## Phân bố mật độ tỉ lệ từng họ
+
+```{r}
+nguyen_sf <- dat_sf %>% mutate(prop.nguyen=(sum(subset(., Ho=="Nguyễn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Nguyễn")
+tran_sf <- dat_sf %>% mutate(prop.tran=(sum(subset(., Ho=="Trần")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Trần")
+le_sf <- dat_sf %>% mutate(prop.le=(sum(subset(., Ho=="Lê")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lê")
+pham_sf <- dat_sf %>% mutate(prop.pham=(sum(subset(., Ho=="Phạm")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phạm")
+hoang_sf <- dat_sf %>% mutate(prop.hoang=(sum(subset(., Ho=="Hoàng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hoàng")
+bui_sf <- dat_sf %>% mutate(prop.bui=(sum(subset(., Ho=="Bùi")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Bùi")
+vu_sf <- dat_sf %>% mutate(prop.vu=(sum(subset(., Ho=="Vũ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Vũ")
+vo_sf <- dat_sf %>% mutate(prop.vo=(sum(subset(., Ho=="Võ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Võ")
+phan_sf <- dat_sf %>% mutate(prop.phan=(sum(subset(., Ho=="Phan")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phan")
+do_sf <- dat_sf %>% mutate(prop.do=(sum(subset(., Ho=="Đỗ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đỗ")
+huynh_sf <- dat_sf %>% mutate(prop.huynh=(sum(subset(., Ho=="Huỳnh")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Huỳnh")
+dang_sf <- dat_sf %>% mutate(prop.dang=(sum(subset(., Ho=="Đặng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đặng")
+ngo_sf <- dat_sf %>% mutate(prop.ngo=(sum(subset(., Ho=="Ngô")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ngô")
+truong_sf <- dat_sf %>% mutate(prop.truong=(sum(subset(., Ho=="Trương")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Trương")
+dinh_sf <- dat_sf %>% mutate(prop.dinh=(sum(subset(., Ho=="Đinh")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đinh")
+ho_sf <- dat_sf %>% mutate(prop.ho=(sum(subset(., Ho=="Hồ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hồ")
+duong_sf <- dat_sf %>% mutate(prop.duong=(sum(subset(., Ho=="Dương")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Dương")
+ha_sf <- dat_sf %>% mutate(prop.ha=(sum(subset(., Ho=="Hà")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hà")
+dao_sf <- dat_sf %>% mutate(prop.dao=(sum(subset(., Ho=="Đào")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đào")
+ly_sf <- dat_sf %>% mutate(prop.ly=(sum(subset(., Ho=="Lý")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lý")
+doan_sf <- dat_sf %>% mutate(prop.doan=(sum(subset(., Ho=="Đoàn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đoàn")
+trinh_sf <- dat_sf %>% mutate(prop.trinh=(sum(subset(., Ho=="Trịnh")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Trịnh")
+mai_sf <- dat_sf %>% mutate(prop.mai=(sum(subset(., Ho=="Mai")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Mai")
+luong_sf <- dat_sf %>% mutate(prop.luong=(sum(subset(., Ho=="Lương")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lương")
+cao_sf <- dat_sf %>% mutate(prop.cao=(sum(subset(., Ho=="Cao")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Cao")
+lo_sf <- dat_sf %>% mutate(prop.lo=(sum(subset(., Ho=="Lò")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lò")
+lam_sf <- dat_sf %>% mutate(prop.lam=(sum(subset(., Ho=="Lâm")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lâm")
+luu_sf <- dat_sf %>% mutate(prop.luu=(sum(subset(., Ho=="Lưu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lưu")
+phung_sf <- dat_sf %>% mutate(prop.phung=(sum(subset(., Ho=="Phùng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phùng")
+ta_sf <- dat_sf %>% mutate(prop.ta=(sum(subset(., Ho=="Tạ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tạ")
+thach_sf <- dat_sf %>% mutate(prop.thach=(sum(subset(., Ho=="Thạch")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Thạch")
+trieu_sf <- dat_sf %>% mutate(prop.trieu=(sum(subset(., Ho=="Triệu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Triệu")
+y_sf <- dat_sf %>% mutate(prop.y=(sum(subset(., Ho=="Y")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Y")
+vi_sf <- dat_sf %>% mutate(prop.vi=(sum(subset(., Ho=="Vi")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Vi")
+chu_sf <- dat_sf %>% mutate(prop.chu=(sum(subset(., Ho=="Chu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Chu")
+nong_sf <- dat_sf %>% mutate(prop.nong=(sum(subset(., Ho=="Nông")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Nông")
+to_sf <- dat_sf %>% mutate(prop.to=(sum(subset(., Ho=="Tô")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tô")
+thai_sf <- dat_sf %>% mutate(prop.thai=(sum(subset(., Ho=="Thái")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Thái")
+chau_sf <- dat_sf %>% mutate(prop.chau=(sum(subset(., Ho=="Châu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Châu")
+giang_sf <- dat_sf %>% mutate(prop.giang=(sum(subset(., Ho=="Giàng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Giàng")
+vuong_sf <- dat_sf %>% mutate(prop.vuong=(sum(subset(., Ho=="Vương")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Vương")
+h_sf <- dat_sf %>% mutate(prop.h=(sum(subset(., Ho=="H")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="H")
+quach_sf <- dat_sf %>% mutate(prop.quach=(sum(subset(., Ho=="Quách")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Quách")
+vang_sf <- dat_sf %>% mutate(prop.vang=(sum(subset(., Ho=="Vàng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Vàng")
+danh_sf <- dat_sf %>% mutate(prop.danh=(sum(subset(., Ho=="Danh")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Danh")
+luong2_sf <- dat_sf %>% mutate(prop.luong2=(sum(subset(., Ho=="Lường")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lường")
+dam_sf <- dat_sf %>% mutate(prop.dam=(sum(subset(., Ho=="Đàm")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đàm")
+sung_sf <- dat_sf %>% mutate(prop.sung=(sum(subset(., Ho=="Sùng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Sùng")
+thi_sf <- dat_sf %>% mutate(prop.thi=(sum(subset(., Ho=="Thị")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Thị")
+a_sf <- dat_sf %>% mutate(prop.a=(sum(subset(., Ho=="A")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="A")
+```
+
+```{r}
+nguyen_his <- nguyen_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(nguyen_sf$pro.pop), sd = sd(nguyen_sf$pro.pop))) +
+  ggtitle("Nguyễn")
+
+tran_his <- tran_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(tran_sf$pro.pop), sd = sd(tran_sf$pro.pop))) +
+  ggtitle("Trần")
+
+le_his <- le_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(le_sf$pro.pop), sd = sd(le_sf$pro.pop))) +
+  ggtitle("Lê")
+
+pham_his <- pham_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(pham_sf$pro.pop), sd = sd(pham_sf$pro.pop))) +
+  ggtitle("Phạm")
+
+hoang_his <- hoang_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(hoang_sf$pro.pop), sd = sd(hoang_sf$pro.pop))) +
+  ggtitle("Hoàng")
+
+bui_his <- bui_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(bui_sf$pro.pop), sd = sd(bui_sf$pro.pop))) +
+  ggtitle("Bùi")
+
+vu_his <- vu_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(vu_sf$pro.pop), sd = sd(vu_sf$pro.pop))) +
+  ggtitle("Vũ")
+
+vo_his <- vo_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(vo_sf$pro.pop), sd = sd(vo_sf$pro.pop))) +
+  ggtitle("Võ")
+
+phan_his <- phan_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(phan_sf$pro.pop), sd = sd(phan_sf$pro.pop))) +
+  ggtitle("Phan")
+
+do_his <- do_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(do_sf$pro.pop), sd = sd(do_sf$pro.pop))) +
+  ggtitle("Đỗ")
+
+huynh_his <- huynh_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(huynh_sf$pro.pop), sd = sd(huynh_sf$pro.pop))) +
+  ggtitle("Huỳnh")
+
+dang_his <- dang_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(dang_sf$pro.pop), sd = sd(dang_sf$pro.pop))) +
+  ggtitle("Đặng")
+
+ngo_his <- ngo_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(ngo_sf$pro.pop), sd = sd(ngo_sf$pro.pop))) +
+  ggtitle("Ngô")
+
+truong_his <- truong_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(truong_sf$pro.pop), sd = sd(truong_sf$pro.pop))) +
+  ggtitle("Trương")
+
+dinh_his <- dinh_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(dinh_sf$pro.pop), sd = sd(dinh_sf$pro.pop))) +
+  ggtitle("Đinh")
+
+duong_his <- duong_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(duong_sf$pro.pop), sd = sd(duong_sf$pro.pop))) +
+  ggtitle("Dương")
+
+ho_his <- ho_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(ho_sf$pro.pop), sd = sd(ho_sf$pro.pop))) +
+  ggtitle("Hồ")
+
+ha_his <- ha_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(ha_sf$pro.pop), sd = sd(ha_sf$pro.pop))) +
+  ggtitle("Hà")
+
+dao_his <- dao_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(dao_sf$pro.pop), sd = sd(dao_sf$pro.pop))) +
+  ggtitle("Đào")
+
+doan_his <- doan_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(doan_sf$pro.pop), sd = sd(doan_sf$pro.pop))) +
+  ggtitle("Đoàn")
+
+ly_his <- ly_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(ly_sf$pro.pop), sd = sd(ly_sf$pro.pop))) +
+  ggtitle("Lý")
+
+trinh_his <- trinh_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(trinh_sf$pro.pop), sd = sd(trinh_sf$pro.pop))) +
+  ggtitle("Trịnh")
+
+mai_his <- mai_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(mai_sf$pro.pop), sd = sd(mai_sf$pro.pop))) +
+  ggtitle("Mai")
+
+luong_his <- luong_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(luong_sf$pro.pop), sd = sd(luong_sf$pro.pop))) +
+  ggtitle("Lương")
+
+cao_his <- cao_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(cao_sf$pro.pop), sd = sd(cao_sf$pro.pop))) +
+  ggtitle("Cao")
+
+lam_his <- lam_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(lam_sf$pro.pop), sd = sd(lam_sf$pro.pop))) +
+  ggtitle("Lâm")
+
+lo_his <- lo_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(lo_sf$pro.pop), sd = sd(lo_sf$pro.pop))) +
+  ggtitle("Lò")
+
+luu_his <- luu_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(luu_sf$pro.pop), sd = sd(luu_sf$pro.pop))) +
+  ggtitle("Lưu")
+
+phung_his <- phung_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(phung_sf$pro.pop), sd = sd(phung_sf$pro.pop))) +
+  ggtitle("Phùng")
+
+ta_his <- ta_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(ta_sf$pro.pop), sd = sd(ta_sf$pro.pop))) +
+  ggtitle("Tạ")
+
+thach_his <- thach_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(thach_sf$pro.pop), sd = sd(thach_sf$pro.pop))) +
+  ggtitle("Thạch")
+
+trieu_his <- trieu_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(trieu_sf$pro.pop), sd = sd(trieu_sf$pro.pop))) +
+  ggtitle("Triệu")
+
+y_his <- y_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(y_sf$pro.pop), sd = sd(y_sf$pro.pop))) +
+  ggtitle("Y")
+
+vi_his <- vi_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(vi_sf$pro.pop), sd = sd(vi_sf$pro.pop))) +
+  ggtitle("Vi")
+
+chu_his <- chu_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(chu_sf$pro.pop), sd = sd(chu_sf$pro.pop))) +
+  ggtitle("Chu")
+
+nong_his <- nong_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(nong_sf$pro.pop), sd = sd(nong_sf$pro.pop))) +
+  ggtitle("Nông")
+
+to_his <- to_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(to_sf$pro.pop), sd = sd(to_sf$pro.pop))) +
+  ggtitle("Tô")
+
+thai_his <- thai_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(thai_sf$pro.pop), sd = sd(thai_sf$pro.pop))) +
+  ggtitle("Thái")
+
+chau_his <- chau_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(chau_sf$pro.pop), sd = sd(chau_sf$pro.pop))) +
+  ggtitle("Châu")
+
+giang_his <- giang_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(giang_sf$pro.pop), sd = sd(giang_sf$pro.pop))) +
+  ggtitle("Giàng")
+
+vuong_his <- vuong_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(vuong_sf$pro.pop), sd = sd(vuong_sf$pro.pop))) +
+  ggtitle("Vương")
+
+h_his <- h_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(h_sf$pro.pop), sd = sd(h_sf$pro.pop))) +
+  ggtitle("H")
+
+quach_his <- quach_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(quach_sf$pro.pop), sd = sd(quach_sf$pro.pop))) +
+  ggtitle("Quách")
+
+vang_his <- vang_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(vang_sf$pro.pop), sd = sd(vang_sf$pro.pop))) +
+  ggtitle("Vàng")
+
+danh_his <- danh_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(danh_sf$pro.pop), sd = sd(danh_sf$pro.pop))) +
+  ggtitle("Danh")
+
+luong2_his <- luong2_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(luong2_sf$pro.pop), sd = sd(luong2_sf$pro.pop))) +
+  ggtitle("Lường")
+
+dam_his <- dam_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(dam_sf$pro.pop), sd = sd(dam_sf$pro.pop))) +
+  ggtitle("Đàm")
+
+sung_his <- sung_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(sung_sf$pro.pop), sd = sd(sung_sf$pro.pop))) +
+  ggtitle("Sùng")
+
+thi_his <- thi_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(thi_sf$pro.pop), sd = sd(thi_sf$pro.pop))) +
+  ggtitle("Thị")
+
+a_his <- a_sf %>% 
+  ggplot(aes(x=pro.pop)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(a_sf$pro.pop), sd = sd(a_sf$pro.pop))) +
+  ggtitle("A")
+```
+
+```{r}
+ggarrange(nguyen_his, tran_his, le_his, pham_his, hoang_his,
+          bui_his, vu_his, vo_his, phan_his, do_his,
+          huynh_his, dang_his, ngo_his, truong_his, dinh_his,
+          ho_his, duong_his, ha_his, dao_his, ly_his,
+          doan_his, trinh_his, mai_his, luong_his, cao_his,
+          lo_his, lam_his, luu_his, phung_his, ta_his,
+          thach_his, y_his, trieu_his, vi_his, chu_his,
+          nong_his, to_his, thai_his, chau_his, giang_his,
+          vuong_his, h_his, quach_his, vang_his, danh_his,
+          luong2_his, dam_his, sung_his, thi_his, a_his,
+          ncol = 5, nrow = 10)
+```
+
+## Top 200 họ phổ biến nhất Việt Nam theo cả nước và tỉnh
+
 ```{r}
 data_ho_top200 <- data_ho_overall %>%
   mutate(pro.pop=round(pro.pop, 2)) %>%
@@ -120,10 +545,8 @@ data_ho_top200 <- data_ho_top200 %>%
   rownames_to_column() %>%
   rename("TT"=rowname,
          "Họ"=Ho,
-         "Cả nước"=pro.pop)
+         "Cả nước (%)"=pro.pop)
 ```
-
-## 200 họ đông nhất Việt Nam theo cả nước và tỉnh
 
 ```{r, fig.width=49, fig.height=33}
 mycolor <- function(x) {
@@ -154,6 +577,7 @@ ft %>%
 
 mytab_cum(label = NULL)
 ```
+
 
 # Phân bố dòng họ cả nước
 
@@ -1990,6 +2414,423 @@ ggplot() + geom_sf() + geom_sf(data=ha2_plotf, aes(fill=songuoi_km), color=NA) +
   theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
   ggtitle("Hạ")
 ```
+
+## Hán
+
+### Phân bố tỉ lệ
+
+```{r}
+han1_sf <- dat_sf %>% mutate(prop.han1=(sum(subset(., Ho=="Hán")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hán")
+han1_plot <- han1_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.han1, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=han1_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(han1_plot$prop.han1[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Hán")
+```
+
+### Phân bố mật độ
+
+```{r}
+han1_sff <- dat_sff %>% mutate(prop.han1=(sum(subset(., Ho=="Hán")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hán")
+han1_plotf <- han1_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.han1, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=han1_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(han1_plotf$prop.han1[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Hán")
+```
+
+## Hàn
+
+### Phân bố tỉ lệ
+
+```{r}
+han2_sf <- dat_sf %>% mutate(prop.han2=(sum(subset(., Ho=="Hàn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hàn")
+han2_plot <- han2_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.han2, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=han2_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(han2_plot$prop.han2[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Hàn")
+```
+
+### Phân bố mật độ
+
+```{r}
+han2_sff <- dat_sff %>% mutate(prop.han2=(sum(subset(., Ho=="Hàn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hàn")
+han2_plotf <- han2_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.han2, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=han2_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(han2_plotf$prop.han2[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Hàn")
+```
+
+## Hàng
+
+### Phân bố tỉ lệ
+
+```{r}
+hang1_sf <- dat_sf %>% mutate(prop.hang1=(sum(subset(., Ho=="Hàng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hàng")
+hang1_plot <- hang1_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.hang1, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=hang1_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(hang1_plot$prop.hang1[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Hàng")
+```
+
+### Phân bố mật độ
+
+```{r}
+hang1_sff <- dat_sff %>% mutate(prop.hang1=(sum(subset(., Ho=="Hàng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hàng")
+hang1_plotf <- hang1_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.hang1, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=hang1_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(hang1_plotf$prop.hang1[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Hàng")
+```
+
+## Hảng
+
+### Phân bố tỉ lệ
+
+```{r}
+hang2_sf <- dat_sf %>% mutate(prop.hang2=(sum(subset(., Ho=="Hảng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hảng")
+hang2_plot <- hang2_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.hang2, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=hang2_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(hang2_plot$prop.hang2[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Hảng")
+```
+
+### Phân bố mật độ
+
+```{r}
+hang2_sff <- dat_sff %>% mutate(prop.hang2=(sum(subset(., Ho=="Hảng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hảng")
+hang2_plotf <- hang2_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.hang2, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=hang2_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(hang2_plotf$prop.hang2[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Hảng")
+```
+
+## Hạng
+
+### Phân bố tỉ lệ
+
+```{r}
+hang3_sf <- dat_sf %>% mutate(prop.hang3=(sum(subset(., Ho=="Hạng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hạng")
+hang3_plot <- hang3_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.hang3, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=hang3_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(hang3_plot$prop.hang3[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Hạng")
+```
+
+### Phân bố mật độ
+
+```{r}
+hang3_sff <- dat_sff %>% mutate(prop.hang3=(sum(subset(., Ho=="Hạng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hạng")
+hang3_plotf <- hang3_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.hang3, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=hang3_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(hang3_plotf$prop.hang3[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Hạng")
+```
+
+## Hầu
+
+### Phân bố tỉ lệ
+
+```{r}
+hau_sf <- dat_sf %>% mutate(prop.hau=(sum(subset(., Ho=="Hầu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hầu")
+hau_plot <- hau_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.hau, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=hau_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(hau_plot$prop.hau[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Hầu")
+```
+
+### Phân bố mật độ
+
+```{r}
+hau_sff <- dat_sff %>% mutate(prop.hau=(sum(subset(., Ho=="Hầu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hầu")
+hau_plotf <- hau_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.hau, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=hau_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(hau_plotf$prop.hau[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Hầu")
+```
+
+## Ho
+
+### Phân bố tỉ lệ
+
+```{r}
+ho1_sf <- dat_sf %>% mutate(prop.ho1=(sum(subset(., Ho=="Ho")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ho")
+ho1_plot <- ho1_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.ho1, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=ho1_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(ho1_plot$prop.ho1[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Ho")
+```
+
+### Phân bố mật độ
+
+```{r}
+ho1_sff <- dat_sff %>% mutate(prop.ho1=(sum(subset(., Ho=="Ho")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ho")
+ho1_plotf <- ho1_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.ho1, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=ho1_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(ho1_plotf$prop.ho1[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Ho")
+```
+
+## Hồ
+
+### Phân bố tỉ lệ
+
+```{r}
+ho2_sf <- dat_sf %>% mutate(prop.ho2=(sum(subset(., Ho=="Hồ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hồ")
+ho2_plot <- ho2_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.ho2, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=ho2_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(ho2_plot$prop.ho2[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Hồ")
+```
+
+### Phân bố mật độ
+
+```{r}
+ho2_sff <- dat_sff %>% mutate(prop.ho2=(sum(subset(., Ho=="Hồ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hồ")
+ho2_plotf <- ho2_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.ho2, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=ho2_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(ho2_plotf$prop.ho2[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Hồ")
+```
+
+## Hờ
+
+### Phân bố tỉ lệ
+
+```{r}
+ho3_sf <- dat_sf %>% mutate(prop.ho3=(sum(subset(., Ho=="Hờ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hờ")
+ho3_plot <- ho3_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.ho3, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=ho3_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(ho3_plot$prop.ho3[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Hờ")
+```
+
+### Phân bố mật độ
+
+```{r}
+ho3_sff <- dat_sff %>% mutate(prop.ho3=(sum(subset(., Ho=="Hờ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hờ")
+ho3_plotf <- ho3_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.ho3, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=ho3_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(ho3_plotf$prop.ho3[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Hờ")
+```
+
+## Hoàng
+
+### Phân bố tỉ lệ
+
+```{r}
+hoang_sf <- dat_sf %>% mutate(prop.hoang=(sum(subset(., Ho=="Hoàng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hoàng")
+hoang_plot <- hoang_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.hoang, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=hoang_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(hoang_plot$prop.hoang[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Hoàng")
+```
+
+### Phân bố mật độ
+
+```{r}
+hoang_sff <- dat_sff %>% mutate(prop.hoang=(sum(subset(., Ho=="Hoàng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hoàng")
+hoang_plotf <- hoang_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.hoang, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=hoang_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(hoang_plotf$prop.hoang[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Hoàng")
+```
+
+## Hứa
+
+### Phân bố tỉ lệ
+
+```{r}
+hua_sf <- dat_sf %>% mutate(prop.hua=(sum(subset(., Ho=="Hứa")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hứa")
+hua_plot <- hua_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.hua, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=hua_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(hua_plot$prop.hua[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Hứa")
+```
+
+### Phân bố mật độ
+
+```{r}
+hua_sff <- dat_sff %>% mutate(prop.hua=(sum(subset(., Ho=="Hứa")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hứa")
+hua_plotf <- hua_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.hua, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=hua_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(hua_plotf$prop.hua[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Hứa")
+```
+
+## Hùng
+
+### Phân bố tỉ lệ
+
+```{r}
+hung_sf <- dat_sf %>% mutate(prop.hung=(sum(subset(., Ho=="Hùng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hùng")
+hung_plot <- hung_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.hung, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=hung_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(hung_plot$prop.hung[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Hùng")
+```
+
+### Phân bố mật độ
+
+```{r}
+hung_sff <- dat_sff %>% mutate(prop.hung=(sum(subset(., Ho=="Hùng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hùng")
+hung_plotf <- hung_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.hung, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=hung_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(hung_plotf$prop.hung[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Hùng")
+```
+
+## Huỳnh
+
+### Phân bố tỉ lệ
+
+```{r}
+huynh_sf <- dat_sf %>% mutate(prop.huynh=(sum(subset(., Ho=="Huỳnh")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Huỳnh")
+huynh_plot <- huynh_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.huynh, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=huynh_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(huynh_plot$prop.huynh[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Huỳnh")
+```
+
+### Phân bố mật độ
+
+```{r}
+huynh_sff <- dat_sff %>% mutate(prop.huynh=(sum(subset(., Ho=="Huỳnh")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Huỳnh")
+huynh_plotf <- huynh_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.huynh, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=huynh_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="white") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(huynh_plotf$prop.huynh[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Huỳnh")
+```
+
 
 
 
