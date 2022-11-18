@@ -37,7 +37,7 @@ options(max.print=1000000)
 ```
 
 ```{r load data, message=FALSE, warning=FALSE}
-load("../data/hoviet.RData")
+load("data/hoviet.RData")
 ```
 
 # Tổng họ Việt Nam
@@ -79,7 +79,7 @@ data_ho_top10 <- data_ho_overall %>%
 data_ho_top10 <- head(data_ho_top10, n=10)
 ```
 
-## Top 50 họ cả nước
+## Top 50 họ cao nhất cả nước
 
 ```{r}
 ggplot(data = data_ho_top50, aes(x = reorder(Ho, songuoi, decreasing=F), y =pro.pop)) +
@@ -502,7 +502,7 @@ a_his <- a_sf %>%
   ggtitle("A")
 ```
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 ggarrange(nguyen_his, tran_his, le_his, pham_his, hoang_his,
           bui_his, vu_his, vo_his, phan_his, do_his,
           huynh_his, dang_his, ngo_his, truong_his, dinh_his,
