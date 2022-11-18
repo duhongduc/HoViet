@@ -36,8 +36,6 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/tabwid-1.1.0/tabwid.css" rel="stylesheet" />
-<link href="site_libs/tabwid-1.1.0/scrool.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -395,9 +393,9 @@ aria-hidden="true"></span> </a>
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 5
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 2
+aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong> <code>HoViet/</code> <span
@@ -420,21 +418,18 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
-<span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
-changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges"
+<div id="strongRMarkdownfilestronguptodate"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of
-the R Markdown file created these results, you’ll want to first commit
-it to the Git repo. If you’re still working on the analysis, you can
-ignore this warning. When you’re finished, you can run
-<code>wflow_publish</code> to commit the R Markdown file and build the
-HTML.</p>
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
 </div>
 </div>
 </div>
@@ -860,15 +855,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomduhongducHoViettree1f88e4b889aad6329fb248eb0475ee53b164c347targetblank1f88e4ba">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomduhongducHoViettree3e089b39fed347a3b85e2256756d23879626f318targetblank3e089b3a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/duhongduc/HoViet/tree/1f88e4b889aad6329fb248eb0475ee53b164c347" target="_blank">1f88e4b</a>
+<a href="https://github.com/duhongduc/HoViet/tree/3e089b39fed347a3b85e2256756d23879626f318" target="_blank">3e089b3</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomduhongducHoViettree1f88e4b889aad6329fb248eb0475ee53b164c347targetblank1f88e4ba"
+id="strongRepositoryversionstrongahrefhttpsgithubcomduhongducHoViettree3e089b39fed347a3b85e2256756d23879626f318targetblank3e089b3a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -878,7 +873,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/duhongduc/HoViet/tree/1f88e4b889aad6329fb248eb0475ee53b164c347" target="_blank">1f88e4b</a>.
+<a href="https://github.com/duhongduc/HoViet/tree/3e089b39fed347a3b85e2256756d23879626f318" target="_blank">3e089b3</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -899,9 +894,6 @@ Ignored files:
     Ignored:    Ho-Viet_files/
     Ignored:    analysis/Ho-Viet_cache/
     Ignored:    data/hoviet.RData
-
-Unstaged changes:
-    Modified:   analysis/Ho-Viet.Rmd
 
 </code></pre>
 <p>
@@ -947,6 +939,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/duhongduc/HoViet/blob/3e089b39fed347a3b85e2256756d23879626f318/analysis/Ho-Viet.Rmd" target="_blank">3e089b3</a>
+</td>
+<td>
+duhongduc
+</td>
+<td>
+2022-11-18
+</td>
+<td>
+Update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/duhongduc/HoViet/3e089b39fed347a3b85e2256756d23879626f318/docs/Ho-Viet.html" target="_blank">3e089b3</a>
+</td>
+<td>
+duhongduc
+</td>
+<td>
+2022-11-18
+</td>
+<td>
+Update
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -1198,8 +1224,9 @@ Update
 <h2>Top 50 họ cả nước</h2>
 <p><img src="figure/Ho-Viet.Rmd/unnamed-chunk-2-1.png" width="3168" style="display: block; margin: auto;" /></p>
 </div>
-<div id="họ-đông-nhất-việt-nam-theo-tỉ-lệ" class="section level2">
-<h2>200 họ đông nhất Việt Nam theo tỉ lệ</h2>
+<div id="họ-đông-nhất-việt-nam-theo-cả-nước-và-tỉnh"
+class="section level2">
+<h2>200 họ đông nhất Việt Nam theo cả nước và tỉnh</h2>
 <template id="7d1224ff-8b9e-4c59-a1f4-4cc033e3db89"><style>
 .tabwid table{
   border-spacing:0px !important;
