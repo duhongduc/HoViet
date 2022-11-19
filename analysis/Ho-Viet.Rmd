@@ -516,6 +516,427 @@ ggarrange(nguyen_his, tran_his, le_his, pham_his, hoang_his,
           ncol = 5, nrow = 10)
 ```
 
+## Phân bố mật độ từng họ
+
+```{r}
+nguyen_sff <- dat_sff %>% mutate(prop.nguyen=(sum(subset(., Ho=="Nguyễn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Nguyễn")
+tran_sff <- dat_sff %>% mutate(prop.tran=(sum(subset(., Ho=="Trần")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Trần")
+le_sff <- dat_sff %>% mutate(prop.le=(sum(subset(., Ho=="Lê")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lê")
+pham_sff <- dat_sff %>% mutate(prop.pham=(sum(subset(., Ho=="Phạm")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phạm")
+hoang_sff <- dat_sff %>% mutate(prop.hoang=(sum(subset(., Ho=="Hoàng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hoàng")
+bui_sff <- dat_sff %>% mutate(prop.bui=(sum(subset(., Ho=="Bùi")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Bùi")
+vu_sff <- dat_sff %>% mutate(prop.vu=(sum(subset(., Ho=="Vũ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Vũ")
+vo_sff <- dat_sff %>% mutate(prop.vo=(sum(subset(., Ho=="Võ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Võ")
+phan_sff <- dat_sff %>% mutate(prop.phan=(sum(subset(., Ho=="Phan")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phan")
+do_sff <- dat_sff %>% mutate(prop.do=(sum(subset(., Ho=="Đỗ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đỗ")
+huynh_sff <- dat_sff %>% mutate(prop.huynh=(sum(subset(., Ho=="Huỳnh")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Huỳnh")
+dang_sff <- dat_sff %>% mutate(prop.dang=(sum(subset(., Ho=="Đặng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đặng")
+ngo_sff <- dat_sff %>% mutate(prop.ngo=(sum(subset(., Ho=="Ngô")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ngô")
+truong_sff <- dat_sff %>% mutate(prop.truong=(sum(subset(., Ho=="Trương")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Trương")
+dinh_sff <- dat_sff %>% mutate(prop.dinh=(sum(subset(., Ho=="Đinh")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đinh")
+ho_sff <- dat_sff %>% mutate(prop.ho=(sum(subset(., Ho=="Hồ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hồ")
+duong_sff <- dat_sff %>% mutate(prop.duong=(sum(subset(., Ho=="Dương")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Dương")
+ha_sff <- dat_sff %>% mutate(prop.ha=(sum(subset(., Ho=="Hà")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hà")
+dao_sff <- dat_sff %>% mutate(prop.dao=(sum(subset(., Ho=="Đào")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đào")
+ly_sff <- dat_sff %>% mutate(prop.ly=(sum(subset(., Ho=="Lý")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lý")
+doan_sff <- dat_sff %>% mutate(prop.doan=(sum(subset(., Ho=="Đoàn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đoàn")
+trinh_sff <- dat_sff %>% mutate(prop.trinh=(sum(subset(., Ho=="Trịnh")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Trịnh")
+mai_sff <- dat_sff %>% mutate(prop.mai=(sum(subset(., Ho=="Mai")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Mai")
+luong_sff <- dat_sff %>% mutate(prop.luong=(sum(subset(., Ho=="Lương")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lương")
+cao_sff <- dat_sff %>% mutate(prop.cao=(sum(subset(., Ho=="Cao")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Cao")
+lo_sff <- dat_sff %>% mutate(prop.lo=(sum(subset(., Ho=="Lò")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lò")
+lam_sff <- dat_sff %>% mutate(prop.lam=(sum(subset(., Ho=="Lâm")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lâm")
+luu_sff <- dat_sff %>% mutate(prop.luu=(sum(subset(., Ho=="Lưu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lưu")
+phung_sff <- dat_sff %>% mutate(prop.phung=(sum(subset(., Ho=="Phùng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phùng")
+ta_sff <- dat_sff %>% mutate(prop.ta=(sum(subset(., Ho=="Tạ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tạ")
+thach_sff <- dat_sff %>% mutate(prop.thach=(sum(subset(., Ho=="Thạch")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Thạch")
+trieu_sff <- dat_sff %>% mutate(prop.trieu=(sum(subset(., Ho=="Triệu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Triệu")
+y_sff <- dat_sff %>% mutate(prop.y=(sum(subset(., Ho=="Y")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Y")
+vi_sff <- dat_sff %>% mutate(prop.vi=(sum(subset(., Ho=="Vi")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Vi")
+chu_sff <- dat_sff %>% mutate(prop.chu=(sum(subset(., Ho=="Chu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Chu")
+nong_sff <- dat_sff %>% mutate(prop.nong=(sum(subset(., Ho=="Nông")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Nông")
+to_sff <- dat_sff %>% mutate(prop.to=(sum(subset(., Ho=="Tô")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tô")
+thai_sff <- dat_sff %>% mutate(prop.thai=(sum(subset(., Ho=="Thái")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Thái")
+chau_sff <- dat_sff %>% mutate(prop.chau=(sum(subset(., Ho=="Châu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Châu")
+giang_sff <- dat_sff %>% mutate(prop.giang=(sum(subset(., Ho=="Giàng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Giàng")
+vuong_sff <- dat_sff %>% mutate(prop.vuong=(sum(subset(., Ho=="Vương")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Vương")
+h_sff <- dat_sff %>% mutate(prop.h=(sum(subset(., Ho=="H")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="H")
+quach_sff <- dat_sff %>% mutate(prop.quach=(sum(subset(., Ho=="Quách")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Quách")
+vang_sff <- dat_sff %>% mutate(prop.vang=(sum(subset(., Ho=="Vàng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Vàng")
+danh_sff <- dat_sff %>% mutate(prop.danh=(sum(subset(., Ho=="Danh")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Danh")
+luong2_sff <- dat_sff %>% mutate(prop.luong2=(sum(subset(., Ho=="Lường")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lường")
+dam_sff <- dat_sff %>% mutate(prop.dam=(sum(subset(., Ho=="Đàm")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đàm")
+sung_sff <- dat_sff %>% mutate(prop.sung=(sum(subset(., Ho=="Sùng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Sùng")
+thi_sff <- dat_sff %>% mutate(prop.thi=(sum(subset(., Ho=="Thị")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Thị")
+a_sff <- dat_sff %>% mutate(prop.a=(sum(subset(., Ho=="A")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="A")
+```
+
+```{r}
+nguyen_hisf <- nguyen_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(nguyen_sff$songuoi_km), sd = sd(nguyen_sff$songuoi_km))) +
+  ggtitle("Nguyễn")
+
+tran_hisf <- tran_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(tran_sff$songuoi_km), sd = sd(tran_sff$songuoi_km))) +
+  ggtitle("Trần")
+
+le_hisf <- le_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(le_sff$songuoi_km), sd = sd(le_sff$songuoi_km))) +
+  ggtitle("Lê")
+
+pham_hisf <- pham_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(pham_sff$songuoi_km), sd = sd(pham_sff$songuoi_km))) +
+  ggtitle("Phạm")
+
+hoang_hisf <- hoang_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(hoang_sff$songuoi_km), sd = sd(hoang_sff$songuoi_km))) +
+  ggtitle("Hoàng")
+
+bui_hisf <- bui_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(bui_sff$songuoi_km), sd = sd(bui_sff$songuoi_km))) +
+  ggtitle("Bùi")
+
+vu_hisf <- vu_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(vu_sff$songuoi_km), sd = sd(vu_sff$songuoi_km))) +
+  ggtitle("Vũ")
+
+vo_hisf <- vo_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(vo_sff$songuoi_km), sd = sd(vo_sff$songuoi_km))) +
+  ggtitle("Võ")
+
+phan_hisf <- phan_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(phan_sff$songuoi_km), sd = sd(phan_sff$songuoi_km))) +
+  ggtitle("Phan")
+
+do_hisf <- do_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(do_sff$songuoi_km), sd = sd(do_sff$songuoi_km))) +
+  ggtitle("Đỗ")
+
+huynh_hisf <- huynh_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(huynh_sff$songuoi_km), sd = sd(huynh_sff$songuoi_km))) +
+  ggtitle("Huỳnh")
+
+dang_hisf <- dang_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(dang_sff$songuoi_km), sd = sd(dang_sff$songuoi_km))) +
+  ggtitle("Đặng")
+
+ngo_hisf <- ngo_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(ngo_sff$songuoi_km), sd = sd(ngo_sff$songuoi_km))) +
+  ggtitle("Ngô")
+
+truong_hisf <- truong_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(truong_sff$songuoi_km), sd = sd(truong_sff$songuoi_km))) +
+  ggtitle("Trương")
+
+dinh_hisf <- dinh_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(dinh_sff$songuoi_km), sd = sd(dinh_sff$songuoi_km))) +
+  ggtitle("Đinh")
+
+duong_hisf <- duong_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(duong_sff$songuoi_km), sd = sd(duong_sff$songuoi_km))) +
+  ggtitle("Dương")
+
+ho_hisf <- ho_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(ho_sff$songuoi_km), sd = sd(ho_sff$songuoi_km))) +
+  ggtitle("Hồ")
+
+ha_hisf <- ha_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(ha_sff$songuoi_km), sd = sd(ha_sff$songuoi_km))) +
+  ggtitle("Hà")
+
+dao_hisf <- dao_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(dao_sff$songuoi_km), sd = sd(dao_sff$songuoi_km))) +
+  ggtitle("Đào")
+
+doan_hisf <- doan_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(doan_sff$songuoi_km), sd = sd(doan_sff$songuoi_km))) +
+  ggtitle("Đoàn")
+
+ly_hisf <- ly_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(ly_sff$songuoi_km), sd = sd(ly_sff$songuoi_km))) +
+  ggtitle("Lý")
+
+trinh_hisf <- trinh_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(trinh_sff$songuoi_km), sd = sd(trinh_sff$songuoi_km))) +
+  ggtitle("Trịnh")
+
+mai_hisf <- mai_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(mai_sff$songuoi_km), sd = sd(mai_sff$songuoi_km))) +
+  ggtitle("Mai")
+
+luong_hisf <- luong_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(luong_sff$songuoi_km), sd = sd(luong_sff$songuoi_km))) +
+  ggtitle("Lương")
+
+cao_hisf <- cao_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(cao_sff$songuoi_km), sd = sd(cao_sff$songuoi_km))) +
+  ggtitle("Cao")
+
+lam_hisf <- lam_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(lam_sff$songuoi_km), sd = sd(lam_sff$songuoi_km))) +
+  ggtitle("Lâm")
+
+lo_hisf <- lo_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(lo_sff$songuoi_km), sd = sd(lo_sff$songuoi_km))) +
+  ggtitle("Lò")
+
+luu_hisf <- luu_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(luu_sff$songuoi_km), sd = sd(luu_sff$songuoi_km))) +
+  ggtitle("Lưu")
+
+phung_hisf <- phung_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(phung_sff$songuoi_km), sd = sd(phung_sff$songuoi_km))) +
+  ggtitle("Phùng")
+
+ta_hisf <- ta_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(ta_sff$songuoi_km), sd = sd(ta_sff$songuoi_km))) +
+  ggtitle("Tạ")
+
+thach_hisf <- thach_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(thach_sff$songuoi_km), sd = sd(thach_sff$songuoi_km))) +
+  ggtitle("Thạch")
+
+trieu_hisf <- trieu_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(trieu_sff$songuoi_km), sd = sd(trieu_sff$songuoi_km))) +
+  ggtitle("Triệu")
+
+y_hisf <- y_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(y_sff$songuoi_km), sd = sd(y_sff$songuoi_km))) +
+  ggtitle("Y")
+
+vi_hisf <- vi_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(vi_sff$songuoi_km), sd = sd(vi_sff$songuoi_km))) +
+  ggtitle("Vi")
+
+chu_hisf <- chu_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(chu_sff$songuoi_km), sd = sd(chu_sff$songuoi_km))) +
+  ggtitle("Chu")
+
+nong_hisf <- nong_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(nong_sff$songuoi_km), sd = sd(nong_sff$songuoi_km))) +
+  ggtitle("Nông")
+
+to_hisf <- to_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(to_sff$songuoi_km), sd = sd(to_sff$songuoi_km))) +
+  ggtitle("Tô")
+
+thai_hisf <- thai_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(thai_sff$songuoi_km), sd = sd(thai_sff$songuoi_km))) +
+  ggtitle("Thái")
+
+chau_hisf <- chau_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(chau_sff$songuoi_km), sd = sd(chau_sff$songuoi_km))) +
+  ggtitle("Châu")
+
+giang_hisf <- giang_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(giang_sff$songuoi_km), sd = sd(giang_sff$songuoi_km))) +
+  ggtitle("Giàng")
+
+vuong_hisf <- vuong_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(vuong_sff$songuoi_km), sd = sd(vuong_sff$songuoi_km))) +
+  ggtitle("Vương")
+
+h_hisf <- h_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(h_sff$songuoi_km), sd = sd(h_sff$songuoi_km))) +
+  ggtitle("H")
+
+quach_hisf <- quach_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(quach_sff$songuoi_km), sd = sd(quach_sff$songuoi_km))) +
+  ggtitle("Quách")
+
+vang_hisf <- vang_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(vang_sff$songuoi_km), sd = sd(vang_sff$songuoi_km))) +
+  ggtitle("Vàng")
+
+danh_hisf <- danh_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(danh_sff$songuoi_km), sd = sd(danh_sff$songuoi_km))) +
+  ggtitle("Danh")
+
+luong2_hisf <- luong2_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(luong2_sff$songuoi_km), sd = sd(luong2_sff$songuoi_km))) +
+  ggtitle("Lường")
+
+dam_hisf <- dam_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(dam_sff$songuoi_km), sd = sd(dam_sff$songuoi_km))) +
+  ggtitle("Đàm")
+
+sung_hisf <- sung_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(sung_sff$songuoi_km), sd = sd(sung_sff$songuoi_km))) +
+  ggtitle("Sùng")
+
+thi_hisf <- thi_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(thi_sff$songuoi_km), sd = sd(thi_sff$songuoi_km))) +
+  ggtitle("Thị")
+
+a_hisf <- a_sff %>% 
+  ggplot(aes(x=songuoi_km)) +
+  geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
+  theme_bw() + 
+  stat_function(fun = dnorm, args = list(mean = mean(a_sff$songuoi_km), sd = sd(a_sff$songuoi_km))) +
+  ggtitle("A")
+```
+
+```{r, message=FALSE, warning=FALSE}
+ggarrange(nguyen_hisf, tran_hisf, le_hisf, pham_hisf, hoang_hisf,
+          bui_hisf, vu_hisf, vo_hisf, phan_hisf, do_hisf,
+          huynh_hisf, dang_hisf, ngo_hisf, truong_hisf, dinh_hisf,
+          ho_hisf, duong_hisf, ha_hisf, dao_hisf, ly_hisf,
+          doan_hisf, trinh_hisf, mai_hisf, luong_hisf, cao_hisf,
+          lo_hisf, lam_hisf, luu_hisf, phung_hisf, ta_hisf,
+          thach_hisf, y_hisf, trieu_hisf, vi_hisf, chu_hisf,
+          nong_hisf, to_hisf, thai_hisf, chau_hisf, giang_hisf,
+          vuong_hisf, h_hisf, quach_hisf, vang_hisf, danh_hisf,
+          luong2_hisf, dam_hisf, sung_hisf, thi_hisf, a_hisf,
+          ncol = 5, nrow = 10)
+```
+
 ## Top 200 họ phổ biến nhất Việt Nam theo cả nước và tỉnh
 
 ```{r}
