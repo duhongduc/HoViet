@@ -156,6 +156,7 @@ nguyen_his <- nguyen_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(nguyen_sf$pro.pop), sd = sd(nguyen_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Nguyễn")
 
 tran_his <- tran_sf %>% 
@@ -163,6 +164,7 @@ tran_his <- tran_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(tran_sf$pro.pop), sd = sd(tran_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Trần")
 
 le_his <- le_sf %>% 
@@ -170,6 +172,7 @@ le_his <- le_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(le_sf$pro.pop), sd = sd(le_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Lê")
 
 pham_his <- pham_sf %>% 
@@ -177,6 +180,7 @@ pham_his <- pham_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(pham_sf$pro.pop), sd = sd(pham_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Phạm")
 
 hoang_his <- hoang_sf %>% 
@@ -184,6 +188,7 @@ hoang_his <- hoang_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(hoang_sf$pro.pop), sd = sd(hoang_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Hoàng")
 
 bui_his <- bui_sf %>% 
@@ -191,6 +196,7 @@ bui_his <- bui_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(bui_sf$pro.pop), sd = sd(bui_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Bùi")
 
 vu_his <- vu_sf %>% 
@@ -198,6 +204,7 @@ vu_his <- vu_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(vu_sf$pro.pop), sd = sd(vu_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Vũ")
 
 vo_his <- vo_sf %>% 
@@ -205,6 +212,7 @@ vo_his <- vo_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(vo_sf$pro.pop), sd = sd(vo_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Võ")
 
 phan_his <- phan_sf %>% 
@@ -212,6 +220,7 @@ phan_his <- phan_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(phan_sf$pro.pop), sd = sd(phan_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Phan")
 
 do_his <- do_sf %>% 
@@ -219,6 +228,7 @@ do_his <- do_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(do_sf$pro.pop), sd = sd(do_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Đỗ")
 
 huynh_his <- huynh_sf %>% 
@@ -226,6 +236,7 @@ huynh_his <- huynh_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(huynh_sf$pro.pop), sd = sd(huynh_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Huỳnh")
 
 dang_his <- dang_sf %>% 
@@ -233,6 +244,7 @@ dang_his <- dang_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(dang_sf$pro.pop), sd = sd(dang_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Đặng")
 
 ngo_his <- ngo_sf %>% 
@@ -240,6 +252,7 @@ ngo_his <- ngo_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(ngo_sf$pro.pop), sd = sd(ngo_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Ngô")
 
 truong_his <- truong_sf %>% 
@@ -247,6 +260,7 @@ truong_his <- truong_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(truong_sf$pro.pop), sd = sd(truong_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Trương")
 
 dinh_his <- dinh_sf %>% 
@@ -254,6 +268,7 @@ dinh_his <- dinh_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(dinh_sf$pro.pop), sd = sd(dinh_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Đinh")
 
 duong_his <- duong_sf %>% 
@@ -261,6 +276,7 @@ duong_his <- duong_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(duong_sf$pro.pop), sd = sd(duong_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Dương")
 
 ho_his <- ho_sf %>% 
@@ -268,6 +284,7 @@ ho_his <- ho_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(ho_sf$pro.pop), sd = sd(ho_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Hồ")
 
 ha_his <- ha_sf %>% 
@@ -275,6 +292,7 @@ ha_his <- ha_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(ha_sf$pro.pop), sd = sd(ha_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Hà")
 
 dao_his <- dao_sf %>% 
@@ -282,6 +300,7 @@ dao_his <- dao_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(dao_sf$pro.pop), sd = sd(dao_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Đào")
 
 doan_his <- doan_sf %>% 
@@ -289,6 +308,7 @@ doan_his <- doan_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(doan_sf$pro.pop), sd = sd(doan_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Đoàn")
 
 ly_his <- ly_sf %>% 
@@ -296,6 +316,7 @@ ly_his <- ly_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(ly_sf$pro.pop), sd = sd(ly_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Lý")
 
 trinh_his <- trinh_sf %>% 
@@ -303,6 +324,7 @@ trinh_his <- trinh_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(trinh_sf$pro.pop), sd = sd(trinh_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Trịnh")
 
 mai_his <- mai_sf %>% 
@@ -310,6 +332,7 @@ mai_his <- mai_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(mai_sf$pro.pop), sd = sd(mai_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Mai")
 
 luong_his <- luong_sf %>% 
@@ -317,6 +340,7 @@ luong_his <- luong_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(luong_sf$pro.pop), sd = sd(luong_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Lương")
 
 cao_his <- cao_sf %>% 
@@ -324,6 +348,7 @@ cao_his <- cao_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(cao_sf$pro.pop), sd = sd(cao_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Cao")
 
 lam_his <- lam_sf %>% 
@@ -331,6 +356,7 @@ lam_his <- lam_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(lam_sf$pro.pop), sd = sd(lam_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Lâm")
 
 lo_his <- lo_sf %>% 
@@ -338,6 +364,7 @@ lo_his <- lo_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(lo_sf$pro.pop), sd = sd(lo_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Lò")
 
 luu_his <- luu_sf %>% 
@@ -345,6 +372,7 @@ luu_his <- luu_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(luu_sf$pro.pop), sd = sd(luu_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Lưu")
 
 phung_his <- phung_sf %>% 
@@ -352,6 +380,7 @@ phung_his <- phung_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(phung_sf$pro.pop), sd = sd(phung_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Phùng")
 
 ta_his <- ta_sf %>% 
@@ -359,6 +388,7 @@ ta_his <- ta_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(ta_sf$pro.pop), sd = sd(ta_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Tạ")
 
 thach_his <- thach_sf %>% 
@@ -366,6 +396,7 @@ thach_his <- thach_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(thach_sf$pro.pop), sd = sd(thach_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Thạch")
 
 trieu_his <- trieu_sf %>% 
@@ -373,6 +404,7 @@ trieu_his <- trieu_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(trieu_sf$pro.pop), sd = sd(trieu_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Triệu")
 
 y_his <- y_sf %>% 
@@ -380,6 +412,7 @@ y_his <- y_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(y_sf$pro.pop), sd = sd(y_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Y")
 
 vi_his <- vi_sf %>% 
@@ -387,6 +420,7 @@ vi_his <- vi_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(vi_sf$pro.pop), sd = sd(vi_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Vi")
 
 chu_his <- chu_sf %>% 
@@ -394,6 +428,7 @@ chu_his <- chu_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(chu_sf$pro.pop), sd = sd(chu_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Chu")
 
 nong_his <- nong_sf %>% 
@@ -401,6 +436,7 @@ nong_his <- nong_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(nong_sf$pro.pop), sd = sd(nong_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Nông")
 
 to_his <- to_sf %>% 
@@ -408,6 +444,7 @@ to_his <- to_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(to_sf$pro.pop), sd = sd(to_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Tô")
 
 thai_his <- thai_sf %>% 
@@ -415,6 +452,7 @@ thai_his <- thai_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(thai_sf$pro.pop), sd = sd(thai_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Thái")
 
 chau_his <- chau_sf %>% 
@@ -422,6 +460,7 @@ chau_his <- chau_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(chau_sf$pro.pop), sd = sd(chau_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Châu")
 
 giang_his <- giang_sf %>% 
@@ -429,6 +468,7 @@ giang_his <- giang_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(giang_sf$pro.pop), sd = sd(giang_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Giàng")
 
 vuong_his <- vuong_sf %>% 
@@ -436,6 +476,7 @@ vuong_his <- vuong_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(vuong_sf$pro.pop), sd = sd(vuong_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Vương")
 
 h_his <- h_sf %>% 
@@ -443,6 +484,7 @@ h_his <- h_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(h_sf$pro.pop), sd = sd(h_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("H")
 
 quach_his <- quach_sf %>% 
@@ -450,6 +492,7 @@ quach_his <- quach_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(quach_sf$pro.pop), sd = sd(quach_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Quách")
 
 vang_his <- vang_sf %>% 
@@ -457,6 +500,7 @@ vang_his <- vang_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(vang_sf$pro.pop), sd = sd(vang_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Vàng")
 
 danh_his <- danh_sf %>% 
@@ -464,6 +508,7 @@ danh_his <- danh_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(danh_sf$pro.pop), sd = sd(danh_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Danh")
 
 luong2_his <- luong2_sf %>% 
@@ -471,6 +516,7 @@ luong2_his <- luong2_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(luong2_sf$pro.pop), sd = sd(luong2_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Lường")
 
 dam_his <- dam_sf %>% 
@@ -478,6 +524,7 @@ dam_his <- dam_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(dam_sf$pro.pop), sd = sd(dam_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Đàm")
 
 sung_his <- sung_sf %>% 
@@ -485,6 +532,7 @@ sung_his <- sung_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(sung_sf$pro.pop), sd = sd(sung_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Sùng")
 
 thi_his <- thi_sf %>% 
@@ -492,6 +540,7 @@ thi_his <- thi_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(thi_sf$pro.pop), sd = sd(thi_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Thị")
 
 a_his <- a_sf %>% 
@@ -499,6 +548,7 @@ a_his <- a_sf %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(a_sf$pro.pop), sd = sd(a_sf$pro.pop))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("A")
 ```
 
@@ -577,6 +627,7 @@ nguyen_hisf <- nguyen_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(nguyen_sff$songuoi_km), sd = sd(nguyen_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Nguyễn")
 
 tran_hisf <- tran_sff %>% 
@@ -584,6 +635,7 @@ tran_hisf <- tran_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(tran_sff$songuoi_km), sd = sd(tran_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Trần")
 
 le_hisf <- le_sff %>% 
@@ -591,6 +643,7 @@ le_hisf <- le_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(le_sff$songuoi_km), sd = sd(le_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Lê")
 
 pham_hisf <- pham_sff %>% 
@@ -598,6 +651,7 @@ pham_hisf <- pham_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(pham_sff$songuoi_km), sd = sd(pham_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Phạm")
 
 hoang_hisf <- hoang_sff %>% 
@@ -605,6 +659,7 @@ hoang_hisf <- hoang_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(hoang_sff$songuoi_km), sd = sd(hoang_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Hoàng")
 
 bui_hisf <- bui_sff %>% 
@@ -612,6 +667,7 @@ bui_hisf <- bui_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(bui_sff$songuoi_km), sd = sd(bui_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Bùi")
 
 vu_hisf <- vu_sff %>% 
@@ -619,6 +675,7 @@ vu_hisf <- vu_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(vu_sff$songuoi_km), sd = sd(vu_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Vũ")
 
 vo_hisf <- vo_sff %>% 
@@ -626,6 +683,7 @@ vo_hisf <- vo_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(vo_sff$songuoi_km), sd = sd(vo_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Võ")
 
 phan_hisf <- phan_sff %>% 
@@ -633,6 +691,7 @@ phan_hisf <- phan_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(phan_sff$songuoi_km), sd = sd(phan_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Phan")
 
 do_hisf <- do_sff %>% 
@@ -640,6 +699,7 @@ do_hisf <- do_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(do_sff$songuoi_km), sd = sd(do_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Đỗ")
 
 huynh_hisf <- huynh_sff %>% 
@@ -647,6 +707,7 @@ huynh_hisf <- huynh_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(huynh_sff$songuoi_km), sd = sd(huynh_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Huỳnh")
 
 dang_hisf <- dang_sff %>% 
@@ -654,6 +715,7 @@ dang_hisf <- dang_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(dang_sff$songuoi_km), sd = sd(dang_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Đặng")
 
 ngo_hisf <- ngo_sff %>% 
@@ -661,6 +723,7 @@ ngo_hisf <- ngo_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(ngo_sff$songuoi_km), sd = sd(ngo_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Ngô")
 
 truong_hisf <- truong_sff %>% 
@@ -668,6 +731,7 @@ truong_hisf <- truong_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(truong_sff$songuoi_km), sd = sd(truong_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Trương")
 
 dinh_hisf <- dinh_sff %>% 
@@ -675,6 +739,7 @@ dinh_hisf <- dinh_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(dinh_sff$songuoi_km), sd = sd(dinh_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Đinh")
 
 duong_hisf <- duong_sff %>% 
@@ -682,6 +747,7 @@ duong_hisf <- duong_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(duong_sff$songuoi_km), sd = sd(duong_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Dương")
 
 ho_hisf <- ho_sff %>% 
@@ -689,6 +755,7 @@ ho_hisf <- ho_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(ho_sff$songuoi_km), sd = sd(ho_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Hồ")
 
 ha_hisf <- ha_sff %>% 
@@ -696,6 +763,7 @@ ha_hisf <- ha_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(ha_sff$songuoi_km), sd = sd(ha_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Hà")
 
 dao_hisf <- dao_sff %>% 
@@ -703,6 +771,7 @@ dao_hisf <- dao_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(dao_sff$songuoi_km), sd = sd(dao_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Đào")
 
 doan_hisf <- doan_sff %>% 
@@ -710,6 +779,7 @@ doan_hisf <- doan_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(doan_sff$songuoi_km), sd = sd(doan_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Đoàn")
 
 ly_hisf <- ly_sff %>% 
@@ -717,6 +787,7 @@ ly_hisf <- ly_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(ly_sff$songuoi_km), sd = sd(ly_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Lý")
 
 trinh_hisf <- trinh_sff %>% 
@@ -724,6 +795,7 @@ trinh_hisf <- trinh_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(trinh_sff$songuoi_km), sd = sd(trinh_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Trịnh")
 
 mai_hisf <- mai_sff %>% 
@@ -731,6 +803,7 @@ mai_hisf <- mai_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(mai_sff$songuoi_km), sd = sd(mai_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Mai")
 
 luong_hisf <- luong_sff %>% 
@@ -738,6 +811,7 @@ luong_hisf <- luong_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(luong_sff$songuoi_km), sd = sd(luong_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Lương")
 
 cao_hisf <- cao_sff %>% 
@@ -745,6 +819,7 @@ cao_hisf <- cao_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(cao_sff$songuoi_km), sd = sd(cao_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Cao")
 
 lam_hisf <- lam_sff %>% 
@@ -752,6 +827,7 @@ lam_hisf <- lam_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(lam_sff$songuoi_km), sd = sd(lam_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Lâm")
 
 lo_hisf <- lo_sff %>% 
@@ -759,6 +835,7 @@ lo_hisf <- lo_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(lo_sff$songuoi_km), sd = sd(lo_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Lò")
 
 luu_hisf <- luu_sff %>% 
@@ -766,6 +843,7 @@ luu_hisf <- luu_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(luu_sff$songuoi_km), sd = sd(luu_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Lưu")
 
 phung_hisf <- phung_sff %>% 
@@ -773,6 +851,7 @@ phung_hisf <- phung_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(phung_sff$songuoi_km), sd = sd(phung_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Phùng")
 
 ta_hisf <- ta_sff %>% 
@@ -780,6 +859,7 @@ ta_hisf <- ta_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(ta_sff$songuoi_km), sd = sd(ta_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Tạ")
 
 thach_hisf <- thach_sff %>% 
@@ -787,6 +867,7 @@ thach_hisf <- thach_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(thach_sff$songuoi_km), sd = sd(thach_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Thạch")
 
 trieu_hisf <- trieu_sff %>% 
@@ -794,6 +875,7 @@ trieu_hisf <- trieu_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(trieu_sff$songuoi_km), sd = sd(trieu_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Triệu")
 
 y_hisf <- y_sff %>% 
@@ -801,6 +883,7 @@ y_hisf <- y_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(y_sff$songuoi_km), sd = sd(y_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Y")
 
 vi_hisf <- vi_sff %>% 
@@ -808,6 +891,7 @@ vi_hisf <- vi_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(vi_sff$songuoi_km), sd = sd(vi_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Vi")
 
 chu_hisf <- chu_sff %>% 
@@ -815,6 +899,7 @@ chu_hisf <- chu_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(chu_sff$songuoi_km), sd = sd(chu_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Chu")
 
 nong_hisf <- nong_sff %>% 
@@ -822,6 +907,7 @@ nong_hisf <- nong_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(nong_sff$songuoi_km), sd = sd(nong_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Nông")
 
 to_hisf <- to_sff %>% 
@@ -829,6 +915,7 @@ to_hisf <- to_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(to_sff$songuoi_km), sd = sd(to_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Tô")
 
 thai_hisf <- thai_sff %>% 
@@ -836,6 +923,7 @@ thai_hisf <- thai_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(thai_sff$songuoi_km), sd = sd(thai_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Thái")
 
 chau_hisf <- chau_sff %>% 
@@ -843,6 +931,7 @@ chau_hisf <- chau_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(chau_sff$songuoi_km), sd = sd(chau_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Châu")
 
 giang_hisf <- giang_sff %>% 
@@ -850,6 +939,7 @@ giang_hisf <- giang_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(giang_sff$songuoi_km), sd = sd(giang_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Giàng")
 
 vuong_hisf <- vuong_sff %>% 
@@ -857,6 +947,7 @@ vuong_hisf <- vuong_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(vuong_sff$songuoi_km), sd = sd(vuong_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Vương")
 
 h_hisf <- h_sff %>% 
@@ -864,6 +955,7 @@ h_hisf <- h_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(h_sff$songuoi_km), sd = sd(h_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("H")
 
 quach_hisf <- quach_sff %>% 
@@ -871,6 +963,7 @@ quach_hisf <- quach_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(quach_sff$songuoi_km), sd = sd(quach_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Quách")
 
 vang_hisf <- vang_sff %>% 
@@ -878,6 +971,7 @@ vang_hisf <- vang_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(vang_sff$songuoi_km), sd = sd(vang_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Vàng")
 
 danh_hisf <- danh_sff %>% 
@@ -885,6 +979,7 @@ danh_hisf <- danh_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(danh_sff$songuoi_km), sd = sd(danh_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Danh")
 
 luong2_hisf <- luong2_sff %>% 
@@ -892,6 +987,7 @@ luong2_hisf <- luong2_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(luong2_sff$songuoi_km), sd = sd(luong2_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Lường")
 
 dam_hisf <- dam_sff %>% 
@@ -899,6 +995,7 @@ dam_hisf <- dam_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(dam_sff$songuoi_km), sd = sd(dam_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Đàm")
 
 sung_hisf <- sung_sff %>% 
@@ -906,6 +1003,7 @@ sung_hisf <- sung_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(sung_sff$songuoi_km), sd = sd(sung_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Sùng")
 
 thi_hisf <- thi_sff %>% 
@@ -913,6 +1011,7 @@ thi_hisf <- thi_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(thi_sff$songuoi_km), sd = sd(thi_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("Thị")
 
 a_hisf <- a_sff %>% 
@@ -920,6 +1019,7 @@ a_hisf <- a_sff %>%
   geom_histogram(aes(y =..density..), color="#e9ecef", alpha=0.6, position = 'identity') +
   theme_bw() + 
   stat_function(fun = dnorm, args = list(mean = mean(a_sff$songuoi_km), sd = sd(a_sff$songuoi_km))) +
+  theme(text = element_text(size=20), axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), legend.text=element_text(size=15), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 20)) +
   ggtitle("A")
 ```
 
@@ -1191,7 +1291,10 @@ rank<-factor(rank, labels = commune)
 estimate<-35*exp(-(distm_km^2)/(2*100))
 
 library(dplyr)
-df<-data.frame(distm_km, rank, commune, estimate, pro.pop) %>%
+
+df <- data.frame(distm_km, rank, commune, estimate, pro.pop)
+
+df <- df %>%
   mutate(num=sum((pro.pop-estimate)^2),
          den=nrow(df)-1,
          var=num/den,
@@ -1213,8 +1316,8 @@ plot_df <- df %>%
   scale_fill_gradientn("Khoảng cách tới tâm (km)", colours = terrain.colors(10), breaks=breaks) +
   scale_y_continuous(name="Tỉ lệ (%)") +
   theme_bw() + 
-  theme(text = element_text(size=20), axis.text.x = element_blank(), axis.ticks.x = element_blank(), axis.text.y = element_text(size=20),
-        legend.text=element_text(size=20), legend.key.size = unit(5, "cm"), legend.key.height = unit(2, "cm"), legend.key.width = unit(4, "cm"), legend.position = "bottom") +
+  theme(text = element_text(size=45), axis.text.x = element_blank(), axis.ticks.x = element_blank(), axis.text.y = element_text(size=30),
+        legend.text=element_text(size=30), legend.key.size = unit(6, "cm"), legend.key.height = unit(3, "cm"), legend.key.width = unit(5, "cm"), legend.position = "bottom") +
   theme(panel.grid.major = element_blank()) + 
   #annotate(geom='text', x=30, y=200, label="y == 55*e^-{(x^{2}+y^{2})/2*(160)}", parse = TRUE,size=10) +
   #annotate(geom='text', x=30, y=180, label="s.e. = 130 người/xã",parse=F,size=8) +
@@ -1272,7 +1375,8 @@ rank<-factor(rank, labels = commune)
 estimate<-1200*exp(-(distm_km^2)/(2*100))
 
 library(dplyr)
-df<-data.frame(distm_km, rank, commune, estimate, songuoi_km) %>%
+df <- data.frame(distm_km, rank, commune, estimate, songuoi_km)
+df <- df %>%
   mutate(num=sum((songuoi_km-estimate)^2),
          den=nrow(df)-1,
          var=num/den,
@@ -1294,8 +1398,8 @@ plot_df <- df %>%
   scale_fill_gradientn("Khoảng cách tới tâm (km)", colours = terrain.colors(10), breaks=breaks) +
   scale_y_continuous(name="Mật độ người/km2") +
   theme_bw() + 
-  theme(text = element_text(size=20), axis.text.x = element_blank(), axis.ticks.x = element_blank(), axis.text.y = element_text(size=20),
-        legend.text=element_text(size=20), legend.key.size = unit(5, "cm"), legend.key.height = unit(2, "cm"), legend.key.width = unit(4, "cm"), legend.position = "bottom") +
+  theme(text = element_text(size=45), axis.text.x = element_blank(), axis.ticks.x = element_blank(), axis.text.y = element_text(size=30),
+        legend.text=element_text(size=30), legend.key.size = unit(6, "cm"), legend.key.height = unit(3, "cm"), legend.key.width = unit(5, "cm"), legend.position = "bottom") +
   theme(panel.grid.major = element_blank()) + 
   #annotate(geom='text', x=30, y=200, label="y == 55*e^-{(x^{2}+y^{2})/2*(160)}", parse = TRUE,size=10) +
   #annotate(geom='text', x=30, y=180, label="s.e. = 130 người/xã",parse=F,size=8) +
@@ -1386,7 +1490,9 @@ rank<-factor(rank, labels = commune)
 estimate<-45*exp(-(distm_km^2)/(2*100))
 
 library(dplyr)
-df<-data.frame(distm_km, rank, commune, estimate, pro.pop) %>%
+df<-data.frame(distm_km, rank, commune, estimate, pro.pop)
+
+df <- df %>%
   mutate(num=sum((pro.pop-estimate)^2),
          den=nrow(df)-1,
          var=num/den,
@@ -1408,8 +1514,8 @@ plot_df <- df %>%
   scale_fill_gradientn("Khoảng cách tới tâm (km)", colours = terrain.colors(10), breaks=breaks) +
   scale_y_continuous(name="Tỉ lệ (%)") +
   theme_bw() + 
-  theme(text = element_text(size=20), axis.text.x = element_blank(), axis.ticks.x = element_blank(), axis.text.y = element_text(size=20),
-        legend.text=element_text(size=20), legend.key.size = unit(5, "cm"), legend.key.height = unit(2, "cm"), legend.key.width = unit(4, "cm"), legend.position = "bottom") +
+  theme(text = element_text(size=45), axis.text.x = element_blank(), axis.ticks.x = element_blank(), axis.text.y = element_text(size=30),
+        legend.text=element_text(size=30), legend.key.size = unit(6, "cm"), legend.key.height = unit(3, "cm"), legend.key.width = unit(5, "cm"), legend.position = "bottom") +
   theme(panel.grid.major = element_blank()) + 
   #annotate(geom='text', x=30, y=200, label="y == 55*e^-{(x^{2}+y^{2})/2*(160)}", parse = TRUE,size=10) +
   #annotate(geom='text', x=30, y=180, label="s.e. = 130 người/xã",parse=F,size=8) +
@@ -1467,7 +1573,9 @@ rank<-factor(rank, labels = commune)
 estimate<-750*exp(-(distm_km^2)/(2*100))
 
 library(dplyr)
-df<-data.frame(distm_km, rank, commune, estimate, songuoi_km) %>%
+df<-data.frame(distm_km, rank, commune, estimate, songuoi_km)
+
+df <- df %>%
   mutate(num=sum((songuoi_km-estimate)^2),
          den=nrow(df)-1,
          var=num/den,
@@ -1489,8 +1597,8 @@ plot_df <- df %>%
   scale_fill_gradientn("Khoảng cách tới tâm (km)", colours = terrain.colors(10), breaks=breaks) +
   scale_y_continuous(name="Mật độ (người/km2)") +
   theme_bw() + 
-  theme(text = element_text(size=20), axis.text.x = element_blank(), axis.ticks.x = element_blank(), axis.text.y = element_text(size=20),
-        legend.text=element_text(size=20), legend.key.size = unit(5, "cm"), legend.key.height = unit(2, "cm"), legend.key.width = unit(4, "cm"), legend.position = "bottom") +
+  theme(text = element_text(size=45), axis.text.x = element_blank(), axis.ticks.x = element_blank(), axis.text.y = element_text(size=30),
+        legend.text=element_text(size=30), legend.key.size = unit(6, "cm"), legend.key.height = unit(3, "cm"), legend.key.width = unit(5, "cm"), legend.position = "bottom") +
   theme(panel.grid.major = element_blank()) + 
   #annotate(geom='text', x=30, y=200, label="y == 55*e^-{(x^{2}+y^{2})/2*(160)}", parse = TRUE,size=10) +
   #annotate(geom='text', x=30, y=180, label="s.e. = 130 người/xã",parse=F,size=8) +
