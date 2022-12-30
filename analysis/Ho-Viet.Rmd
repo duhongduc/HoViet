@@ -3,6 +3,8 @@ title: "Họ Việt"
 author: "Duc Du"
 date: '`r format(Sys.time(), "%d %B, %Y")`'
 output: html_document
+editor_options: 
+  chunk_output_type: inline
 ---
 
 ```{r setup, include=FALSE, message=FALSE, warning=FALSE}
@@ -23,6 +25,7 @@ library(tidyverse)
 library(dplyr)
 library(ggplot2)
 library(data.table)
+library(DT)
 library(lubridate)
 library(viridis)
 library(sf)
@@ -31,6 +34,7 @@ library(flextable)
 library(scales)
 library(ggtext)
 library(glue)
+library(geosphere)
 
 options(scipen=999, digits = 3)
 options(max.print=1000000)
@@ -1099,6 +1103,18 @@ ft %>%
 mytab_cum(label = NULL)
 ```
 
+# Phân bố sông ngòi cả nước
+
+```{r, warning=FALSE, message=FALSE}
+nguyen_sf <- dat_sf %>% mutate(prop.nguyen=(sum(subset(., Ho=="Nguyễn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Nguyễn")
+nguyen_plot <- nguyen_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.nguyen, geometry) %>% st_as_sf(crs = 4326)
+ggplot() + geom_sf() + geom_sf(data=nguyen_plot, color=NA) +
+  geom_sf(data=river3, col="blue") +
+  geom_sf_text(data=river3, mapping=aes(label = nam), stat = "sf_coordinates", position = "identity", check_overlap = T) +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Sông ngòi Việt Nam")
+```
 
 # Phân bố dòng họ cả nước
 
@@ -1243,14 +1259,45 @@ Họ Dương đến Dương Đình Nghệ đã nhiều đời làm hào trưởn
 
 Vậy có thể đưa ra kết luận "Các cuộc khởi nghĩa dẫn đến việc thiết lập các triều đại Vua ở Đại Việt liên quan tới việc chống lại sự áp bức bóc lột của phương Bắc trong việc khai mỏ thiếc". Tuy nhiên chúng ta cần phải có bằng chứng về việc khai thác thiếc vào thời kỳ từ năm 700 cho tới 900. Liệu có thể tìm ra được dấu vết khai mỏ không?
 
-### Phân bố tỉ lệ
+### Dữ liệu
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 mai_sf <- dat_sf %>% mutate(prop.mai=(sum(subset(., Ho=="Mai")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Mai")
 mai_plot <- mai_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.mai, geometry) %>% st_as_sf(crs = 4326)
+mai_plot$centroid <- sf::st_transform(mai_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
 
+mai <- mai_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Thi tran Nga Son"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.mai=as.numeric(round(prop.mai, 2))) %>%
+  arrange(distm_km) %>%
+  mutate(rank=row_number()) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, pro.pop, prop.mai, lng, lat, distm_km, rank)
+
+mai_peak <- mai_plot %>% filter(NAME_3=="Thi tran Nga Son")
+
+datatable(mai, colnames = c("Tỉnh/Thành phố", "Quận/Huyện", "Phường/Xã", "Tỉ lệ/xã phường", "Tỉ lệ/cả nước", "Kinh độ", "Vĩ độ", "Khoảng cách tới tâm", "STT"))
+```
+
+### Phân bố tỉ lệ
+
+```{r, warning=FALSE, message=FALSE}
 ggplot() + geom_sf() + geom_sf(data=mai_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="white") +
+  geom_sf_label(data=mai_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(mai_plot$prop.mai[1],1), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
