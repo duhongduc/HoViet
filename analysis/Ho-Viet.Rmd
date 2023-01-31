@@ -1289,7 +1289,10 @@ mai <- mai_plot %>%
 
 mai_peak <- mai_plot %>% filter(NAME_3=="Thi tran Nga Son")
 
-datatable(mai, colnames = c("Tỉnh/Thành phố", "Quận/Huyện", "Phường/Xã", "Tỉ lệ/xã phường", "Tỉ lệ/cả nước", "Kinh độ", "Vĩ độ", "Khoảng cách tới tâm", "STT"))
+datatable(mai, colnames = c("Tỉnh/Thành phố", "Quận/Huyện", "Phường/Xã", "Tỉ lệ/xã phường", "Tỉ lệ/cả nước", "Kinh độ", "Vĩ độ", "Khoảng cách tới tâm (km)", "STT"), extensions = 'Buttons', options = list(
+    dom = 'Bfrtip',
+    buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
+  ))
 ```
 
 ### Phân bố tỉ lệ
@@ -1474,7 +1477,43 @@ chúng ta có thể nhận thấy họ Phùng ở khu vực ngay chân núi Ba V
 
 Chúng ta có thể nhận thấy dòng họ Phùng chiếm vị trí sâu về phía chân núi, sau đó là họ Lý ở dải đất gần với biển hơn kéo dài từ vùng Đền Đô qua Từ Liêm, tiếp sau nữa là nhà Trần. 
 
-Đây có thể là sự hình thành ra cấu trúc không gian văn hóa vua Hùng (phụ hệ) trong tổng thể văn hóa mẫu hệ ở đồng bằng Bắc Bộ. 
+Đây có thể là sự hình thành ra cấu trúc không gian văn hóa vua Hùng (phụ hệ) trong tổng thể văn hóa mẫu hệ ở đồng bằng Bắc Bộ.
+
+### Dữ liệu
+
+```{r, warning=FALSE, message=FALSE}
+phung_sf <- dat_sf %>% mutate(prop.phung=(sum(subset(., Ho=="Phùng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phùng")
+phung_plot <- phung_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.phung, geometry) %>% st_as_sf(crs = 4326)
+phung_plot$centroid <- sf::st_transform(phung_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+phung <- phung_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Phu Son" & NAME_2=="Ba Vi"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.phung=as.numeric(round(prop.phung, 2))) %>%
+  arrange(distm_km) %>%
+  mutate(rank=row_number()) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, pro.pop, prop.phung, lng, lat, distm_km, rank)
+
+phung_peak <- phung_plot %>% filter(NAME_3=="Xa Phu Son" & NAME_2=="Ba Vi")
+
+datatable(phung, colnames = c("Tỉnh/Thành phố", "Quận/Huyện", "Phường/Xã", "Tỉ lệ/xã phường", "Tỉ lệ/cả nước", "Kinh độ", "Vĩ độ", "Khoảng cách tới tâm (km)", "STT"), extensions = 'Buttons', options = list(
+    dom = 'Bfrtip',
+    buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
+  ))
+```
 
 ### Phân bố tỉ lệ
 
@@ -1486,6 +1525,7 @@ phung_plot <- phung_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.phung, g
 
 ggplot() + geom_sf() + geom_sf(data=phung_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=phung_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(phung_plot$prop.phung[1],1), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -1517,7 +1557,7 @@ phung$centroid <- sf::st_transform(phung, 2154) %>%
 
 library(geosphere)
 phung <- phung %>%
-  mutate(centroid_0 = centroid[NAME_3=="Xa Dong Thai" & NAME_2=="Ba Vi"],
+  mutate(centroid_0 = centroid[NAME_3=="Xa Phu Son" & NAME_2=="Ba Vi"],
          distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
          distm_km=distm/1000,
          distm_km2=distm_km^2,
@@ -1600,7 +1640,7 @@ phung$centroid <- sf::st_transform(phung, 2154) %>%
 
 library(geosphere)
 phung <- phung %>%
-  mutate(centroid_0 = centroid[NAME_3=="Xa Dong Thai" & NAME_2=="Ba Vi"],
+  mutate(centroid_0 = centroid[NAME_3=="Xa Phu Son" & NAME_2=="Ba Vi"],
          distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
          distm_km=distm/1000,
          distm_km2=distm_km^2,
