@@ -41,7 +41,7 @@ options(max.print=1000000)
 ```
 
 ```{r load data, message=FALSE, warning=FALSE}
-load("data/hoviet.RData")
+load("data/hoviet_full.RData")
 ```
 
 # Tổng họ Việt Nam
@@ -9960,14 +9960,46 @@ ggplot() + geom_sf() + geom_sf(data=nong_plotf, aes(fill=songuoi_km), color=NA) 
 
 ## Ôn
 
+```{r, warning=FALSE, message=FALSE}
+on_sff <- dat_sff %>% mutate(prop.on=(sum(subset(., Ho=="Ôn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ôn")
+on_plot <- on_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.on, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+on_plot$centroid <- sf::st_transform(on_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+on <- on_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Ninh Lai" & NAME_2=="Son Duong"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.on=as.numeric(round(prop.on, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.on, area_km, songuoi_km, lng, lat, distm_km)
+
+on_peak <- on_plot %>% filter(NAME_3=="Xa Ninh Lai" & NAME_2=="Son Duong")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 on_sf <- dat_sf %>% mutate(prop.on=(sum(subset(., Ho=="Ôn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ôn")
 on_plot <- on_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.on, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=on_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=on_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(on_plot$prop.on[1],2), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -9992,14 +10024,46 @@ ggplot() + geom_sf() + geom_sf(data=on_plotf, aes(fill=songuoi_km), color=NA) +
 
 ## Ông
 
+```{r, warning=FALSE, message=FALSE}
+ong_sff <- dat_sff %>% mutate(prop.ong=(sum(subset(., Ho=="Ông")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ông")
+ong_plot <- ong_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.ong, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+ong_plot$centroid <- sf::st_transform(ong_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+ong <- ong_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Canh Thuy" & NAME_2=="Yen Dung"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.ong=as.numeric(round(prop.ong, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.ong, area_km, songuoi_km, lng, lat, distm_km)
+
+ong_peak <- ong_plot %>% filter(NAME_3=="Xa Canh Thuy" & NAME_2=="Yen Dung")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 ong_sf <- dat_sf %>% mutate(prop.ong=(sum(subset(., Ho=="Ông")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ông")
 ong_plot <- ong_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.ong, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=ong_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=ong_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(ong_plot$prop.ong[1],2), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -10024,14 +10088,46 @@ ggplot() + geom_sf() + geom_sf(data=ong_plotf, aes(fill=songuoi_km), color=NA) +
 
 ## Phạm
 
+```{r, warning=FALSE, message=FALSE}
+pham_sff <- dat_sff %>% mutate(prop.pham=(sum(subset(., Ho=="Phạm")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phạm")
+pham_plot <- pham_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.pham, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+pham_plot$centroid <- sf::st_transform(pham_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+pham <- pham_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Ba Nam" & NAME_2=="Ba To"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.pham=as.numeric(round(prop.pham, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.pham, area_km, songuoi_km, lng, lat, distm_km)
+
+pham_peak <- pham_plot %>% filter(NAME_3=="Xa Ba Nam" & NAME_2=="Ba To")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 pham_sf <- dat_sf %>% mutate(prop.pham=(sum(subset(., Ho=="Phạm")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phạm")
 pham_plot <- pham_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.pham, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=pham_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=pham_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(pham_plot$prop.pham[1],1), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -10056,14 +10152,46 @@ ggplot() + geom_sf() + geom_sf(data=pham_plotf, aes(fill=songuoi_km), color=NA) 
 
 ## Phan
 
+```{r, warning=FALSE, message=FALSE}
+phan_sff <- dat_sff %>% mutate(prop.phan=(sum(subset(., Ho=="Phan")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phan")
+phan_plot <- phan_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.phan, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+phan_plot$centroid <- sf::st_transform(phan_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+phan <- phan_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Bac Trach" & NAME_2=="Bo Trach"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.phan=as.numeric(round(prop.phan, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.phan, area_km, songuoi_km, lng, lat, distm_km)
+
+phan_peak <- phan_plot %>% filter(NAME_3=="Xa Bac Trach" & NAME_2=="Bo Trach")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 phan_sf <- dat_sf %>% mutate(prop.phan=(sum(subset(., Ho=="Phan")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phan")
 phan_plot <- phan_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.phan, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=phan_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=phan_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(phan_plot$prop.phan[1],1), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -10088,14 +10216,46 @@ ggplot() + geom_sf() + geom_sf(data=phan_plotf, aes(fill=songuoi_km), color=NA) 
 
 ## Phàn
 
+```{r, warning=FALSE, message=FALSE}
+phan1_sff <- dat_sff %>% mutate(prop.phan1=(sum(subset(., Ho=="Phàn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phàn")
+phan1_plot <- phan1_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.phan1, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+phan1_plot$centroid <- sf::st_transform(phan1_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+phan1 <- phan1_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Sung Mang" & NAME_2=="Meo Vac"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.phan1=as.numeric(round(prop.phan1, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.phan1, area_km, songuoi_km, lng, lat, distm_km)
+
+phan1_peak <- phan1_plot %>% filter(NAME_3=="Xa Sung Mang" & NAME_2=="Meo Vac")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 phan1_sf <- dat_sf %>% mutate(prop.phan1=(sum(subset(., Ho=="Phàn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phàn")
 phan1_plot <- phan1_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.phan1, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=phan1_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=phan1_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(phan1_plot$prop.phan1[1],2), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -10120,14 +10280,46 @@ ggplot() + geom_sf() + geom_sf(data=phan1_plotf, aes(fill=songuoi_km), color=NA)
 
 ## Phàng
 
+```{r, warning=FALSE, message=FALSE}
+phang_sff <- dat_sff %>% mutate(prop.phang=(sum(subset(., Ho=="Phàng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phàng")
+phang_plot <- phang_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.phang, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+phang_plot$centroid <- sf::st_transform(phang_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+phang <- phang_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Chieng Xuan" & NAME_2=="Van Ho"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.phang=as.numeric(round(prop.phang, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.phang, area_km, songuoi_km, lng, lat, distm_km)
+
+phang_peak <- phang_plot %>% filter(NAME_3=="Xa Chieng Xuan" & NAME_2=="Van Ho")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 phang_sf <- dat_sf %>% mutate(prop.phang=(sum(subset(., Ho=="Phàng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phàng")
 phang_plot <- phang_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.phang, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=phang_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=phang_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(phang_plot$prop.phang[1],2), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -10152,14 +10344,46 @@ ggplot() + geom_sf() + geom_sf(data=phang_plotf, aes(fill=songuoi_km), color=NA)
 
 ## Phí
 
+```{r, warning=FALSE, message=FALSE}
+phi_sff <- dat_sff %>% mutate(prop.phi=(sum(subset(., Ho=="Phí")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phí")
+phi_plot <- phi_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.phi, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+phi_plot$centroid <- sf::st_transform(phi_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+phi <- phi_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Dong A" & NAME_2=="Dong Hung"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.phi=as.numeric(round(prop.phi, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.phi, area_km, songuoi_km, lng, lat, distm_km)
+
+phi_peak <- phi_plot %>% filter(NAME_3=="Xa Dong A" & NAME_2=="Dong Hung")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 phi_sf <- dat_sf %>% mutate(prop.phi=(sum(subset(., Ho=="Phí")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phí")
 phi_plot <- phi_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.phi, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=phi_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=phi_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(phi_plot$prop.phi[1],2), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -10184,14 +10408,46 @@ ggplot() + geom_sf() + geom_sf(data=phi_plotf, aes(fill=songuoi_km), color=NA) +
 
 ## Phó
 
+```{r, warning=FALSE, message=FALSE}
+pho_sff <- dat_sff %>% mutate(prop.pho=(sum(subset(., Ho=="Phó")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phó")
+pho_plot <- pho_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.pho, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+pho_plot$centroid <- sf::st_transform(pho_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+pho <- pho_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Quang Duc" & NAME_2=="Hai Ha"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.pho=as.numeric(round(prop.pho, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.pho, area_km, songuoi_km, lng, lat, distm_km)
+
+pho_peak <- pho_plot %>% filter(NAME_3=="Xa Quang Duc" & NAME_2=="Hai Ha")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 pho_sf <- dat_sf %>% mutate(prop.pho=(sum(subset(., Ho=="Phó")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phó")
 pho_plot <- pho_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.pho, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=pho_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=pho_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(pho_plot$prop.pho[1],2), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -10216,14 +10472,46 @@ ggplot() + geom_sf() + geom_sf(data=pho_plotf, aes(fill=songuoi_km), color=NA) +
 
 ## Phù
 
+```{r, warning=FALSE, message=FALSE}
+phu_sff <- dat_sff %>% mutate(prop.phu=(sum(subset(., Ho=="Phù")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phù")
+phu_plot <- phu_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.phu, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+phu_plot$centroid <- sf::st_transform(phu_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+phu <- phu_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Tan Bac" & NAME_2=="Quang Binh"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.phu=as.numeric(round(prop.phu, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.phu, area_km, songuoi_km, lng, lat, distm_km)
+
+phu_peak <- phu_plot %>% filter(NAME_3=="Xa Tan Bac" & NAME_2=="Quang Binh")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 phu_sf <- dat_sf %>% mutate(prop.phu=(sum(subset(., Ho=="Phù")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phù")
 phu_plot <- phu_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.phu, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=phu_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=phu_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(phu_plot$prop.phu[1],2), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -10248,14 +10536,46 @@ ggplot() + geom_sf() + geom_sf(data=phu_plotf, aes(fill=songuoi_km), color=NA) +
 
 ## Phùng
 
+```{r, warning=FALSE, message=FALSE}
+phung_sff <- dat_sff %>% mutate(prop.phung=(sum(subset(., Ho=="Phùng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phùng")
+phung_plot <- phung_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.phung, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+phung_plot$centroid <- sf::st_transform(phung_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+phung <- phung_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Phu Son" & NAME_2=="Ba Vi"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.phung=as.numeric(round(prop.phung, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.phung, area_km, songuoi_km, lng, lat, distm_km)
+
+phung_peak <- phung_plot %>% filter(NAME_3=="Xa Phu Son" & NAME_2=="Ba Vi")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 phung_sf <- dat_sf %>% mutate(prop.phung=(sum(subset(., Ho=="Phùng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phùng")
 phung_plot <- phung_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.phung, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=phung_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=phung_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(phung_plot$prop.phung[1],1), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -10280,14 +10600,46 @@ ggplot() + geom_sf() + geom_sf(data=phung_plotf, aes(fill=songuoi_km), color=NA)
 
 ## Phương
 
+```{r, warning=FALSE, message=FALSE}
+phuong_sff <- dat_sff %>% mutate(prop.phuong=(sum(subset(., Ho=="Phương")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phương")
+phuong_plot <- phuong_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.phuong, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+phuong_plot$centroid <- sf::st_transform(phuong_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+phuong <- phuong_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Ho Thau" & NAME_2=="Hoang Su Phi"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.phuong=as.numeric(round(prop.phuong, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.phuong, area_km, songuoi_km, lng, lat, distm_km)
+
+phuong_peak <- phuong_plot %>% filter(NAME_3=="Xa Ho Thau" & NAME_2=="Hoang Su Phi")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 phuong_sf <- dat_sf %>% mutate(prop.phuong=(sum(subset(., Ho=="Phương")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phương")
 phuong_plot <- phuong_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.phuong, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=phuong_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=phuong_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(phuong_plot$prop.phuong[1],2), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -10312,14 +10664,46 @@ ggplot() + geom_sf() + geom_sf(data=phuong_plotf, aes(fill=songuoi_km), color=NA
 
 ## Puih
 
+```{r, warning=FALSE, message=FALSE}
+puih_sff <- dat_sff %>% mutate(prop.puih=(sum(subset(., Ho=="Puih")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Puih")
+puih_plot <- puih_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.puih, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+puih_plot$centroid <- sf::st_transform(puih_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+puih <- puih_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Ia Grang" & NAME_2=="Ia Grai"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.puih=as.numeric(round(prop.puih, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.puih, area_km, songuoi_km, lng, lat, distm_km)
+
+puih_peak <- puih_plot %>% filter(NAME_3=="Xa Ia Grang" & NAME_2=="Ia Grai")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 puih_sf <- dat_sf %>% mutate(prop.puih=(sum(subset(., Ho=="Puih")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Puih")
 puih_plot <- puih_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.puih, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=puih_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=puih_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(puih_plot$prop.puih[1],2), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -10344,14 +10728,46 @@ ggplot() + geom_sf() + geom_sf(data=puih_plotf, aes(fill=songuoi_km), color=NA) 
 
 ## Quách
 
+```{r, warning=FALSE, message=FALSE}
+quach_sff <- dat_sff %>% mutate(prop.quach=(sum(subset(., Ho=="Quách")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Quách")
+quach_plot <- quach_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.quach, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+quach_plot$centroid <- sf::st_transform(quach_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+quach <- quach_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa My Thanh" & NAME_2=="Lac Son"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.quach=as.numeric(round(prop.quach, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.quach, area_km, songuoi_km, lng, lat, distm_km)
+
+quach_peak <- quach_plot %>% filter(NAME_3=="Xa My Thanh" & NAME_2=="Lac Son")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 quach_sf <- dat_sf %>% mutate(prop.quach=(sum(subset(., Ho=="Quách")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Quách")
 quach_plot <- quach_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.quach, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=quach_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=quach_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(quach_plot$prop.quach[1],1), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -10376,14 +10792,46 @@ ggplot() + geom_sf() + geom_sf(data=quach_plotf, aes(fill=songuoi_km), color=NA)
 
 ## Quan
 
+```{r, warning=FALSE, message=FALSE}
+quan_sff <- dat_sff %>% mutate(prop.quan=(sum(subset(., Ho=="Quan")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Quan")
+quan_plot <- quan_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.quan, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+quan_plot$centroid <- sf::st_transform(quan_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+quan <- quan_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Tan My" & NAME_2=="Chiem Hoa"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.quan=as.numeric(round(prop.quan, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.quan, area_km, songuoi_km, lng, lat, distm_km)
+
+quan_peak <- quan_plot %>% filter(NAME_3=="Xa Tan My" & NAME_2=="Chiem Hoa")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 quan_sf <- dat_sf %>% mutate(prop.quan=(sum(subset(., Ho=="Quan")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Quan")
 quan_plot <- quan_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.quan, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=quan_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=quan_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(quan_plot$prop.quan[1],2), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -10408,14 +10856,46 @@ ggplot() + geom_sf() + geom_sf(data=quan_plotf, aes(fill=songuoi_km), color=NA) 
 
 ## Quản
 
+```{r, warning=FALSE, message=FALSE}
+quan1_sff <- dat_sff %>% mutate(prop.quan1=(sum(subset(., Ho=="Quản")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Quản")
+quan1_plot <- quan1_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.quan1, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+quan1_plot$centroid <- sf::st_transform(quan1_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+quan1 <- quan1_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Thieu Hop" & NAME_2=="Thieu Hoa"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.quan1=as.numeric(round(prop.quan1, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.quan1, area_km, songuoi_km, lng, lat, distm_km)
+
+quan1_peak <- quan1_plot %>% filter(NAME_3=="Xa Thieu Hop" & NAME_2=="Thieu Hoa")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 quan1_sf <- dat_sf %>% mutate(prop.quan1=(sum(subset(., Ho=="Quản")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Quản")
 quan1_plot <- quan1_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.quan1, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=quan1_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=quan1_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(quan1_plot$prop.quan1[1],2), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -10440,14 +10920,46 @@ ggplot() + geom_sf() + geom_sf(data=quan1_plotf, aes(fill=songuoi_km), color=NA)
 
 ## Quang
 
+```{r, warning=FALSE, message=FALSE}
+quang_sff <- dat_sff %>% mutate(prop.quang=(sum(subset(., Ho=="Quang")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Quang")
+quang_plot <- quang_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.quang, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+quang_plot$centroid <- sf::st_transform(quang_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+quang <- quang_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Dien Lam" & NAME_2=="Quy Chau"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.quang=as.numeric(round(prop.quang, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.quang, area_km, songuoi_km, lng, lat, distm_km)
+
+quang_peak <- quang_plot %>% filter(NAME_3=="Xa Dien Lam" & NAME_2=="Quy Chau")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 quang_sf <- dat_sf %>% mutate(prop.quang=(sum(subset(., Ho=="Quang")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Quang")
 quang_plot <- quang_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.quang, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=quang_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=quang_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(quang_plot$prop.quang[1],2), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -10472,14 +10984,46 @@ ggplot() + geom_sf() + geom_sf(data=quang_plotf, aes(fill=songuoi_km), color=NA)
 
 ## Quàng
 
+```{r, warning=FALSE, message=FALSE}
+quang1_sff <- dat_sff %>% mutate(prop.quang1=(sum(subset(., Ho=="Quàng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Quàng")
+quang1_plot <- quang1_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.quang1, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+quang1_plot$centroid <- sf::st_transform(quang1_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+quang1 <- quang1_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Sap Vat" & NAME_2=="Yen Chau"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.quang1=as.numeric(round(prop.quang1, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.quang1, area_km, songuoi_km, lng, lat, distm_km)
+
+quang1_peak <- quang1_plot %>% filter(NAME_3=="Xa Sap Vat" & NAME_2=="Yen Chau")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 quang1_sf <- dat_sf %>% mutate(prop.quang1=(sum(subset(., Ho=="Quàng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Quàng")
 quang1_plot <- quang1_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.quang1, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=quang1_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=quang1_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(quang1_plot$prop.quang1[1],1), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -10504,14 +11048,46 @@ ggplot() + geom_sf() + geom_sf(data=quang1_plotf, aes(fill=songuoi_km), color=NA
 
 ## Rah
 
+```{r, warning=FALSE, message=FALSE}
+rah_sff <- dat_sff %>% mutate(prop.rah=(sum(subset(., Ho=="Rah")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Rah")
+rah_plot <- rah_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.rah, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+rah_plot$centroid <- sf::st_transform(rah_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+rah <- rah_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Ia RSai" & NAME_2=="Krong Pa"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.rah=as.numeric(round(prop.rah, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.rah, area_km, songuoi_km, lng, lat, distm_km)
+
+rah_peak <- rah_plot %>% filter(NAME_3=="Xa Ia RSai" & NAME_2=="Krong Pa")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 rah_sf <- dat_sf %>% mutate(prop.rah=(sum(subset(., Ho=="Rah")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Rah")
 rah_plot <- rah_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.rah, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=rah_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=rah_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(rah_plot$prop.rah[1],2), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -10536,14 +11112,46 @@ ggplot() + geom_sf() + geom_sf(data=rah_plotf, aes(fill=songuoi_km), color=NA) +
 
 ## Rmah
 
+```{r, warning=FALSE, message=FALSE}
+rmah_sff <- dat_sff %>% mutate(prop.rmah=(sum(subset(., Ho=="Rmah")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Rmah")
+rmah_plot <- rmah_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.rmah, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+rmah_plot$centroid <- sf::st_transform(rmah_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+rmah <- rmah_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Chu Don" & NAME_2=="Chu Puh"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.rmah=as.numeric(round(prop.rmah, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.rmah, area_km, songuoi_km, lng, lat, distm_km)
+
+rmah_peak <- rmah_plot %>% filter(NAME_3=="Xa Chu Don" & NAME_2=="Chu Puh")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 rmah_sf <- dat_sf %>% mutate(prop.rmah=(sum(subset(., Ho=="Rmah")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Rmah")
 rmah_plot <- rmah_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.rmah, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=rmah_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=rmah_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(rmah_plot$prop.rmah[1],2), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -10568,14 +11176,46 @@ ggplot() + geom_sf() + geom_sf(data=rmah_plotf, aes(fill=songuoi_km), color=NA) 
 
 ## Rơ
 
+```{r, warning=FALSE, message=FALSE}
+ro_sff <- dat_sff %>% mutate(prop.ro=(sum(subset(., Ho=="Rơ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Rơ")
+ro_plot <- ro_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.ro, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+ro_plot$centroid <- sf::st_transform(ro_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+ro <- ro_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Ia Phi" & NAME_2=="Chu Pah"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.ro=as.numeric(round(prop.ro, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.ro, area_km, songuoi_km, lng, lat, distm_km)
+
+ro_peak <- ro_plot %>% filter(NAME_3=="Xa Ia Phi" & NAME_2=="Chu Pah")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 ro_sf <- dat_sf %>% mutate(prop.ro=(sum(subset(., Ho=="Rơ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Rơ")
 ro_plot <- ro_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.ro, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=ro_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=ro_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(ro_plot$prop.ro[1],1), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -10600,14 +11240,46 @@ ggplot() + geom_sf() + geom_sf(data=ro_plotf, aes(fill=songuoi_km), color=NA) +
 
 ## Sa
 
+```{r, warning=FALSE, message=FALSE}
+sa_sff <- dat_sff %>% mutate(prop.sa=(sum(subset(., Ho=="Sa")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Sa")
+sa_plot <- sa_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.sa, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+sa_plot$centroid <- sf::st_transform(sa_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+sa <- sa_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Huy Ha" & NAME_2=="Phu Yen"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.sa=as.numeric(round(prop.sa, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.sa, area_km, songuoi_km, lng, lat, distm_km)
+
+sa_peak <- sa_plot %>% filter(NAME_3=="Xa Huy Ha" & NAME_2=="Phu Yen")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 sa_sf <- dat_sf %>% mutate(prop.sa=(sum(subset(., Ho=="Sa")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Sa")
 sa_plot <- sa_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.sa, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=sa_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=sa_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(sa_plot$prop.sa[1],2), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -10632,14 +11304,46 @@ ggplot() + geom_sf() + geom_sf(data=sa_plotf, aes(fill=songuoi_km), color=NA) +
 
 ## Sầm
 
+```{r, warning=FALSE, message=FALSE}
+sam_sff <- dat_sff %>% mutate(prop.sam=(sum(subset(., Ho=="Sầm")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Sầm")
+sam_plot <- sam_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.sam, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+sam_plot$centroid <- sf::st_transform(sam_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+sam <- sam_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Chau Loc" & NAME_2=="Quy Hop"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.sam=as.numeric(round(prop.sam, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.sam, area_km, songuoi_km, lng, lat, distm_km)
+
+sam_peak <- sam_plot %>% filter(NAME_3=="Xa Chau Loc" & NAME_2=="Quy Hop")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 sam_sf <- dat_sf %>% mutate(prop.sam=(sum(subset(., Ho=="Sầm")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Sầm")
 sam_plot <- sam_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.sam, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=sam_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=sam_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(sam_plot$prop.sam[1],2), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -10664,46 +11368,46 @@ ggplot() + geom_sf() + geom_sf(data=sam_plotf, aes(fill=songuoi_km), color=NA) +
 
 ## Siu
 
-### Phân bố tỉ lệ
-
-```{r}
-siu_sf <- dat_sf %>% mutate(prop.siu=(sum(subset(., Ho=="Siu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Siu")
-siu_plot <- siu_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.siu, geometry) %>% st_as_sf(crs = 4326)
-
-ggplot() + geom_sf() + geom_sf(data=siu_plot, aes(fill=pro.pop), color=NA) +
-  geom_sf(data=river3, col="orange") +
-  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(siu_plot$prop.siu[1],1), "% dân số", sep = "")) +
-  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
-  theme_bw() +
-  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
-  ggtitle("Siu")
-```
-
-### Phân bố mật độ
-
-```{r}
+```{r, warning=FALSE, message=FALSE}
 siu_sff <- dat_sff %>% mutate(prop.siu=(sum(subset(., Ho=="Siu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Siu")
-siu_plotf <- siu_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.siu, geometry) %>% st_as_sf(crs = 4326)
+siu_plot <- siu_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.siu, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+siu_plot$centroid <- sf::st_transform(siu_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
 
-ggplot() + geom_sf() + geom_sf(data=siu_plotf, aes(fill=songuoi_km), color=NA) +
-  geom_sf(data=river3, col="orange") +
-  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(siu_plotf$prop.siu[1],1), "% dân số", sep = "")) +
-  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
-  theme_bw() +
-  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
-  ggtitle("Siu")
+siu <- siu_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Bar Maih" & NAME_2=="Chu Se"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.siu=as.numeric(round(prop.siu, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.siu, area_km, songuoi_km, lng, lat, distm_km)
+
+siu_peak <- siu_plot %>% filter(NAME_3=="Xa Bar Maih" & NAME_2=="Chu Se")
+
 ```
-
-## Siu
 
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 siu_sf <- dat_sf %>% mutate(prop.siu=(sum(subset(., Ho=="Siu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Siu")
 siu_plot <- siu_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.siu, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=siu_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=siu_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(siu_plot$prop.siu[1],1), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -10728,14 +11432,47 @@ ggplot() + geom_sf() + geom_sf(data=siu_plotf, aes(fill=songuoi_km), color=NA) +
 
 ## Sơn
 
+```{r, warning=FALSE, message=FALSE}
+son_sff <- dat_sff %>% mutate(prop.son=(sum(subset(., Ho=="Sơn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Sơn")
+son_plot <- son_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.son, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+son_plot$centroid <- sf::st_transform(son_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+son <- son_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Vinh Tan" & NAME_2=="Vinh Chau"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.son=as.numeric(round(prop.son, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.son, area_km, songuoi_km, lng, lat, distm_km)
+
+son_peak <- son_plot %>% filter(NAME_3=="Xa Vinh Tan" & NAME_2=="Vinh Chau")
+
+```
+
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 son_sf <- dat_sf %>% mutate(prop.son=(sum(subset(., Ho=="Sơn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Sơn")
 son_plot <- son_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.son, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=son_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=son_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(son_plot$prop.son[1],1), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -10760,14 +11497,47 @@ ggplot() + geom_sf() + geom_sf(data=son_plotf, aes(fill=songuoi_km), color=NA) +
 
 ## Sồng
 
+```{r, warning=FALSE, message=FALSE}
+song_sff <- dat_sff %>% mutate(prop.song=(sum(subset(., Ho=="Sồng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Sồng")
+song_plot <- song_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.song, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+song_plot$centroid <- sf::st_transform(song_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+song <- song_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Suoi To" & NAME_2=="Phu Yen"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.song=as.numeric(round(prop.song, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.song, area_km, songuoi_km, lng, lat, distm_km)
+
+song_peak <- song_plot %>% filter(NAME_3=="Xa Suoi To" & NAME_2=="Phu Yen")
+
+```
+
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 song_sf <- dat_sf %>% mutate(prop.song=(sum(subset(., Ho=="Sồng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Sồng")
 song_plot <- song_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.song, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=song_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=song_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(song_plot$prop.song[1],2), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -10792,14 +11562,47 @@ ggplot() + geom_sf() + geom_sf(data=song_plotf, aes(fill=songuoi_km), color=NA) 
 
 ## Sử
 
+```{r, warning=FALSE, message=FALSE}
+su_sff <- dat_sff %>% mutate(prop.su=(sum(subset(., Ho=="Sử")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Sử")
+su_plot <- su_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.su, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+su_plot$centroid <- sf::st_transform(su_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+su <- su_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Phuong Duc Thuan" & NAME_2=="Hong Linh"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.su=as.numeric(round(prop.su, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.su, area_km, songuoi_km, lng, lat, distm_km)
+
+su_peak <- su_plot %>% filter(NAME_3=="Phuong Duc Thuan" & NAME_2=="Hong Linh")
+
+```
+
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 su_sf <- dat_sf %>% mutate(prop.su=(sum(subset(., Ho=="Sử")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Sử")
 su_plot <- su_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.su, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=su_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=su_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(su_plot$prop.su[1],2), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -10824,14 +11627,46 @@ ggplot() + geom_sf() + geom_sf(data=su_plotf, aes(fill=songuoi_km), color=NA) +
 
 ## Sùng
 
+```{r, warning=FALSE, message=FALSE}
+sung_sff <- dat_sff %>% mutate(prop.sung=(sum(subset(., Ho=="Sùng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Sùng")
+sung_plot <- sung_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.sung, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+sung_plot$centroid <- sf::st_transform(sung_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+sung <- sung_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Che Tao" & NAME_2=="Mu Cang Chai"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.sung=as.numeric(round(prop.sung, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.sung, area_km, songuoi_km, lng, lat, distm_km)
+
+sung_peak <- sung_plot %>% filter(NAME_3=="Xa Che Tao" & NAME_2=="Mu Cang Chai")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 sung_sf <- dat_sf %>% mutate(prop.sung=(sum(subset(., Ho=="Sùng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Sùng")
 sung_plot <- sung_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.sung, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=sung_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=sung_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(sung_plot$prop.sung[1],1), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -10856,14 +11691,47 @@ ggplot() + geom_sf() + geom_sf(data=sung_plotf, aes(fill=songuoi_km), color=NA) 
 
 ## Tạ
 
+```{r, warning=FALSE, message=FALSE}
+ta_sff <- dat_sff %>% mutate(prop.ta=(sum(subset(., Ho=="Tạ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tạ")
+ta_plot <- ta_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.ta, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+ta_plot$centroid <- sf::st_transform(ta_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+ta <- ta_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Di Nau" & NAME_2=="Tam Nong"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.ta=as.numeric(round(prop.ta, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.ta, area_km, songuoi_km, lng, lat, distm_km)
+
+ta_peak <- ta_plot %>% filter(NAME_3=="Xa Di Nau" & NAME_2=="Tam Nong")
+
+```
+
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 ta_sf <- dat_sf %>% mutate(prop.ta=(sum(subset(., Ho=="Tạ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tạ")
 ta_plot <- ta_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.ta, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=ta_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=ta_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(ta_plot$prop.ta[1],1), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -10888,14 +11756,46 @@ ggplot() + geom_sf() + geom_sf(data=ta_plotf, aes(fill=songuoi_km), color=NA) +
 
 ## Tần
 
+```{r, warning=FALSE, message=FALSE}
+tan_sff <- dat_sff %>% mutate(prop.tan=(sum(subset(., Ho=="Tần")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tần")
+tan_plot <- tan_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.tan, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+tan_plot$centroid <- sf::st_transform(tan_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+tan <- tan_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Dong Van" & NAME_2=="Binh Lieu"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.tan=as.numeric(round(prop.tan, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.tan, area_km, songuoi_km, lng, lat, distm_km)
+
+tan_peak <- tan_plot %>% filter(NAME_3=="Xa Dong Van" & NAME_2=="Binh Lieu")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 tan_sf <- dat_sf %>% mutate(prop.tan=(sum(subset(., Ho=="Tần")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tần")
 tan_plot <- tan_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.tan, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=tan_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=tan_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(tan_plot$prop.tan[1],2), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -10920,14 +11820,46 @@ ggplot() + geom_sf() + geom_sf(data=tan_plotf, aes(fill=songuoi_km), color=NA) +
 
 ## Tẩn
 
+```{r, warning=FALSE, message=FALSE}
+tan1_sff <- dat_sff %>% mutate(prop.tan1=(sum(subset(., Ho=="Tẩn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tẩn")
+tan1_plot <- tan1_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.tan1, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+tan1_plot$centroid <- sf::st_transform(tan1_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+tan1 <- tan1_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Si Lo Lau" & NAME_2=="Phong Tho"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.tan1=as.numeric(round(prop.tan1, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.tan1, area_km, songuoi_km, lng, lat, distm_km)
+
+tan1_peak <- tan1_plot %>% filter(NAME_3=="Xa Si Lo Lau" & NAME_2=="Phong Tho")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 tan1_sf <- dat_sf %>% mutate(prop.tan1=(sum(subset(., Ho=="Tẩn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tẩn")
 tan1_plot <- tan1_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.tan1, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=tan1_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=tan1_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(tan1_plot$prop.tan1[1],2), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -10952,14 +11884,46 @@ ggplot() + geom_sf() + geom_sf(data=tan1_plotf, aes(fill=songuoi_km), color=NA) 
 
 ## Tăng
 
+```{r, warning=FALSE, message=FALSE}
+tang_sff <- dat_sff %>% mutate(prop.tang=(sum(subset(., Ho=="Tăng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tăng")
+tang_plot <- tang_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.tang, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+tang_plot$centroid <- sf::st_transform(tang_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+tang <- tang_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Thanh Lang" & NAME_2=="Thanh Ha"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.tang=as.numeric(round(prop.tang, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.tang, area_km, songuoi_km, lng, lat, distm_km)
+
+tang_peak <- tang_plot %>% filter(NAME_3=="Xa Thanh Lang" & NAME_2=="Thanh Ha")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 tang_sf <- dat_sf %>% mutate(prop.tang=(sum(subset(., Ho=="Tăng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tăng")
 tang_plot <- tang_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.tang, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=tang_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=tang_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(tang_plot$prop.tang[1],1), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -10984,14 +11948,46 @@ ggplot() + geom_sf() + geom_sf(data=tang_plotf, aes(fill=songuoi_km), color=NA) 
 
 ## Tào
 
+```{r, warning=FALSE, message=FALSE}
+tao_sff <- dat_sff %>% mutate(prop.tao=(sum(subset(., Ho=="Tào")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tào")
+tao_plot <- tao_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.tao, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+tao_plot$centroid <- sf::st_transform(tao_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+tao <- tao_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Ban Hon" & NAME_2=="Tam Duong"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.tao=as.numeric(round(prop.tao, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.tao, area_km, songuoi_km, lng, lat, distm_km)
+
+tao_peak <- tao_plot %>% filter(NAME_3=="Xa Ban Hon" & NAME_2=="Tam Duong")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 tao_sf <- dat_sf %>% mutate(prop.tao=(sum(subset(., Ho=="Tào")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tào")
 tao_plot <- tao_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.tao, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=tao_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=tao_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(tao_plot$prop.tao[1],2), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -11016,14 +12012,46 @@ ggplot() + geom_sf() + geom_sf(data=tao_plotf, aes(fill=songuoi_km), color=NA) +
 
 ## Thạch
 
+```{r, warning=FALSE, message=FALSE}
+thach_sff <- dat_sff %>% mutate(prop.thach=(sum(subset(., Ho=="Thạch")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Thạch")
+thach_plot <- thach_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.thach, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+thach_plot$centroid <- sf::st_transform(thach_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+thach <- thach_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Chau Dien" & NAME_2=="Cau Ke"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.thach=as.numeric(round(prop.thach, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.thach, area_km, songuoi_km, lng, lat, distm_km)
+
+thach_peak <- thach_plot %>% filter(NAME_3=="Xa Chau Dien" & NAME_2=="Cau Ke")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 thach_sf <- dat_sf %>% mutate(prop.thach=(sum(subset(., Ho=="Thạch")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Thạch")
 thach_plot <- thach_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.thach, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=thach_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=thach_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(thach_plot$prop.thach[1],1), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -11048,14 +12076,46 @@ ggplot() + geom_sf() + geom_sf(data=thach_plotf, aes(fill=songuoi_km), color=NA)
 
 ## Thái
 
+```{r, warning=FALSE, message=FALSE}
+thai_sff <- dat_sff %>% mutate(prop.thai=(sum(subset(., Ho=="Thái")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Thái")
+thai_plot <- thai_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.thai, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+thai_plot$centroid <- sf::st_transform(thai_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+thai <- thai_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Hoa Son" & NAME_2=="Do Luong"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.thai=as.numeric(round(prop.thai, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.thai, area_km, songuoi_km, lng, lat, distm_km)
+
+thai_peak <- thai_plot %>% filter(NAME_3=="Xa Hoa Son" & NAME_2=="Do Luong")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 thai_sf <- dat_sf %>% mutate(prop.thai=(sum(subset(., Ho=="Thái")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Thái")
 thai_plot <- thai_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.thai, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=thai_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=thai_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(thai_plot$prop.thai[1],1), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -11080,14 +12140,46 @@ ggplot() + geom_sf() + geom_sf(data=thai_plotf, aes(fill=songuoi_km), color=NA) 
 
 ## Thân
 
+```{r, warning=FALSE, message=FALSE}
+than_sff <- dat_sff %>% mutate(prop.than=(sum(subset(., Ho=="Thân")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Thân")
+than_plot <- than_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.than, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+than_plot$centroid <- sf::st_transform(than_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+than <- than_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Hong Thai" & NAME_2=="Viet Yen"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.than=as.numeric(round(prop.than, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.than, area_km, songuoi_km, lng, lat, distm_km)
+
+than_peak <- than_plot %>% filter(NAME_3=="Xa Hong Thai" & NAME_2=="Viet Yen")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 than_sf <- dat_sf %>% mutate(prop.than=(sum(subset(., Ho=="Thân")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Thân")
 than_plot <- than_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.than, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=than_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=than_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(than_plot$prop.than[1],1), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -11112,14 +12204,46 @@ ggplot() + geom_sf() + geom_sf(data=than_plotf, aes(fill=songuoi_km), color=NA) 
 
 ## Thào
 
+```{r, warning=FALSE, message=FALSE}
+thao_sff <- dat_sff %>% mutate(prop.thao=(sum(subset(., Ho=="Thào")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Thào")
+thao_plot <- thao_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.thao, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+thao_plot$centroid <- sf::st_transform(thao_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+thao <- thao_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Pa Lau" & NAME_2=="Tram Tau"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.thao=as.numeric(round(prop.thao, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.thao, area_km, songuoi_km, lng, lat, distm_km)
+
+thao_peak <- thao_plot %>% filter(NAME_3=="Xa Pa Lau" & NAME_2=="Tram Tau")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 thao_sf <- dat_sf %>% mutate(prop.thao=(sum(subset(., Ho=="Thào")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Thào")
 thao_plot <- thao_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.thao, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=thao_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=thao_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(thao_plot$prop.thao[1],1), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -11144,14 +12268,46 @@ ggplot() + geom_sf() + geom_sf(data=thao_plotf, aes(fill=songuoi_km), color=NA) 
 
 ## Thèn
 
+```{r, warning=FALSE, message=FALSE}
+then_sff <- dat_sff %>% mutate(prop.then=(sum(subset(., Ho=="Thèn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Thèn")
+then_plot <- then_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.then, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+then_plot$centroid <- sf::st_transform(then_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+then <- then_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Ban Nhung" & NAME_2=="Hoang Su Phi"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.then=as.numeric(round(prop.then, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.then, area_km, songuoi_km, lng, lat, distm_km)
+
+then_peak <- then_plot %>% filter(NAME_3=="Xa Ban Nhung" & NAME_2=="Hoang Su Phi")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 then_sf <- dat_sf %>% mutate(prop.then=(sum(subset(., Ho=="Thèn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Thèn")
 then_plot <- then_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.then, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=then_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=then_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(then_plot$prop.then[1],2), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -11176,14 +12332,46 @@ ggplot() + geom_sf() + geom_sf(data=then_plotf, aes(fill=songuoi_km), color=NA) 
 
 ## Thi
 
+```{r, warning=FALSE, message=FALSE}
+thi_sff <- dat_sff %>% mutate(prop.thi=(sum(subset(., Ho=="Thi")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Thi")
+thi_plot <- thi_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.thi, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+thi_plot$centroid <- sf::st_transform(thi_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+thi <- thi_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Xuan Le" & NAME_2=="Loc Binh"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.thi=as.numeric(round(prop.thi, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.thi, area_km, songuoi_km, lng, lat, distm_km)
+
+thi_peak <- thi_plot %>% filter(NAME_3=="Xa Xuan Le" & NAME_2=="Loc Binh")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 thi_sf <- dat_sf %>% mutate(prop.thi=(sum(subset(., Ho=="Thi")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Thi")
 thi_plot <- thi_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.thi, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=thi_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=thi_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(thi_plot$prop.thi[1],2), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -11208,14 +12396,46 @@ ggplot() + geom_sf() + geom_sf(data=thi_plotf, aes(fill=songuoi_km), color=NA) +
 
 ## Thị
 
+```{r, warning=FALSE, message=FALSE}
+thi1_sff <- dat_sff %>% mutate(prop.thi1=(sum(subset(., Ho=="Thị")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Thị")
+thi1_plot <- thi1_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.thi1, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+thi1_plot$centroid <- sf::st_transform(thi1_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+thi1 <- thi1_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Cam Thinh Tay" & NAME_2=="Cam Ranh"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.thi1=as.numeric(round(prop.thi1, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.thi1, area_km, songuoi_km, lng, lat, distm_km)
+
+thi1_peak <- thi1_plot %>% filter(NAME_3=="Xa Cam Thinh Tay" & NAME_2=="Cam Ranh")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 thi1_sf <- dat_sf %>% mutate(prop.thi1=(sum(subset(., Ho=="Thị")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Thị")
 thi1_plot <- thi1_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.thi1, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=thi1_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=thi1_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(thi1_plot$prop.thi1[1],1), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -11240,14 +12460,46 @@ ggplot() + geom_sf() + geom_sf(data=thi1_plotf, aes(fill=songuoi_km), color=NA) 
 
 ## Thiều
 
+```{r, warning=FALSE, message=FALSE}
+thieu_sff <- dat_sff %>% mutate(prop.thieu=(sum(subset(., Ho=="Thiều")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Thiều")
+thieu_plot <- thieu_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.thieu, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+thieu_plot$centroid <- sf::st_transform(thieu_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+thieu <- thieu_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Dong Tien" & NAME_2=="Dong Son"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.thieu=as.numeric(round(prop.thieu, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.thieu, area_km, songuoi_km, lng, lat, distm_km)
+
+thieu_peak <- thieu_plot %>% filter(NAME_3=="Xa Dong Tien" & NAME_2=="Dong Son")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 thieu_sf <- dat_sf %>% mutate(prop.thieu=(sum(subset(., Ho=="Thiều")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Thiều")
 thieu_plot <- thieu_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.thieu, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=thieu_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=thieu_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(thieu_plot$prop.thieu[1],2), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -11272,14 +12524,46 @@ ggplot() + geom_sf() + geom_sf(data=thieu_plotf, aes(fill=songuoi_km), color=NA)
 
 ## Thò
 
+```{r, warning=FALSE, message=FALSE}
+tho_sff <- dat_sff %>% mutate(prop.tho=(sum(subset(., Ho=="Thò")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Thò")
+tho_plot <- tho_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.tho, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+tho_plot$centroid <- sf::st_transform(tho_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+tho <- tho_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Sung Trai" & NAME_2=="Dong Van"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.tho=as.numeric(round(prop.tho, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.tho, area_km, songuoi_km, lng, lat, distm_km)
+
+tho_peak <- tho_plot %>% filter(NAME_3=="Xa Sung Trai" & NAME_2=="Dong Van")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 tho_sf <- dat_sf %>% mutate(prop.tho=(sum(subset(., Ho=="Thò")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Thò")
 tho_plot <- tho_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.tho, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=tho_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=tho_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(tho_plot$prop.tho[1],2), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -11304,14 +12588,46 @@ ggplot() + geom_sf() + geom_sf(data=tho_plotf, aes(fill=songuoi_km), color=NA) +
 
 ## Tiêu
 
+```{r, warning=FALSE, message=FALSE}
+tieu_sff <- dat_sff %>% mutate(prop.tieu=(sum(subset(., Ho=="Tiêu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tiêu")
+tieu_plot <- tieu_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.tieu, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+tieu_plot$centroid <- sf::st_transform(tieu_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+tieu <- tieu_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Cam Che" & NAME_2=="Thanh Ha"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.tieu=as.numeric(round(prop.tieu, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.tieu, area_km, songuoi_km, lng, lat, distm_km)
+
+tieu_peak <- tieu_plot %>% filter(NAME_3=="Xa Cam Che" & NAME_2=="Thanh Ha")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 tieu_sf <- dat_sf %>% mutate(prop.tieu=(sum(subset(., Ho=="Tiêu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tiêu")
 tieu_plot <- tieu_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.tieu, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=tieu_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=tieu_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(tieu_plot$prop.tieu[1],2), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -11336,14 +12652,46 @@ ggplot() + geom_sf() + geom_sf(data=tieu_plotf, aes(fill=songuoi_km), color=NA) 
 
 ## Tô
 
+```{r, warning=FALSE, message=FALSE}
+to_sff <- dat_sff %>% mutate(prop.to=(sum(subset(., Ho=="Tô")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tô")
+to_plot <- to_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.to, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+to_plot$centroid <- sf::st_transform(to_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+to <- to_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Quang Thai" & NAME_2=="Quang Xuong"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.to=as.numeric(round(prop.to, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.to, area_km, songuoi_km, lng, lat, distm_km)
+
+to_peak <- to_plot %>% filter(NAME_3=="Xa Quang Thai" & NAME_2=="Quang Xuong")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 to_sf <- dat_sf %>% mutate(prop.to=(sum(subset(., Ho=="Tô")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tô")
 to_plot <- to_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.to, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=to_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=to_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(to_plot$prop.to[1],1), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -11368,14 +12716,46 @@ ggplot() + geom_sf() + geom_sf(data=to_plotf, aes(fill=songuoi_km), color=NA) +
 
 ## Tôn
 
+```{r, warning=FALSE, message=FALSE}
+ton_sff <- dat_sff %>% mutate(prop.ton=(sum(subset(., Ho=="Tôn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tôn")
+ton_plot <- ton_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.ton, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+ton_plot$centroid <- sf::st_transform(ton_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+ton <- ton_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Vuong Loc" & NAME_2=="Can Loc"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.ton=as.numeric(round(prop.ton, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.ton, area_km, songuoi_km, lng, lat, distm_km)
+
+ton_peak <- ton_plot %>% filter(NAME_3=="Xa Vuong Loc" & NAME_2=="Can Loc")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 ton_sf <- dat_sf %>% mutate(prop.ton=(sum(subset(., Ho=="Tôn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tôn")
 ton_plot <- ton_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.ton, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=ton_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=ton_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(ton_plot$prop.ton[1],2), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -11400,14 +12780,46 @@ ggplot() + geom_sf() + geom_sf(data=ton_plotf, aes(fill=songuoi_km), color=NA) +
 
 ## Tòng
 
+```{r, warning=FALSE, message=FALSE}
+tong_sff <- dat_sff %>% mutate(prop.tong=(sum(subset(., Ho=="Tòng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tòng")
+tong_plot <- tong_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.tong, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+tong_plot$centroid <- sf::st_transform(tong_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+tong <- tong_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Dom Cang" & NAME_2=="Sop Cop"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.tong=as.numeric(round(prop.tong, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.tong, area_km, songuoi_km, lng, lat, distm_km)
+
+tong_peak <- tong_plot %>% filter(NAME_3=="Xa Dom Cang" & NAME_2=="Sop Cop")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 tong_sf <- dat_sf %>% mutate(prop.tong=(sum(subset(., Ho=="Tòng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tòng")
 tong_plot <- tong_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.tong, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=tong_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=tong_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(tong_plot$prop.tong[1],1), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -11432,14 +12844,46 @@ ggplot() + geom_sf() + geom_sf(data=tong_plotf, aes(fill=songuoi_km), color=NA) 
 
 ## Tống
 
+```{r, warning=FALSE, message=FALSE}
+tong1_sff <- dat_sff %>% mutate(prop.tong1=(sum(subset(., Ho=="Tống")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tống")
+tong1_plot <- tong1_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.tong1, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+tong1_plot$centroid <- sf::st_transform(tong1_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+tong1 <- tong1_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Ha Bac" & NAME_2=="Ha Trung"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.tong1=as.numeric(round(prop.tong1, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.tong1, area_km, songuoi_km, lng, lat, distm_km)
+
+tong1_peak <- tong1_plot %>% filter(NAME_3=="Xa Ha Bac" & NAME_2=="Ha Trung")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 tong1_sf <- dat_sf %>% mutate(prop.tong1=(sum(subset(., Ho=="Tống")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tống")
 tong1_plot <- tong1_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.tong1, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=tong1_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=tong1_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(tong1_plot$prop.tong1[1],1), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -11464,14 +12908,46 @@ ggplot() + geom_sf() + geom_sf(data=tong1_plotf, aes(fill=songuoi_km), color=NA)
 
 ## Trà
 
+```{r, warning=FALSE, message=FALSE}
+tra_sff <- dat_sff %>% mutate(prop.tra=(sum(subset(., Ho=="Trà")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Trà")
+tra_plot <- tra_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.tra, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+tra_plot$centroid <- sf::st_transform(tra_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+tra <- tra_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Binh Dinh Bac" & NAME_2=="Thang Binh"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.tra=as.numeric(round(prop.tra, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.tra, area_km, songuoi_km, lng, lat, distm_km)
+
+tra_peak <- tra_plot %>% filter(NAME_3=="Xa Binh Dinh Bac" & NAME_2=="Thang Binh")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 tra_sf <- dat_sf %>% mutate(prop.tra=(sum(subset(., Ho=="Trà")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Trà")
 tra_plot <- tra_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.tra, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=tra_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=tra_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(tra_plot$prop.tra[1],2), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -11496,14 +12972,46 @@ ggplot() + geom_sf() + geom_sf(data=tra_plotf, aes(fill=songuoi_km), color=NA) +
 
 ## Trần
 
+```{r, warning=FALSE, message=FALSE}
+tran_sff <- dat_sff %>% mutate(prop.tran=(sum(subset(., Ho=="Trần")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Trần")
+tran_plot <- tran_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.tran, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+tran_plot$centroid <- sf::st_transform(tran_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+tran <- tran_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Hoa Hau" & NAME_2=="Ly Nhan"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.tran=as.numeric(round(prop.tran, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.tran, area_km, songuoi_km, lng, lat, distm_km)
+
+tran_peak <- tran_plot %>% filter(NAME_3=="Xa Hoa Hau" & NAME_2=="Ly Nhan")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 tran_sf <- dat_sf %>% mutate(prop.tran=(sum(subset(., Ho=="Trần")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Trần")
 tran_plot <- tran_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.tran, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=tran_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=tran_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(tran_plot$prop.tran[1],1), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -11528,14 +13036,46 @@ ggplot() + geom_sf() + geom_sf(data=tran_plotf, aes(fill=songuoi_km), color=NA) 
 
 ## Tráng
 
+```{r, warning=FALSE, message=FALSE}
+trang_sff <- dat_sff %>% mutate(prop.trang=(sum(subset(., Ho=="Tráng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tráng")
+trang_plot <- trang_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.trang, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+trang_plot$centroid <- sf::st_transform(trang_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+trang <- trang_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Ta Van Chu" & NAME_2=="Bac Ha"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.trang=as.numeric(round(prop.trang, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.trang, area_km, songuoi_km, lng, lat, distm_km)
+
+trang_peak <- trang_plot %>% filter(NAME_3=="Xa Ta Van Chu" & NAME_2=="Bac Ha")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 trang_sf <- dat_sf %>% mutate(prop.trang=(sum(subset(., Ho=="Tráng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tráng")
 trang_plot <- trang_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.trang, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=trang_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=trang_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(trang_plot$prop.trang[1],2), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -11560,14 +13100,46 @@ ggplot() + geom_sf() + geom_sf(data=trang_plotf, aes(fill=songuoi_km), color=NA)
 
 ## Triệu
 
+```{r, warning=FALSE, message=FALSE}
+trieu_sff <- dat_sff %>% mutate(prop.trieu=(sum(subset(., Ho=="Triệu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Triệu")
+trieu_plot <- trieu_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.trieu, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+trieu_plot$centroid <- sf::st_transform(trieu_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+trieu <- trieu_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Vinh Tien" & NAME_2=="Trang Dinh"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.trieu=as.numeric(round(prop.trieu, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.trieu, area_km, songuoi_km, lng, lat, distm_km)
+
+trieu_peak <- trieu_plot %>% filter(NAME_3=="Xa Vinh Tien" & NAME_2=="Trang Dinh")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 trieu_sf <- dat_sf %>% mutate(prop.trieu=(sum(subset(., Ho=="Triệu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Triệu")
 trieu_plot <- trieu_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.trieu, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=trieu_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=trieu_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(trieu_plot$prop.trieu[1],1), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -11592,14 +13164,46 @@ ggplot() + geom_sf() + geom_sf(data=trieu_plotf, aes(fill=songuoi_km), color=NA)
 
 ## Trinh
 
+```{r, warning=FALSE, message=FALSE}
+trinh_sff <- dat_sff %>% mutate(prop.trinh=(sum(subset(., Ho=="Trinh")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Trinh")
+trinh_plot <- trinh_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.trinh, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+trinh_plot$centroid <- sf::st_transform(trinh_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+trinh <- trinh_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Nga Van" & NAME_2=="Nga Son"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.trinh=as.numeric(round(prop.trinh, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.trinh, area_km, songuoi_km, lng, lat, distm_km)
+
+trinh_peak <- trinh_plot %>% filter(NAME_3=="Xa Nga Van" & NAME_2=="Nga Son")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 trinh_sf <- dat_sf %>% mutate(prop.trinh=(sum(subset(., Ho=="Trinh")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Trinh")
 trinh_plot <- trinh_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.trinh, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=trinh_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=trinh_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(trinh_plot$prop.trinh[1],2), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -11624,14 +13228,46 @@ ggplot() + geom_sf() + geom_sf(data=trinh_plotf, aes(fill=songuoi_km), color=NA)
 
 ## Trình
 
+```{r, warning=FALSE, message=FALSE}
+trinh1_sff <- dat_sff %>% mutate(prop.trinh1=(sum(subset(., Ho=="Trình")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Trình")
+trinh1_plot <- trinh1_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.trinh1, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+trinh1_plot$centroid <- sf::st_transform(trinh1_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+trinh1 <- trinh1_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Lam Loi" & NAME_2=="Ha Hoa"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.trinh1=as.numeric(round(prop.trinh1, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.trinh1, area_km, songuoi_km, lng, lat, distm_km)
+
+trinh1_peak <- trinh1_plot %>% filter(NAME_3=="Xa Lam Loi" & NAME_2=="Ha Hoa")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 trinh1_sf <- dat_sf %>% mutate(prop.trinh1=(sum(subset(., Ho=="Trình")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Trình")
 trinh1_plot <- trinh1_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.trinh1, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=trinh1_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=trinh1_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(trinh1_plot$prop.trinh1[1],2), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -11656,14 +13292,46 @@ ggplot() + geom_sf() + geom_sf(data=trinh1_plotf, aes(fill=songuoi_km), color=NA
 
 ## Trịnh
 
+```{r, warning=FALSE, message=FALSE}
+trinh2_sff <- dat_sff %>% mutate(prop.trinh2=(sum(subset(., Ho=="Trịnh")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Trịnh")
+trinh2_plot <- trinh2_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.trinh2, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+trinh2_plot$centroid <- sf::st_transform(trinh2_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+trinh2 <- trinh2_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Tho Truong" & NAME_2=="Tho Xuan"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.trinh2=as.numeric(round(prop.trinh2, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.trinh2, area_km, songuoi_km, lng, lat, distm_km)
+
+trinh2_peak <- trinh2_plot %>% filter(NAME_3=="Xa Tho Truong" & NAME_2=="Tho Xuan")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 trinh2_sf <- dat_sf %>% mutate(prop.trinh2=(sum(subset(., Ho=="Trịnh")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Trịnh")
 trinh2_plot <- trinh2_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.trinh2, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=trinh2_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=trinh2_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(trinh2_plot$prop.trinh2[1],1), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -11688,14 +13356,46 @@ ggplot() + geom_sf() + geom_sf(data=trinh2_plotf, aes(fill=songuoi_km), color=NA
 
 ## Trương
 
+```{r, warning=FALSE, message=FALSE}
+truong_sff <- dat_sff %>% mutate(prop.truong=(sum(subset(., Ho=="Trương")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Trương")
+truong_plot <- truong_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.truong, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+truong_plot$centroid <- sf::st_transform(truong_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+truong <- truong_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Ha Trung" & NAME_2=="Ba Thuoc"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.truong=as.numeric(round(prop.truong, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.truong, area_km, songuoi_km, lng, lat, distm_km)
+
+truong_peak <- truong_plot %>% filter(NAME_3=="Xa Ha Trung" & NAME_2=="Ba Thuoc")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 truong_sf <- dat_sf %>% mutate(prop.truong=(sum(subset(., Ho=="Trương")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Trương")
 truong_plot <- truong_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.truong, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=truong_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=truong_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(truong_plot$prop.truong[1],1), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -11720,14 +13420,46 @@ ggplot() + geom_sf() + geom_sf(data=truong_plotf, aes(fill=songuoi_km), color=NA
 
 ## Từ
 
+```{r, warning=FALSE, message=FALSE}
+tu_sff <- dat_sff %>% mutate(prop.tu=(sum(subset(., Ho=="Từ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Từ")
+tu_plot <- tu_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.tu, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+tu_plot$centroid <- sf::st_transform(tu_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+tu <- tu_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Quang Kim" & NAME_2=="Quang Trach"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.tu=as.numeric(round(prop.tu, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.tu, area_km, songuoi_km, lng, lat, distm_km)
+
+tu_peak <- tu_plot %>% filter(NAME_3=="Xa Quang Kim" & NAME_2=="Quang Trach")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 tu_sf <- dat_sf %>% mutate(prop.tu=(sum(subset(., Ho=="Từ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Từ")
 tu_plot <- tu_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.tu, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=tu_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=tu_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(tu_plot$prop.tu[1],1), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -11752,14 +13484,46 @@ ggplot() + geom_sf() + geom_sf(data=tu_plotf, aes(fill=songuoi_km), color=NA) +
 
 ## Tưởng
 
+```{r, warning=FALSE, message=FALSE}
+tuong_sff <- dat_sff %>% mutate(prop.tuong=(sum(subset(., Ho=="Tưởng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tưởng")
+tuong_plot <- tuong_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.tuong, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+tuong_plot$centroid <- sf::st_transform(tuong_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+tuong <- tuong_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Quang Tung" & NAME_2=="Quang Trach"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.tuong=as.numeric(round(prop.tuong, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.tuong, area_km, songuoi_km, lng, lat, distm_km)
+
+tuong_peak <- tuong_plot %>% filter(NAME_3=="Xa Quang Tung" & NAME_2=="Quang Trach")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 tuong_sf <- dat_sf %>% mutate(prop.tuong=(sum(subset(., Ho=="Tưởng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tưởng")
 tuong_plot <- tuong_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.tuong, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=tuong_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=tuong_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(tuong_plot$prop.tuong[1],2), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -11784,14 +13548,46 @@ ggplot() + geom_sf() + geom_sf(data=tuong_plotf, aes(fill=songuoi_km), color=NA)
 
 ## Ung
 
+```{r, warning=FALSE, message=FALSE}
+ung_sff <- dat_sff %>% mutate(prop.ung=(sum(subset(., Ho=="Ung")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ung")
+ung_plot <- ung_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.ung, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+ung_plot$centroid <- sf::st_transform(ung_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+ung <- ung_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Nhi Son" & NAME_2=="Muong Lat"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.ung=as.numeric(round(prop.ung, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.ung, area_km, songuoi_km, lng, lat, distm_km)
+
+ung_peak <- ung_plot %>% filter(NAME_3=="Xa Nhi Son" & NAME_2=="Muong Lat")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 ung_sf <- dat_sf %>% mutate(prop.ung=(sum(subset(., Ho=="Ung")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ung")
 ung_plot <- ung_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.ung, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=ung_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=ung_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(ung_plot$prop.ung[1],1), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -11816,14 +13612,46 @@ ggplot() + geom_sf() + geom_sf(data=ung_plotf, aes(fill=songuoi_km), color=NA) +
 
 ## Uông
 
+```{r, warning=FALSE, message=FALSE}
+uong_sff <- dat_sff %>% mutate(prop.uong=(sum(subset(., Ho=="Uông")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Uông")
+uong_plot <- uong_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.uong, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+uong_plot$centroid <- sf::st_transform(uong_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+uong <- uong_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Son Phuc" & NAME_2=="Huong Son"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.uong=as.numeric(round(prop.uong, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.uong, area_km, songuoi_km, lng, lat, distm_km)
+
+uong_peak <- uong_plot %>% filter(NAME_3=="Xa Son Phuc" & NAME_2=="Huong Son")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 uong_sf <- dat_sf %>% mutate(prop.uong=(sum(subset(., Ho=="Uông")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Uông")
 uong_plot <- uong_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.uong, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=uong_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=uong_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(uong_plot$prop.uong[1],2), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -11848,14 +13676,46 @@ ggplot() + geom_sf() + geom_sf(data=uong_plotf, aes(fill=songuoi_km), color=NA) 
 
 ## Và
 
+```{r, warning=FALSE, message=FALSE}
+va_sff <- dat_sff %>% mutate(prop.va=(sum(subset(., Ho=="Và")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Và")
+va_plot <- va_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.va, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+va_plot$centroid <- sf::st_transform(va_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+va <- va_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Na U" & NAME_2=="Dien Bien"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.va=as.numeric(round(prop.va, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.va, area_km, songuoi_km, lng, lat, distm_km)
+
+va_peak <- va_plot %>% filter(NAME_3=="Xa Na U" & NAME_2=="Dien Bien")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 va_sf <- dat_sf %>% mutate(prop.va=(sum(subset(., Ho=="Và")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Và")
 va_plot <- va_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.va, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=va_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=va_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(va_plot$prop.va[1],2), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -11880,14 +13740,46 @@ ggplot() + geom_sf() + geom_sf(data=va_plotf, aes(fill=songuoi_km), color=NA) +
 
 ## Văn
 
+```{r, warning=FALSE, message=FALSE}
+van_sff <- dat_sff %>% mutate(prop.van=(sum(subset(., Ho=="Văn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Văn")
+van_plot <- van_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.van, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+van_plot$centroid <- sf::st_transform(van_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+van <- van_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Thanh Khai" & NAME_2=="Thanh Chuong"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.van=as.numeric(round(prop.van, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.van, area_km, songuoi_km, lng, lat, distm_km)
+
+van_peak <- van_plot %>% filter(NAME_3=="Xa Thanh Khai" & NAME_2=="Thanh Chuong")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 van_sf <- dat_sf %>% mutate(prop.van=(sum(subset(., Ho=="Văn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Văn")
 van_plot <- van_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.van, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=van_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=van_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(van_plot$prop.van[1],1), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -11912,14 +13804,46 @@ ggplot() + geom_sf() + geom_sf(data=van_plotf, aes(fill=songuoi_km), color=NA) +
 
 ## Vàng
 
+```{r, warning=FALSE, message=FALSE}
+vang_sff <- dat_sff %>% mutate(prop.vang=(sum(subset(., Ho=="Vàng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Vàng")
+vang_plot <- vang_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.vang, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+vang_plot$centroid <- sf::st_transform(vang_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+vang <- vang_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Hang Lia" & NAME_2=="Dien Bien Dong"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.vang=as.numeric(round(prop.vang, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.vang, area_km, songuoi_km, lng, lat, distm_km)
+
+vang_peak <- vang_plot %>% filter(NAME_3=="Xa Hang Lia" & NAME_2=="Dien Bien Dong")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 vang_sf <- dat_sf %>% mutate(prop.vang=(sum(subset(., Ho=="Vàng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Vàng")
 vang_plot <- vang_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.vang, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=vang_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=vang_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(vang_plot$prop.vang[1],1), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -11944,14 +13868,46 @@ ggplot() + geom_sf() + geom_sf(data=vang_plotf, aes(fill=songuoi_km), color=NA) 
 
 ## Vi
 
+```{r, warning=FALSE, message=FALSE}
+vi_sff <- dat_sff %>% mutate(prop.vi=(sum(subset(., Ho=="Vi")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Vi")
+vi_plot <- vi_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.vi, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+vi_plot$centroid <- sf::st_transform(vi_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+vi <- vi_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Dong Thanh" & NAME_2=="Thanh Ba"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.vi=as.numeric(round(prop.vi, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.vi, area_km, songuoi_km, lng, lat, distm_km)
+
+vi_peak <- vi_plot %>% filter(NAME_3=="Xa Dong Thanh" & NAME_2=="Thanh Ba")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 vi_sf <- dat_sf %>% mutate(prop.vi=(sum(subset(., Ho=="Vi")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Vi")
 vi_plot <- vi_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.vi, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=vi_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=vi_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(vi_plot$prop.vi[1],1), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -11976,14 +13932,46 @@ ggplot() + geom_sf() + geom_sf(data=vi_plotf, aes(fill=songuoi_km), color=NA) +
 
 ## Vì
 
+```{r, warning=FALSE, message=FALSE}
+vi1_sff <- dat_sff %>% mutate(prop.vi1=(sum(subset(., Ho=="Vì")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Vì")
+vi1_plot <- vi1_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.vi1, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+vi1_plot$centroid <- sf::st_transform(vi1_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+vi1 <- vi1_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Chieng On" & NAME_2=="Yen Chau"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.vi1=as.numeric(round(prop.vi1, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.vi1, area_km, songuoi_km, lng, lat, distm_km)
+
+vi1_peak <- vi1_plot %>% filter(NAME_3=="Xa Chieng On" & NAME_2=="Yen Chau")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 vi1_sf <- dat_sf %>% mutate(prop.vi1=(sum(subset(., Ho=="Vì")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Vì")
 vi1_plot <- vi1_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.vi1, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=vi1_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=vi1_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(vi1_plot$prop.vi1[1],1), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -12008,14 +13996,46 @@ ggplot() + geom_sf() + geom_sf(data=vi1_plotf, aes(fill=songuoi_km), color=NA) +
 
 ## Võ
 
+```{r, warning=FALSE, message=FALSE}
+vo_sff <- dat_sff %>% mutate(prop.vo=(sum(subset(., Ho=="Võ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Võ")
+vo_plot <- vo_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.vo, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+vo_plot$centroid <- sf::st_transform(vo_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+vo <- vo_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Thien Loc" & NAME_2=="Can Loc"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.vo=as.numeric(round(prop.vo, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.vo, area_km, songuoi_km, lng, lat, distm_km)
+
+vo_peak <- vo_plot %>% filter(NAME_3=="Xa Thien Loc" & NAME_2=="Can Loc")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 vo_sf <- dat_sf %>% mutate(prop.vo=(sum(subset(., Ho=="Võ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Võ")
 vo_plot <- vo_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.vo, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=vo_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=vo_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(vo_plot$prop.vo[1],1), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -12040,14 +14060,46 @@ ggplot() + geom_sf() + geom_sf(data=vo_plotf, aes(fill=songuoi_km), color=NA) +
 
 ## Vòng
 
+```{r, warning=FALSE, message=FALSE}
+vong_sff <- dat_sff %>% mutate(prop.vong=(sum(subset(., Ho=="Vòng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Vòng")
+vong_plot <- vong_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.vong, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+vong_plot$centroid <- sf::st_transform(vong_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+vong <- vong_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Quang Son" & NAME_2=="Hai Ha"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.vong=as.numeric(round(prop.vong, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.vong, area_km, songuoi_km, lng, lat, distm_km)
+
+vong_peak <- vong_plot %>% filter(NAME_3=="Xa Quang Son" & NAME_2=="Hai Ha")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 vong_sf <- dat_sf %>% mutate(prop.vong=(sum(subset(., Ho=="Vòng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Vòng")
 vong_plot <- vong_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.vong, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=vong_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=vong_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(vong_plot$prop.vong[1],2), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -12072,14 +14124,46 @@ ggplot() + geom_sf() + geom_sf(data=vong_plotf, aes(fill=songuoi_km), color=NA) 
 
 ## Vu
 
+```{r, warning=FALSE, message=FALSE}
+vu1_sff <- dat_sff %>% mutate(prop.vu1=(sum(subset(., Ho=="Vu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Vu")
+vu1_plot <- vu1_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.vu1, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+vu1_plot$centroid <- sf::st_transform(vu1_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+vu1 <- vu1_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Thai Tho" & NAME_2=="Thai Thuy"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.vu1=as.numeric(round(prop.vu1, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.vu1, area_km, songuoi_km, lng, lat, distm_km)
+
+vu1_peak <- vu1_plot %>% filter(NAME_3=="Xa Thai Tho" & NAME_2=="Thai Thuy")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 vu1_sf <- dat_sf %>% mutate(prop.vu1=(sum(subset(., Ho=="Vu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Vu")
 vu1_plot <- vu1_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.vu1, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=vu1_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=vu1_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(vu1_plot$prop.vu1[1],2), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -12104,14 +14188,46 @@ ggplot() + geom_sf() + geom_sf(data=vu1_plotf, aes(fill=songuoi_km), color=NA) +
 
 ## Vũ
 
+```{r, warning=FALSE, message=FALSE}
+vu_sff <- dat_sff %>% mutate(prop.vu=(sum(subset(., Ho=="Vũ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Vũ")
+vu_plot <- vu_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.vu, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+vu_plot$centroid <- sf::st_transform(vu_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+vu <- vu_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Chi Lang Bac" & NAME_2=="Thanh Mien"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.vu=as.numeric(round(prop.vu, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.vu, area_km, songuoi_km, lng, lat, distm_km)
+
+vu_peak <- vu_plot %>% filter(NAME_3=="Xa Chi Lang Bac" & NAME_2=="Thanh Mien")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 vu_sf <- dat_sf %>% mutate(prop.vu=(sum(subset(., Ho=="Vũ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Vũ")
 vu_plot <- vu_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.vu, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=vu_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=vu_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(vu_plot$prop.vu[1],1), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -12136,14 +14252,46 @@ ggplot() + geom_sf() + geom_sf(data=vu_plotf, aes(fill=songuoi_km), color=NA) +
 
 ## Vừ
 
+```{r, warning=FALSE, message=FALSE}
+vu2_sff <- dat_sff %>% mutate(prop.vu2=(sum(subset(., Ho=="Vừ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Vừ")
+vu2_plot <- vu2_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.vu2, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+vu2_plot$centroid <- sf::st_transform(vu2_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+vu2 <- vu2_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Tay Son" & NAME_2=="Ky Son"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.vu2=as.numeric(round(prop.vu2, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.vu2, area_km, songuoi_km, lng, lat, distm_km)
+
+vu2_peak <- vu2_plot %>% filter(NAME_3=="Xa Tay Son" & NAME_2=="Ky Son")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 vu2_sf <- dat_sf %>% mutate(prop.vu2=(sum(subset(., Ho=="Vừ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Vừ")
 vu2_plot <- vu2_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.vu2, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=vu2_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=vu2_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(vu2_plot$prop.vu2[1],1), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -12168,14 +14316,46 @@ ggplot() + geom_sf() + geom_sf(data=vu2_plotf, aes(fill=songuoi_km), color=NA) +
 
 ## Vương
 
+```{r, warning=FALSE, message=FALSE}
+vuong_sff <- dat_sff %>% mutate(prop.vuong=(sum(subset(., Ho=="Vương")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Vương")
+vuong_plot <- vuong_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.vuong, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+vuong_plot$centroid <- sf::st_transform(vuong_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+vuong <- vuong_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Cong Hoa" & NAME_2=="Quoc Oai"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.vuong=as.numeric(round(prop.vuong, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.vuong, area_km, songuoi_km, lng, lat, distm_km)
+
+vuong_peak <- vuong_plot %>% filter(NAME_3=="Xa Cong Hoa" & NAME_2=="Quoc Oai")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 vuong_sf <- dat_sf %>% mutate(prop.vuong=(sum(subset(., Ho=="Vương")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Vương")
 vuong_plot <- vuong_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.vuong, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=vuong_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=vuong_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(vuong_plot$prop.vuong[1],1), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -12200,14 +14380,46 @@ ggplot() + geom_sf() + geom_sf(data=vuong_plotf, aes(fill=songuoi_km), color=NA)
 
 ## Xa
 
+```{r, warning=FALSE, message=FALSE}
+xa_sff <- dat_sff %>% mutate(prop.xa=(sum(subset(., Ho=="Xa")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Xa")
+xa_plot <- xa_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.xa, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+xa_plot$centroid <- sf::st_transform(xa_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+xa <- xa_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Dong Chum" & NAME_2=="Da Bac"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.xa=as.numeric(round(prop.xa, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.xa, area_km, songuoi_km, lng, lat, distm_km)
+
+xa_peak <- xa_plot %>% filter(NAME_3=="Xa Dong Chum" & NAME_2=="Da Bac")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 xa_sf <- dat_sf %>% mutate(prop.xa=(sum(subset(., Ho=="Xa")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Xa")
 xa_plot <- xa_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.xa, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=xa_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=xa_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(xa_plot$prop.xa[1],2), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -12232,14 +14444,46 @@ ggplot() + geom_sf() + geom_sf(data=xa_plotf, aes(fill=songuoi_km), color=NA) +
 
 ## Y
 
+```{r, warning=FALSE, message=FALSE}
+y_sff <- dat_sff %>% mutate(prop.y=(sum(subset(., Ho=="Y")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Y")
+y_plot <- y_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.y, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+y_plot$centroid <- sf::st_transform(y_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+y <- y_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Mang Ri" & NAME_2=="Tu Mo Rong"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.y=as.numeric(round(prop.y, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.y, area_km, songuoi_km, lng, lat, distm_km)
+
+y_peak <- y_plot %>% filter(NAME_3=="Xa Mang Ri" & NAME_2=="Tu Mo Rong")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 y_sf <- dat_sf %>% mutate(prop.y=(sum(subset(., Ho=="Y")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Y")
 y_plot <- y_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.y, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=y_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=y_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(y_plot$prop.y[1],1), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -12264,14 +14508,46 @@ ggplot() + geom_sf() + geom_sf(data=y_plotf, aes(fill=songuoi_km), color=NA) +
 
 ## Ya
 
+```{r, warning=FALSE, message=FALSE}
+ya_sff <- dat_sff %>% mutate(prop.ya=(sum(subset(., Ho=="Ya")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ya")
+ya_plot <- ya_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.ya, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+ya_plot$centroid <- sf::st_transform(ya_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+ya <- ya_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Ta Nang" & NAME_2=="Duc Trong"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.ya=as.numeric(round(prop.ya, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.ya, area_km, songuoi_km, lng, lat, distm_km)
+
+ya_peak <- ya_plot %>% filter(NAME_3=="Xa Ta Nang" & NAME_2=="Duc Trong")
+
+```
+
 ### Phân bố tỉ lệ
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 ya_sf <- dat_sf %>% mutate(prop.ya=(sum(subset(., Ho=="Ya")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ya")
 ya_plot <- ya_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.ya, geometry) %>% st_as_sf(crs = 4326)
 
 ggplot() + geom_sf() + geom_sf(data=ya_plot, aes(fill=pro.pop), color=NA) +
   geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=ya_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
   annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(ya_plot$prop.ya[1],2), "% dân số", sep = "")) +
   scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
   theme_bw() +
@@ -12293,9 +14569,6 @@ ggplot() + geom_sf() + geom_sf(data=ya_plotf, aes(fill=songuoi_km), color=NA) +
   theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
   ggtitle("Ya")
 ```
-
-
-
 
 
 
