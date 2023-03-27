@@ -2,7 +2,7 @@
 title: "Họ Việt"
 author: "Duc Du"
 date: '`r format(Sys.time(), "%d %B, %Y")`'
-output: html_document
+output: lazyhtml_document
 editor_options: 
   chunk_output_type: inline
 ---
@@ -12,10 +12,12 @@ rm(list = ls(all.names = TRUE))
 library(rmarkdown)
 library(knitr)
 library(markdown)
+library(lazyrmd)
 
 knitr::opts_chunk$set(echo = FALSE, 
                       cache=TRUE,
                       autodep = TRUE,
+                      lazy = TRUE,
                       tidy.opts=list(width.cutoff=60),
                       tidy=TRUE,
                       fig.width = 33,
@@ -1261,7 +1263,7 @@ Vậy có thể đưa ra kết luận "Các cuộc khởi nghĩa dẫn đến vi
 
 ### Dữ liệu
 
-```{r, warning=FALSE, message=FALSE}
+```{r, warning=FALSE, message=FALSE, lazy=FALSE}
 mai_sff <- dat_sff %>% mutate(prop.mai=(sum(subset(., Ho=="Mai")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Mai")
 mai_plot <- mai_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.mai, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
 mai_plot$centroid <- sf::st_transform(mai_plot, 2154) %>% 
@@ -1482,7 +1484,7 @@ Chúng ta có thể nhận thấy dòng họ Phùng chiếm vị trí sâu về 
 
 ### Dữ liệu
 
-```{r, warning=FALSE, message=FALSE}
+```{r, warning=FALSE, message=FALSE, lazy=FALSE}
 phung_sff <- dat_sff %>% mutate(prop.phung=(sum(subset(., Ho=="Phùng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phùng")
 phung_plot <- phung_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.phung, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
 phung_plot$centroid <- sf::st_transform(phung_plot, 2154) %>% 
@@ -5251,11 +5253,6 @@ hau <- hau_plot %>%
   select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.hau, area_km, songuoi_km, lng, lat, distm_km)
 
 hau_peak <- hau_plot %>% filter(NAME_3=="Xa Bat Dai Son" & NAME_2=="Quan Ba")
-
-datatable(hau, colnames = c("STT", "Tỉnh/Thành phố", "Quận/Huyện", "Phường/Xã", "Số người", "Dân số", "Tỉ lệ/xã phường", "Tỉ lệ/cả nước", "Diện tích (km2)", "Mật độ (người/km2)", "Kinh độ", "Vĩ độ", "Khoảng cách tới tâm (km)"), extensions = 'Buttons', options = list(
-    dom = 'Bfrtip',
-    buttons = c('csv', 'excel')
-  ))
 ```
 
 ### Phân bố tỉ lệ
