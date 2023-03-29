@@ -1699,6 +1699,1448 @@ plot_df <- df %>%
 plot_df
 ```
 
+## Khúc
+
+### Dữ liệu
+
+```{r, warning=FALSE, message=FALSE, lazy=FALSE}
+khuc_sff <- dat_sff %>% mutate(prop.khuc=(sum(subset(., Ho=="Khúc")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Khúc")
+khuc_plot <- khuc_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.khuc, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+khuc_plot$centroid <- sf::st_transform(khuc_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+khuc <- khuc_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Canh Tan" & NAME_2=="Hung Ha"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.khuc=as.numeric(round(prop.khuc, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.khuc, area_km, songuoi_km, lng, lat, distm_km)
+
+khuc_peak <- khuc_plot %>% filter(NAME_3=="Xa Canh Tan" & NAME_2=="Hung Ha")
+
+datatable(khuc, colnames = c("STT", "Tỉnh/Thành phố", "Quận/Huyện", "Phường/Xã", "Số người", "Dân số", "Tỉ lệ/xã phường", "Tỉ lệ/cả nước", "Diện tích (km2)", "Mật độ (người/km2)", "Kinh độ", "Vĩ độ", "Khoảng cách tới tâm (km)"), extensions = 'Buttons', options = list(
+    dom = 'Bfrtip',
+    buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
+  ))
+```
+
+### Phân bố tỉ lệ
+
+```{r, message=FALSE, warning=FALSE, lazy=TRUE}
+khuc_sf <- dat_sf %>% mutate(prop.khuc=(sum(subset(., Ho=="Khúc")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Khúc")
+khuc_plot <- khuc_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.khuc, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=khuc_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=khuc_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(khuc_plot$prop.khuc[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Khúc")
+```
+
+### Phương trình hàm phân bố tỉ lệ
+
+```{r, message=FALSE, warning=FALSE, lazy=TRUE}
+khuc <- dat_sff %>% filter(Ho=="Khúc") %>% st_as_sf(crs = 4326)
+khuc$centroid <- sf::st_transform(khuc, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+library(geosphere)
+khuc <- khuc %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Canh Tan" & NAME_2=="Hung Ha"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km2=distm_km^2,
+         sum_distm_km2=sum(distm_km2),
+         var=sum_distm_km2/(n()-1),
+         sd=sqrt(var))
+
+khuc_radius <- khuc %>%
+  arrange(distm_km) %>%
+  mutate(rank=row_number())
+
+distm_km<-khuc_radius$distm_km
+pro.pop<-khuc_radius$pro.pop
+rank<-khuc_radius$rank
+commune<-khuc_radius$NAME_3
+rank<-factor(rank, labels = commune)
+estimate<-18*exp(-(distm_km^2)/(2*100))
+
+library(dplyr)
+df<-data.frame(distm_km, rank, commune, estimate, pro.pop)
+
+df <- df %>%
+  mutate(num=sum((pro.pop-estimate)^2),
+         den=nrow(df)-1,
+         var=num/den,
+         sd=sqrt(var),
+         rank_com=as.numeric(reorder(factor(rank), distm_km)))
+  
+breaks <- c(0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200)
+
+plot_df <- df %>%
+  filter(row_number()<=1000) %>%
+  ggplot(aes(x=reorder(factor(rank), distm_km), y=pro.pop, fill=distm_km)) +
+  geom_bar(aes(x=reorder(factor(rank), distm_km), y=pro.pop), stat = "identity", width = 0.5) + 
+  #stat_smooth(method = 'lm', aes(colour = 'linear'), se = FALSE) +
+  #geom_line(aes(x=as.numeric(reorder(factor(rank), distm_km)), y=estimate)) +
+  stat_smooth(aes(y=pro.pop, x=as.numeric(reorder(factor(rank), distm_km))),method="gam",se=TRUE,formula=y~s(x,k=20)) +
+  scale_x_discrete(name = "Xã/Phường", 
+                     breaks = reorder(factor(rank), distm_km), 
+                     labels = reorder(factor(rank), distm_km)) +
+  scale_fill_gradientn("Khoảng cách tới tâm (km)", colours = terrain.colors(10), breaks=breaks) +
+  scale_y_continuous(name="Tỉ lệ (%)") +
+  theme_bw() + 
+  theme(text = element_text(size=45), axis.text.x = element_blank(), axis.ticks.x = element_blank(), axis.text.y = element_text(size=30),
+        legend.text=element_text(size=30), legend.key.size = unit(6, "cm"), legend.key.height = unit(3, "cm"), legend.key.width = unit(5, "cm"), legend.position = "bottom") +
+  theme(panel.grid.major = element_blank()) + 
+  #annotate(geom='text', x=30, y=200, label="y == 55*e^-{(x^{2}+y^{2})/2*(160)}", parse = TRUE,size=10) +
+  #annotate(geom='text', x=30, y=180, label="s.e. = 130 người/xã",parse=F,size=8) +
+  #coord_flip() +
+  ggtitle("Khúc")
+
+plot_df
+```
+
+### Phân bố mật độ
+
+```{r, lazy=TRUE}
+khuc_sff <- dat_sff %>% mutate(prop.khuc=(sum(subset(., Ho=="Khúc")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Khúc")
+khuc_plotf <- khuc_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.khuc, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=khuc_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="orange") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(khuc_plotf$prop.khuc[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Khúc")
+```
+
+### Phương trình hàm phân bố mật độ
+
+```{r, message=FALSE, warning=FALSE, lazy=TRUE}
+khuc <- dat_sff %>% filter(Ho=="Khúc") %>% st_as_sf(crs = 4326)
+khuc$centroid <- sf::st_transform(khuc, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+library(geosphere)
+khuc <- khuc %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Canh Tan" & NAME_2=="Hung Ha"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km2=distm_km^2,
+         sum_distm_km2=sum(distm_km2),
+         var=sum_distm_km2/(n()-1),
+         sd=sqrt(var))
+
+khuc_radius <- khuc %>%
+  arrange(distm_km) %>%
+  mutate(rank=row_number())
+
+distm_km<-khuc_radius$distm_km
+songuoi_km<-khuc_radius$songuoi_km
+rank<-khuc_radius$rank
+commune<-khuc_radius$NAME_3
+rank<-factor(rank, labels = commune)
+estimate<-250*exp(-(distm_km^2)/(2*100))
+
+library(dplyr)
+df<-data.frame(distm_km, rank, commune, estimate, songuoi_km)
+
+df <- df %>%
+  mutate(num=sum((songuoi_km-estimate)^2),
+         den=nrow(df)-1,
+         var=num/den,
+         sd=sqrt(var),
+         rank_com=as.numeric(reorder(factor(rank), distm_km)))
+  
+breaks <- c(0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200)
+
+plot_df <- df %>%
+  filter(row_number()<=1000) %>%
+  ggplot(aes(x=reorder(factor(rank), distm_km), y=songuoi_km, fill=distm_km)) +
+  geom_bar(aes(x=reorder(factor(rank), distm_km), y=songuoi_km), stat = "identity", width = 0.5) + 
+  #stat_smooth(method = 'lm', aes(colour = 'linear'), se = FALSE) +
+  #geom_line(aes(x=as.numeric(reorder(factor(rank), distm_km)), y=estimate)) +
+  stat_smooth(aes(y=songuoi_km, x=as.numeric(reorder(factor(rank), distm_km))),method="gam",se=TRUE,formula=y~s(x,k=20)) +
+  scale_x_discrete(name = "Xã/Phường", 
+                     breaks = reorder(factor(rank), distm_km), 
+                     labels = reorder(factor(rank), distm_km)) +
+  scale_fill_gradientn("Khoảng cách tới tâm (km)", colours = terrain.colors(10), breaks=breaks) +
+  scale_y_continuous(name="Mật độ (người/km2)") +
+  theme_bw() + 
+  theme(text = element_text(size=45), axis.text.x = element_blank(), axis.ticks.x = element_blank(), axis.text.y = element_text(size=30),
+        legend.text=element_text(size=30), legend.key.size = unit(6, "cm"), legend.key.height = unit(3, "cm"), legend.key.width = unit(5, "cm"), legend.position = "bottom") +
+  theme(panel.grid.major = element_blank()) + 
+  #annotate(geom='text', x=30, y=200, label="y == 55*e^-{(x^{2}+y^{2})/2*(160)}", parse = TRUE,size=10) +
+  #annotate(geom='text', x=30, y=180, label="s.e. = 130 người/xã",parse=F,size=8) +
+  #coord_flip() +
+  ggtitle("Khúc")
+
+plot_df
+```
+
+## Dương
+
+### Dữ liệu
+
+```{r, warning=FALSE, message=FALSE, lazy=FALSE}
+duong_sff <- dat_sff %>% mutate(prop.duong=(sum(subset(., Ho=="Dương")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Dương")
+duong_plot <- duong_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.duong, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+duong_plot$centroid <- sf::st_transform(duong_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+duong <- duong_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Quynh Son" & NAME_2=="Bac Son"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.duong=as.numeric(round(prop.duong, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.duong, area_km, songuoi_km, lng, lat, distm_km)
+
+duong_peak <- duong_plot %>% filter(NAME_3=="Xa Quynh Son" & NAME_2=="Bac Son")
+
+datatable(duong, colnames = c("STT", "Tỉnh/Thành phố", "Quận/Huyện", "Phường/Xã", "Số người", "Dân số", "Tỉ lệ/xã phường", "Tỉ lệ/cả nước", "Diện tích (km2)", "Mật độ (người/km2)", "Kinh độ", "Vĩ độ", "Khoảng cách tới tâm (km)"), extensions = 'Buttons', options = list(
+    dom = 'Bfrtip',
+    buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
+  ))
+```
+
+### Phân bố tỉ lệ
+
+```{r, warning=FALSE, message=FALSE, lazy=TRUE}
+duong_sf <- dat_sf %>% mutate(prop.duong=(sum(subset(., Ho=="Dương")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Dương")
+duong_plot <- duong_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.duong, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=duong_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=duong_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(duong_plot$prop.duong[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Dương")
+```
+
+### Phương trình hàm phân bố tỉ lệ
+
+```{r, message=FALSE, warning=FALSE, lazy=TRUE}
+duong <- dat_sff %>% filter(Ho=="Dương") %>% st_as_sf(crs = 4326)
+duong$centroid <- sf::st_transform(duong, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+library(geosphere)
+duong <- duong %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Quynh Son" & NAME_2=="Bac Son"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km2=distm_km^2,
+         sum_distm_km2=sum(distm_km2),
+         var=sum_distm_km2/(n()-1),
+         sd=sqrt(var))
+
+duong_radius <- duong %>%
+  arrange(distm_km) %>%
+  mutate(rank=row_number())
+
+distm_km<-duong_radius$distm_km
+pro.pop<-duong_radius$pro.pop
+rank<-duong_radius$rank
+commune<-duong_radius$NAME_3
+rank<-factor(rank, labels = commune)
+estimate<-87*exp(-(distm_km^2)/(2*100))
+
+library(dplyr)
+df<-data.frame(distm_km, rank, commune, estimate, pro.pop)
+
+df <- df %>%
+  mutate(num=sum((pro.pop-estimate)^2),
+         den=nrow(df)-1,
+         var=num/den,
+         sd=sqrt(var),
+         rank_com=as.numeric(reorder(factor(rank), distm_km)))
+  
+breaks <- c(0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200)
+
+plot_df <- df %>%
+  filter(row_number()<=1000) %>%
+  ggplot(aes(x=reorder(factor(rank), distm_km), y=pro.pop, fill=distm_km)) +
+  geom_bar(aes(x=reorder(factor(rank), distm_km), y=pro.pop), stat = "identity", width = 0.5) + 
+  #stat_smooth(method = 'lm', aes(colour = 'linear'), se = FALSE) +
+  #geom_line(aes(x=as.numeric(reorder(factor(rank), distm_km)), y=estimate)) +
+  stat_smooth(aes(y=pro.pop, x=as.numeric(reorder(factor(rank), distm_km))),method="gam",se=TRUE,formula=y~s(x,k=20)) +
+  scale_x_discrete(name = "Xã/Phường", 
+                     breaks = reorder(factor(rank), distm_km), 
+                     labels = reorder(factor(rank), distm_km)) +
+  scale_fill_gradientn("Khoảng cách tới tâm (km)", colours = terrain.colors(10), breaks=breaks) +
+  scale_y_continuous(name="Tỉ lệ (%)") +
+  theme_bw() + 
+  theme(text = element_text(size=45), axis.text.x = element_blank(), axis.ticks.x = element_blank(), axis.text.y = element_text(size=30),
+        legend.text=element_text(size=30), legend.key.size = unit(6, "cm"), legend.key.height = unit(3, "cm"), legend.key.width = unit(5, "cm"), legend.position = "bottom") +
+  theme(panel.grid.major = element_blank()) + 
+  #annotate(geom='text', x=30, y=200, label="y == 55*e^-{(x^{2}+y^{2})/2*(160)}", parse = TRUE,size=10) +
+  #annotate(geom='text', x=30, y=180, label="s.e. = 130 người/xã",parse=F,size=8) +
+  #coord_flip() +
+  ggtitle("Dương")
+
+plot_df
+```
+
+### Phân bố mật độ
+
+```{r, lazy=TRUE}
+duong_sff <- dat_sff %>% mutate(prop.duong=(sum(subset(., Ho=="Dương")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Dương")
+duong_plotf <- duong_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.duong, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=duong_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="orange") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(duong_plotf$prop.duong[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Dương")
+```
+
+### Phương trình hàm phân bố mật độ
+
+```{r, message=FALSE, warning=FALSE, lazy=TRUE}
+duong <- dat_sff %>% filter(Ho=="Dương") %>% st_as_sf(crs = 4326)
+duong$centroid <- sf::st_transform(duong, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+library(geosphere)
+duong <- duong %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Quynh Son" & NAME_2=="Bac Son"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km2=distm_km^2,
+         sum_distm_km2=sum(distm_km2),
+         var=sum_distm_km2/(n()-1),
+         sd=sqrt(var))
+
+duong_radius <- duong %>%
+  arrange(distm_km) %>%
+  mutate(rank=row_number())
+
+distm_km<-duong_radius$distm_km
+songuoi_km<-duong_radius$songuoi_km
+rank<-duong_radius$rank
+commune<-duong_radius$NAME_3
+rank<-factor(rank, labels = commune)
+estimate<-121*exp(-(distm_km^2)/(2*100))
+
+library(dplyr)
+df<-data.frame(distm_km, rank, commune, estimate, songuoi_km)
+
+df <- df %>%
+  mutate(num=sum((songuoi_km-estimate)^2),
+         den=nrow(df)-1,
+         var=num/den,
+         sd=sqrt(var),
+         rank_com=as.numeric(reorder(factor(rank), distm_km)))
+  
+breaks <- c(0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200)
+
+plot_df <- df %>%
+  filter(row_number()<=1000) %>%
+  ggplot(aes(x=reorder(factor(rank), distm_km), y=songuoi_km, fill=distm_km)) +
+  geom_bar(aes(x=reorder(factor(rank), distm_km), y=songuoi_km), stat = "identity", width = 0.5) + 
+  #stat_smooth(method = 'lm', aes(colour = 'linear'), se = FALSE) +
+  #geom_line(aes(x=as.numeric(reorder(factor(rank), distm_km)), y=estimate)) +
+  stat_smooth(aes(y=songuoi_km, x=as.numeric(reorder(factor(rank), distm_km))),method="gam",se=TRUE,formula=y~s(x,k=20)) +
+  scale_x_discrete(name = "Xã/Phường", 
+                     breaks = reorder(factor(rank), distm_km), 
+                     labels = reorder(factor(rank), distm_km)) +
+  scale_fill_gradientn("Khoảng cách tới tâm (km)", colours = terrain.colors(10), breaks=breaks) +
+  scale_y_continuous(name="Mật độ (người/km2)") +
+  theme_bw() + 
+  theme(text = element_text(size=45), axis.text.x = element_blank(), axis.ticks.x = element_blank(), axis.text.y = element_text(size=30),
+        legend.text=element_text(size=30), legend.key.size = unit(6, "cm"), legend.key.height = unit(3, "cm"), legend.key.width = unit(5, "cm"), legend.position = "bottom") +
+  theme(panel.grid.major = element_blank()) + 
+  #annotate(geom='text', x=30, y=200, label="y == 55*e^-{(x^{2}+y^{2})/2*(160)}", parse = TRUE,size=10) +
+  #annotate(geom='text', x=30, y=180, label="s.e. = 130 người/xã",parse=F,size=8) +
+  #coord_flip() +
+  ggtitle("Dương")
+
+plot_df
+```
+
+## Ngô
+
+### Dữ liệu
+
+```{r, warning=FALSE, message=FALSE, lazy=FALSE}
+ngo_sff <- dat_sff %>% mutate(prop.ngo=(sum(subset(., Ho=="Ngô")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ngô")
+ngo_plot <- ngo_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.ngo, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+ngo_plot$centroid <- sf::st_transform(ngo_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+ngo <- ngo_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Dai Thanh" & NAME_2=="Hiep Hoa"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.ngo=as.numeric(round(prop.ngo, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.ngo, area_km, songuoi_km, lng, lat, distm_km)
+
+ngo_peak <- ngo_plot %>% filter(NAME_3=="Xa Dai Thanh" & NAME_2=="Hiep Hoa")
+
+datatable(ngo, colnames = c("STT", "Tỉnh/Thành phố", "Quận/Huyện", "Phường/Xã", "Số người", "Dân số", "Tỉ lệ/xã phường", "Tỉ lệ/cả nước", "Diện tích (km2)", "Mật độ (người/km2)", "Kinh độ", "Vĩ độ", "Khoảng cách tới tâm (km)"), extensions = 'Buttons', options = list(
+    dom = 'Bfrtip',
+    buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
+  ))
+```
+
+### Phân bố tỉ lệ
+
+```{r, warning=FALSE, message=FALSE, lazy=TRUE}
+ngo_sf <- dat_sf %>% mutate(prop.ngo=(sum(subset(., Ho=="Ngô")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ngô")
+ngo_plot <- ngo_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.ngo, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=ngo_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=ngo_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(ngo_plot$prop.ngo[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Ngô")
+```
+
+### Phương trình hàm phân bố tỉ lệ
+
+```{r, message=FALSE, warning=FALSE, lazy=TRUE}
+ngo <- dat_sff %>% filter(Ho=="Ngô") %>% st_as_sf(crs = 4326)
+ngo$centroid <- sf::st_transform(ngo, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+library(geosphere)
+ngo <- ngo %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Dai Thanh" & NAME_2=="Hiep Hoa"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km2=distm_km^2,
+         sum_distm_km2=sum(distm_km2),
+         var=sum_distm_km2/(n()-1),
+         sd=sqrt(var))
+
+ngo_radius <- ngo %>%
+  arrange(distm_km) %>%
+  mutate(rank=row_number())
+
+distm_km<-ngo_radius$distm_km
+pro.pop<-ngo_radius$pro.pop
+rank<-ngo_radius$rank
+commune<-ngo_radius$NAME_3
+rank<-factor(rank, labels = commune)
+estimate<-35*exp(-(distm_km^2)/(2*100))
+
+library(dplyr)
+df<-data.frame(distm_km, rank, commune, estimate, pro.pop)
+
+df <- df %>%
+  mutate(num=sum((pro.pop-estimate)^2),
+         den=nrow(df)-1,
+         var=num/den,
+         sd=sqrt(var),
+         rank_com=as.numeric(reorder(factor(rank), distm_km)))
+  
+breaks <- c(0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200)
+
+plot_df <- df %>%
+  filter(row_number()<=1000) %>%
+  ggplot(aes(x=reorder(factor(rank), distm_km), y=pro.pop, fill=distm_km)) +
+  geom_bar(aes(x=reorder(factor(rank), distm_km), y=pro.pop), stat = "identity", width = 0.5) + 
+  #stat_smooth(method = 'lm', aes(colour = 'linear'), se = FALSE) +
+  #geom_line(aes(x=as.numeric(reorder(factor(rank), distm_km)), y=estimate)) +
+  stat_smooth(aes(y=pro.pop, x=as.numeric(reorder(factor(rank), distm_km))),method="gam",se=TRUE,formula=y~s(x,k=20)) +
+  scale_x_discrete(name = "Xã/Phường", 
+                     breaks = reorder(factor(rank), distm_km), 
+                     labels = reorder(factor(rank), distm_km)) +
+  scale_fill_gradientn("Khoảng cách tới tâm (km)", colours = terrain.colors(10), breaks=breaks) +
+  scale_y_continuous(name="Tỉ lệ (%)") +
+  theme_bw() + 
+  theme(text = element_text(size=45), axis.text.x = element_blank(), axis.ticks.x = element_blank(), axis.text.y = element_text(size=30),
+        legend.text=element_text(size=30), legend.key.size = unit(6, "cm"), legend.key.height = unit(3, "cm"), legend.key.width = unit(5, "cm"), legend.position = "bottom") +
+  theme(panel.grid.major = element_blank()) + 
+  #annotate(geom='text', x=30, y=200, label="y == 55*e^-{(x^{2}+y^{2})/2*(160)}", parse = TRUE,size=10) +
+  #annotate(geom='text', x=30, y=180, label="s.e. = 130 người/xã",parse=F,size=8) +
+  #coord_flip() +
+  ggtitle("Ngô")
+
+plot_df
+```
+
+### Phân bố mật độ
+
+```{r, lazy=TRUE}
+ngo_sff <- dat_sff %>% mutate(prop.ngo=(sum(subset(., Ho=="Ngô")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ngô")
+ngo_plotf <- ngo_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.ngo, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=ngo_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="orange") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(ngo_plotf$prop.ngo[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Ngô")
+```
+
+### Phương trình hàm phân bố mật độ
+
+```{r, message=FALSE, warning=FALSE, lazy=TRUE}
+ngo <- dat_sff %>% filter(Ho=="Ngô") %>% st_as_sf(crs = 4326)
+ngo$centroid <- sf::st_transform(ngo, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+library(geosphere)
+ngo <- ngo %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Dai Thanh" & NAME_2=="Hiep Hoa"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km2=distm_km^2,
+         sum_distm_km2=sum(distm_km2),
+         var=sum_distm_km2/(n()-1),
+         sd=sqrt(var))
+
+ngo_radius <- ngo %>%
+  arrange(distm_km) %>%
+  mutate(rank=row_number())
+
+distm_km<-ngo_radius$distm_km
+songuoi_km<-ngo_radius$songuoi_km
+rank<-ngo_radius$rank
+commune<-ngo_radius$NAME_3
+rank<-factor(rank, labels = commune)
+estimate<-525*exp(-(distm_km^2)/(2*100))
+
+library(dplyr)
+df<-data.frame(distm_km, rank, commune, estimate, songuoi_km)
+
+df <- df %>%
+  mutate(num=sum((songuoi_km-estimate)^2),
+         den=nrow(df)-1,
+         var=num/den,
+         sd=sqrt(var),
+         rank_com=as.numeric(reorder(factor(rank), distm_km)))
+  
+breaks <- c(0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200)
+
+plot_df <- df %>%
+  filter(row_number()<=1000) %>%
+  ggplot(aes(x=reorder(factor(rank), distm_km), y=songuoi_km, fill=distm_km)) +
+  geom_bar(aes(x=reorder(factor(rank), distm_km), y=songuoi_km), stat = "identity", width = 0.5) + 
+  #stat_smooth(method = 'lm', aes(colour = 'linear'), se = FALSE) +
+  #geom_line(aes(x=as.numeric(reorder(factor(rank), distm_km)), y=estimate)) +
+  stat_smooth(aes(y=songuoi_km, x=as.numeric(reorder(factor(rank), distm_km))),method="gam",se=TRUE,formula=y~s(x,k=20)) +
+  scale_x_discrete(name = "Xã/Phường", 
+                     breaks = reorder(factor(rank), distm_km), 
+                     labels = reorder(factor(rank), distm_km)) +
+  scale_fill_gradientn("Khoảng cách tới tâm (km)", colours = terrain.colors(10), breaks=breaks) +
+  scale_y_continuous(name="Mật độ (người/km2)") +
+  theme_bw() + 
+  theme(text = element_text(size=45), axis.text.x = element_blank(), axis.ticks.x = element_blank(), axis.text.y = element_text(size=30),
+        legend.text=element_text(size=30), legend.key.size = unit(6, "cm"), legend.key.height = unit(3, "cm"), legend.key.width = unit(5, "cm"), legend.position = "bottom") +
+  theme(panel.grid.major = element_blank()) + 
+  #annotate(geom='text', x=30, y=200, label="y == 55*e^-{(x^{2}+y^{2})/2*(160)}", parse = TRUE,size=10) +
+  #annotate(geom='text', x=30, y=180, label="s.e. = 130 người/xã",parse=F,size=8) +
+  #coord_flip() +
+  ggtitle("Ngô")
+
+plot_df
+```
+
+## Lương
+
+### Dữ liệu
+
+```{r, warning=FALSE, message=FALSE, lazy=FALSE}
+luong_sff <- dat_sff %>% mutate(prop.luong=(sum(subset(., Ho=="Lương")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lương")
+luong_plot <- luong_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.luong, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+luong_plot$centroid <- sf::st_transform(luong_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+luong <- luong_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Tam Van" & NAME_2=="Lang Chanh"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.luong=as.numeric(round(prop.luong, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.luong, area_km, songuoi_km, lng, lat, distm_km)
+
+luong_peak <- luong_plot %>% filter(NAME_3=="Xa Tam Van" & NAME_2=="Lang Chanh")
+
+datatable(luong, colnames = c("STT", "Tỉnh/Thành phố", "Quận/Huyện", "Phường/Xã", "Số người", "Dân số", "Tỉ lệ/xã phường", "Tỉ lệ/cả nước", "Diện tích (km2)", "Mật độ (người/km2)", "Kinh độ", "Vĩ độ", "Khoảng cách tới tâm (km)"), extensions = 'Buttons', options = list(
+    dom = 'Bfrtip',
+    buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
+  ))
+```
+
+### Phân bố tỉ lệ
+
+```{r, warning=FALSE, message=FALSE, lazy=TRUE}
+luong_sf <- dat_sf %>% mutate(prop.luong=(sum(subset(., Ho=="Lương")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lương")
+luong_plot <- luong_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.luong, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=luong_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=luong_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(luong_plot$prop.luong[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Lương")
+```
+
+### Phương trình hàm phân bố tỉ lệ
+
+```{r, message=FALSE, warning=FALSE, lazy=TRUE}
+luong <- dat_sff %>% filter(Ho=="Lương") %>% st_as_sf(crs = 4326)
+luong$centroid <- sf::st_transform(luong, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+library(geosphere)
+luong <- luong %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Tam Van" & NAME_2=="Lang Chanh"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km2=distm_km^2,
+         sum_distm_km2=sum(distm_km2),
+         var=sum_distm_km2/(n()-1),
+         sd=sqrt(var))
+
+luong_radius <- luong %>%
+  arrange(distm_km) %>%
+  mutate(rank=row_number())
+
+distm_km<-luong_radius$distm_km
+pro.pop<-luong_radius$pro.pop
+rank<-luong_radius$rank
+commune<-luong_radius$NAME_3
+rank<-factor(rank, labels = commune)
+estimate<-46*exp(-(distm_km^2)/(2*100))
+
+library(dplyr)
+df<-data.frame(distm_km, rank, commune, estimate, pro.pop)
+
+df <- df %>%
+  mutate(num=sum((pro.pop-estimate)^2),
+         den=nrow(df)-1,
+         var=num/den,
+         sd=sqrt(var),
+         rank_com=as.numeric(reorder(factor(rank), distm_km)))
+  
+breaks <- c(0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200)
+
+plot_df <- df %>%
+  filter(row_number()<=1000) %>%
+  ggplot(aes(x=reorder(factor(rank), distm_km), y=pro.pop, fill=distm_km)) +
+  geom_bar(aes(x=reorder(factor(rank), distm_km), y=pro.pop), stat = "identity", width = 0.5) + 
+  #stat_smooth(method = 'lm', aes(colour = 'linear'), se = FALSE) +
+  #geom_line(aes(x=as.numeric(reorder(factor(rank), distm_km)), y=estimate)) +
+  stat_smooth(aes(y=pro.pop, x=as.numeric(reorder(factor(rank), distm_km))),method="gam",se=TRUE,formula=y~s(x,k=20)) +
+  scale_x_discrete(name = "Xã/Phường", 
+                     breaks = reorder(factor(rank), distm_km), 
+                     labels = reorder(factor(rank), distm_km)) +
+  scale_fill_gradientn("Khoảng cách tới tâm (km)", colours = terrain.colors(10), breaks=breaks) +
+  scale_y_continuous(name="Tỉ lệ (%)") +
+  theme_bw() + 
+  theme(text = element_text(size=45), axis.text.x = element_blank(), axis.ticks.x = element_blank(), axis.text.y = element_text(size=30),
+        legend.text=element_text(size=30), legend.key.size = unit(6, "cm"), legend.key.height = unit(3, "cm"), legend.key.width = unit(5, "cm"), legend.position = "bottom") +
+  theme(panel.grid.major = element_blank()) + 
+  #annotate(geom='text', x=30, y=200, label="y == 55*e^-{(x^{2}+y^{2})/2*(160)}", parse = TRUE,size=10) +
+  #annotate(geom='text', x=30, y=180, label="s.e. = 130 người/xã",parse=F,size=8) +
+  #coord_flip() +
+  ggtitle("Lương")
+
+plot_df
+```
+
+### Phân bố mật độ
+
+```{r, lazy=TRUE}
+luong_sff <- dat_sff %>% mutate(prop.luong=(sum(subset(., Ho=="Lương")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lương")
+luong_plotf <- luong_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.luong, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=luong_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="orange") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(luong_plotf$prop.luong[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Lương")
+```
+
+### Phương trình hàm phân bố mật độ
+
+```{r, message=FALSE, warning=FALSE, lazy=TRUE}
+luong <- dat_sff %>% filter(Ho=="Lương") %>% st_as_sf(crs = 4326)
+luong$centroid <- sf::st_transform(luong, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+library(geosphere)
+luong <- luong %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Tam Van" & NAME_2=="Lang Chanh"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km2=distm_km^2,
+         sum_distm_km2=sum(distm_km2),
+         var=sum_distm_km2/(n()-1),
+         sd=sqrt(var))
+
+luong_radius <- luong %>%
+  arrange(distm_km) %>%
+  mutate(rank=row_number())
+
+distm_km<-luong_radius$distm_km
+songuoi_km<-luong_radius$songuoi_km
+rank<-luong_radius$rank
+commune<-luong_radius$NAME_3
+rank<-factor(rank, labels = commune)
+estimate<-36*exp(-(distm_km^2)/(2*100))
+
+library(dplyr)
+df<-data.frame(distm_km, rank, commune, estimate, songuoi_km)
+
+df <- df %>%
+  mutate(num=sum((songuoi_km-estimate)^2),
+         den=nrow(df)-1,
+         var=num/den,
+         sd=sqrt(var),
+         rank_com=as.numeric(reorder(factor(rank), distm_km)))
+  
+breaks <- c(0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200)
+
+plot_df <- df %>%
+  filter(row_number()<=1000) %>%
+  ggplot(aes(x=reorder(factor(rank), distm_km), y=songuoi_km, fill=distm_km)) +
+  geom_bar(aes(x=reorder(factor(rank), distm_km), y=songuoi_km), stat = "identity", width = 0.5) + 
+  #stat_smooth(method = 'lm', aes(colour = 'linear'), se = FALSE) +
+  #geom_line(aes(x=as.numeric(reorder(factor(rank), distm_km)), y=estimate)) +
+  stat_smooth(aes(y=songuoi_km, x=as.numeric(reorder(factor(rank), distm_km))),method="gam",se=TRUE,formula=y~s(x,k=20)) +
+  scale_x_discrete(name = "Xã/Phường", 
+                     breaks = reorder(factor(rank), distm_km), 
+                     labels = reorder(factor(rank), distm_km)) +
+  scale_fill_gradientn("Khoảng cách tới tâm (km)", colours = terrain.colors(10), breaks=breaks) +
+  scale_y_continuous(name="Mật độ (người/km2)") +
+  theme_bw() + 
+  theme(text = element_text(size=45), axis.text.x = element_blank(), axis.ticks.x = element_blank(), axis.text.y = element_text(size=30),
+        legend.text=element_text(size=30), legend.key.size = unit(6, "cm"), legend.key.height = unit(3, "cm"), legend.key.width = unit(5, "cm"), legend.position = "bottom") +
+  theme(panel.grid.major = element_blank()) + 
+  #annotate(geom='text', x=30, y=200, label="y == 55*e^-{(x^{2}+y^{2})/2*(160)}", parse = TRUE,size=10) +
+  #annotate(geom='text', x=30, y=180, label="s.e. = 130 người/xã",parse=F,size=8) +
+  #coord_flip() +
+  ggtitle("Lương")
+
+plot_df
+```
+
+## Lý
+
+### Dữ liệu
+
+```{r, warning=FALSE, message=FALSE, lazy=FALSE}
+ly_sff <- dat_sff %>% mutate(prop.ly=(sum(subset(., Ho=="Lý")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lý")
+ly_plot <- ly_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.ly, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+ly_plot$centroid <- sf::st_transform(ly_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+ly <- ly_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Trung Leng Ho" & NAME_2=="Bat Xat"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.ly=as.numeric(round(prop.ly, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.ly, area_km, songuoi_km, lng, lat, distm_km)
+
+ly_peak <- ly_plot %>% filter(NAME_3=="Xa Trung Leng Ho" & NAME_2=="Bat Xat")
+
+datatable(ly, colnames = c("STT", "Tỉnh/Thành phố", "Quận/Huyện", "Phường/Xã", "Số người", "Dân số", "Tỉ lệ/xã phường", "Tỉ lệ/cả nước", "Diện tích (km2)", "Mật độ (người/km2)", "Kinh độ", "Vĩ độ", "Khoảng cách tới tâm (km)"), extensions = 'Buttons', options = list(
+    dom = 'Bfrtip',
+    buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
+  ))
+```
+
+### Phân bố tỉ lệ
+
+```{r, warning=FALSE, message=FALSE, lazy=TRUE}
+ly_sf <- dat_sf %>% mutate(prop.ly=(sum(subset(., Ho=="Lý")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lý")
+ly_plot <- ly_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.ly, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=ly_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=ly_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(ly_plot$prop.ly[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Lý")
+```
+
+### Phương trình hàm phân bố tỉ lệ
+
+```{r, message=FALSE, warning=FALSE, lazy=TRUE}
+ly <- dat_sff %>% filter(Ho=="Lý") %>% st_as_sf(crs = 4326)
+ly$centroid <- sf::st_transform(ly, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+library(geosphere)
+ly <- ly %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Trung Leng Ho" & NAME_2=="Bat Xat"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km2=distm_km^2,
+         sum_distm_km2=sum(distm_km2),
+         var=sum_distm_km2/(n()-1),
+         sd=sqrt(var))
+
+ly_radius <- ly %>%
+  arrange(distm_km) %>%
+  mutate(rank=row_number())
+
+distm_km<-ly_radius$distm_km
+pro.pop<-ly_radius$pro.pop
+rank<-ly_radius$rank
+commune<-ly_radius$NAME_3
+rank<-factor(rank, labels = commune)
+estimate<-35*exp(-(distm_km^2)/(2*100))
+
+library(dplyr)
+df<-data.frame(distm_km, rank, commune, estimate, pro.pop)
+
+df <- df %>%
+  mutate(num=sum((pro.pop-estimate)^2),
+         den=nrow(df)-1,
+         var=num/den,
+         sd=sqrt(var),
+         rank_com=as.numeric(reorder(factor(rank), distm_km)))
+  
+breaks <- c(0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200)
+
+plot_df <- df %>%
+  filter(row_number()<=1000) %>%
+  ggplot(aes(x=reorder(factor(rank), distm_km), y=pro.pop, fill=distm_km)) +
+  geom_bar(aes(x=reorder(factor(rank), distm_km), y=pro.pop), stat = "identity", width = 0.5) + 
+  #stat_smooth(method = 'lm', aes(colour = 'linear'), se = FALSE) +
+  #geom_line(aes(x=as.numeric(reorder(factor(rank), distm_km)), y=estimate)) +
+  stat_smooth(aes(y=pro.pop, x=as.numeric(reorder(factor(rank), distm_km))),method="gam",se=TRUE,formula=y~s(x,k=20)) +
+  scale_x_discrete(name = "Xã/Phường", 
+                     breaks = reorder(factor(rank), distm_km), 
+                     labels = reorder(factor(rank), distm_km)) +
+  scale_fill_gradientn("Khoảng cách tới tâm (km)", colours = terrain.colors(10), breaks=breaks) +
+  scale_y_continuous(name="Tỉ lệ (%)") +
+  theme_bw() + 
+  theme(text = element_text(size=45), axis.text.x = element_blank(), axis.ticks.x = element_blank(), axis.text.y = element_text(size=30),
+        legend.text=element_text(size=30), legend.key.size = unit(6, "cm"), legend.key.height = unit(3, "cm"), legend.key.width = unit(5, "cm"), legend.position = "bottom") +
+  theme(panel.grid.major = element_blank()) + 
+  #annotate(geom='text', x=30, y=200, label="y == 55*e^-{(x^{2}+y^{2})/2*(160)}", parse = TRUE,size=10) +
+  #annotate(geom='text', x=30, y=180, label="s.e. = 130 người/xã",parse=F,size=8) +
+  #coord_flip() +
+  ggtitle("Lý")
+
+plot_df
+```
+
+### Phân bố mật độ
+
+```{r, lazy=TRUE}
+ly_sff <- dat_sff %>% mutate(prop.ly=(sum(subset(., Ho=="Lý")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lý")
+ly_plotf <- ly_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.ly, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=ly_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="orange") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(ly_plotf$prop.ly[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Lý")
+```
+
+### Phương trình hàm phân bố mật độ
+
+```{r, message=FALSE, warning=FALSE, lazy=TRUE}
+ly <- dat_sff %>% filter(Ho=="Lý") %>% st_as_sf(crs = 4326)
+ly$centroid <- sf::st_transform(ly, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+library(geosphere)
+ly <- ly %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Trung Leng Ho" & NAME_2=="Bat Xat"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km2=distm_km^2,
+         sum_distm_km2=sum(distm_km2),
+         var=sum_distm_km2/(n()-1),
+         sd=sqrt(var))
+
+ly_radius <- ly %>%
+  arrange(distm_km) %>%
+  mutate(rank=row_number())
+
+distm_km<-ly_radius$distm_km
+songuoi_km<-ly_radius$songuoi_km
+rank<-ly_radius$rank
+commune<-ly_radius$NAME_3
+rank<-factor(rank, labels = commune)
+estimate<-40*exp(-(distm_km^2)/(2*100))
+
+library(dplyr)
+df<-data.frame(distm_km, rank, commune, estimate, songuoi_km)
+
+df <- df %>%
+  mutate(num=sum((songuoi_km-estimate)^2),
+         den=nrow(df)-1,
+         var=num/den,
+         sd=sqrt(var),
+         rank_com=as.numeric(reorder(factor(rank), distm_km)))
+  
+breaks <- c(0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200)
+
+plot_df <- df %>%
+  filter(row_number()<=1000) %>%
+  ggplot(aes(x=reorder(factor(rank), distm_km), y=songuoi_km, fill=distm_km)) +
+  geom_bar(aes(x=reorder(factor(rank), distm_km), y=songuoi_km), stat = "identity", width = 0.5) + 
+  #stat_smooth(method = 'lm', aes(colour = 'linear'), se = FALSE) +
+  #geom_line(aes(x=as.numeric(reorder(factor(rank), distm_km)), y=estimate)) +
+  stat_smooth(aes(y=songuoi_km, x=as.numeric(reorder(factor(rank), distm_km))),method="gam",se=TRUE,formula=y~s(x,k=20)) +
+  scale_x_discrete(name = "Xã/Phường", 
+                     breaks = reorder(factor(rank), distm_km), 
+                     labels = reorder(factor(rank), distm_km)) +
+  scale_fill_gradientn("Khoảng cách tới tâm (km)", colours = terrain.colors(10), breaks=breaks) +
+  scale_y_continuous(name="Mật độ (người/km2)") +
+  theme_bw() + 
+  theme(text = element_text(size=45), axis.text.x = element_blank(), axis.ticks.x = element_blank(), axis.text.y = element_text(size=30),
+        legend.text=element_text(size=30), legend.key.size = unit(6, "cm"), legend.key.height = unit(3, "cm"), legend.key.width = unit(5, "cm"), legend.position = "bottom") +
+  theme(panel.grid.major = element_blank()) + 
+  #annotate(geom='text', x=30, y=200, label="y == 55*e^-{(x^{2}+y^{2})/2*(160)}", parse = TRUE,size=10) +
+  #annotate(geom='text', x=30, y=180, label="s.e. = 130 người/xã",parse=F,size=8) +
+  #coord_flip() +
+  ggtitle("Lý")
+
+plot_df
+```
+
+## Hoàng
+
+### Dữ liệu
+
+```{r, warning=FALSE, message=FALSE, lazy=FALSE}
+hoang_sff <- dat_sff %>% mutate(prop.hoang=(sum(subset(., Ho=="Hoàng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hoàng")
+hoang_plot <- hoang_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.hoang, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+hoang_plot$centroid <- sf::st_transform(hoang_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+hoang <- hoang_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Ban Ria" & NAME_2=="Quang Binh"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.hoang=as.numeric(round(prop.hoang, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.hoang, area_km, songuoi_km, lng, lat, distm_km)
+
+hoang_peak <- hoang_plot %>% filter(NAME_3=="Xa Ban Ria" & NAME_2=="Quang Binh")
+
+datatable(hoang, colnames = c("STT", "Tỉnh/Thành phố", "Quận/Huyện", "Phường/Xã", "Số người", "Dân số", "Tỉ lệ/xã phường", "Tỉ lệ/cả nước", "Diện tích (km2)", "Mật độ (người/km2)", "Kinh độ", "Vĩ độ", "Khoảng cách tới tâm (km)"), extensions = 'Buttons', options = list(
+    dom = 'Bfrtip',
+    buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
+  ))
+```
+
+### Phân bố tỉ lệ
+
+```{r, warning=FALSE, message=FALSE, lazy=TRUE}
+hoang_sf <- dat_sf %>% mutate(prop.hoang=(sum(subset(., Ho=="Hoàng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hoàng")
+hoang_plot <- hoang_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.hoang, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=hoang_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=hoang_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(hoang_plot$prop.hoang[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Hoàng")
+```
+
+### Phương trình hàm phân bố tỉ lệ
+
+```{r, message=FALSE, warning=FALSE, lazy=TRUE}
+hoang <- dat_sff %>% filter(Ho=="Hoàng") %>% st_as_sf(crs = 4326)
+hoang$centroid <- sf::st_transform(hoang, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+library(geosphere)
+hoang <- hoang %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Ban Ria" & NAME_2=="Quang Binh"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km2=distm_km^2,
+         sum_distm_km2=sum(distm_km2),
+         var=sum_distm_km2/(n()-1),
+         sd=sqrt(var))
+
+hoang_radius <- hoang %>%
+  arrange(distm_km) %>%
+  mutate(rank=row_number())
+
+distm_km<-hoang_radius$distm_km
+pro.pop<-hoang_radius$pro.pop
+rank<-hoang_radius$rank
+commune<-hoang_radius$NAME_3
+rank<-factor(rank, labels = commune)
+estimate<-86*exp(-(distm_km^2)/(2*100))
+
+library(dplyr)
+df<-data.frame(distm_km, rank, commune, estimate, pro.pop)
+
+df <- df %>%
+  mutate(num=sum((pro.pop-estimate)^2),
+         den=nrow(df)-1,
+         var=num/den,
+         sd=sqrt(var),
+         rank_com=as.numeric(reorder(factor(rank), distm_km)))
+  
+breaks <- c(0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200)
+
+plot_df <- df %>%
+  filter(row_number()<=1000) %>%
+  ggplot(aes(x=reorder(factor(rank), distm_km), y=pro.pop, fill=distm_km)) +
+  geom_bar(aes(x=reorder(factor(rank), distm_km), y=pro.pop), stat = "identity", width = 0.5) + 
+  #stat_smooth(method = 'lm', aes(colour = 'linear'), se = FALSE) +
+  #geom_line(aes(x=as.numeric(reorder(factor(rank), distm_km)), y=estimate)) +
+  stat_smooth(aes(y=pro.pop, x=as.numeric(reorder(factor(rank), distm_km))),method="gam",se=TRUE,formula=y~s(x,k=20)) +
+  scale_x_discrete(name = "Xã/Phường", 
+                     breaks = reorder(factor(rank), distm_km), 
+                     labels = reorder(factor(rank), distm_km)) +
+  scale_fill_gradientn("Khoảng cách tới tâm (km)", colours = terrain.colors(10), breaks=breaks) +
+  scale_y_continuous(name="Tỉ lệ (%)") +
+  theme_bw() + 
+  theme(text = element_text(size=45), axis.text.x = element_blank(), axis.ticks.x = element_blank(), axis.text.y = element_text(size=30),
+        legend.text=element_text(size=30), legend.key.size = unit(6, "cm"), legend.key.height = unit(3, "cm"), legend.key.width = unit(5, "cm"), legend.position = "bottom") +
+  theme(panel.grid.major = element_blank()) + 
+  #annotate(geom='text', x=30, y=200, label="y == 55*e^-{(x^{2}+y^{2})/2*(160)}", parse = TRUE,size=10) +
+  #annotate(geom='text', x=30, y=180, label="s.e. = 130 người/xã",parse=F,size=8) +
+  #coord_flip() +
+  ggtitle("Hoàng")
+
+plot_df
+```
+
+### Phân bố mật độ
+
+```{r, lazy=TRUE}
+hoang_sff <- dat_sff %>% mutate(prop.hoang=(sum(subset(., Ho=="Hoàng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hoàng")
+hoang_plotf <- hoang_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.hoang, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=hoang_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="orange") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(hoang_plotf$prop.hoang[1],2), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Hoàng")
+```
+
+### Phương trình hàm phân bố mật độ
+
+```{r, message=FALSE, warning=FALSE, lazy=TRUE}
+hoang <- dat_sff %>% filter(Ho=="Hoàng") %>% st_as_sf(crs = 4326)
+hoang$centroid <- sf::st_transform(hoang, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+library(geosphere)
+hoang <- hoang %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Ban Ria" & NAME_2=="Quang Binh"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km2=distm_km^2,
+         sum_distm_km2=sum(distm_km2),
+         var=sum_distm_km2/(n()-1),
+         sd=sqrt(var))
+
+hoang_radius <- hoang %>%
+  arrange(distm_km) %>%
+  mutate(rank=row_number())
+
+distm_km<-hoang_radius$distm_km
+songuoi_km<-hoang_radius$songuoi_km
+rank<-hoang_radius$rank
+commune<-hoang_radius$NAME_3
+rank<-factor(rank, labels = commune)
+estimate<-47*exp(-(distm_km^2)/(2*100))
+
+library(dplyr)
+df<-data.frame(distm_km, rank, commune, estimate, songuoi_km)
+
+df <- df %>%
+  mutate(num=sum((songuoi_km-estimate)^2),
+         den=nrow(df)-1,
+         var=num/den,
+         sd=sqrt(var),
+         rank_com=as.numeric(reorder(factor(rank), distm_km)))
+  
+breaks <- c(0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200)
+
+plot_df <- df %>%
+  filter(row_number()<=1000) %>%
+  ggplot(aes(x=reorder(factor(rank), distm_km), y=songuoi_km, fill=distm_km)) +
+  geom_bar(aes(x=reorder(factor(rank), distm_km), y=songuoi_km), stat = "identity", width = 0.5) + 
+  #stat_smooth(method = 'lm', aes(colour = 'linear'), se = FALSE) +
+  #geom_line(aes(x=as.numeric(reorder(factor(rank), distm_km)), y=estimate)) +
+  stat_smooth(aes(y=songuoi_km, x=as.numeric(reorder(factor(rank), distm_km))),method="gam",se=TRUE,formula=y~s(x,k=20)) +
+  scale_x_discrete(name = "Xã/Phường", 
+                     breaks = reorder(factor(rank), distm_km), 
+                     labels = reorder(factor(rank), distm_km)) +
+  scale_fill_gradientn("Khoảng cách tới tâm (km)", colours = terrain.colors(10), breaks=breaks) +
+  scale_y_continuous(name="Mật độ (người/km2)") +
+  theme_bw() + 
+  theme(text = element_text(size=45), axis.text.x = element_blank(), axis.ticks.x = element_blank(), axis.text.y = element_text(size=30),
+        legend.text=element_text(size=30), legend.key.size = unit(6, "cm"), legend.key.height = unit(3, "cm"), legend.key.width = unit(5, "cm"), legend.position = "bottom") +
+  theme(panel.grid.major = element_blank()) + 
+  #annotate(geom='text', x=30, y=200, label="y == 55*e^-{(x^{2}+y^{2})/2*(160)}", parse = TRUE,size=10) +
+  #annotate(geom='text', x=30, y=180, label="s.e. = 130 người/xã",parse=F,size=8) +
+  #coord_flip() +
+  ggtitle("Hoàng")
+
+plot_df
+```
+
+## Triệu
+
+### Dữ liệu
+
+```{r, warning=FALSE, message=FALSE, lazy=FALSE}
+trieu_sff <- dat_sff %>% mutate(prop.trieu=(sum(subset(., Ho=="Triệu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Triệu")
+trieu_plot <- trieu_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.trieu, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+trieu_plot$centroid <- sf::st_transform(trieu_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+trieu <- trieu_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Vinh Tien" & NAME_2=="Trang Dinh"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.trieu=as.numeric(round(prop.trieu, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.trieu, area_km, songuoi_km, lng, lat, distm_km)
+
+trieu_peak <- trieu_plot %>% filter(NAME_3=="Xa Vinh Tien" & NAME_2=="Trang Dinh")
+
+datatable(trieu, colnames = c("STT", "Tỉnh/Thành phố", "Quận/Huyện", "Phường/Xã", "Số người", "Dân số", "Tỉ lệ/xã phường", "Tỉ lệ/cả nước", "Diện tích (km2)", "Mật độ (người/km2)", "Kinh độ", "Vĩ độ", "Khoảng cách tới tâm (km)"), extensions = 'Buttons', options = list(
+  dom = 'Bfrtip',
+  buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
+))
+```
+
+### Phân bố tỉ lệ
+
+```{r, warning=FALSE, message=FALSE, lazy = TRUE}
+trieu_sf <- dat_sf %>% mutate(prop.trieu=(sum(subset(., Ho=="Triệu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Triệu")
+trieu_plot <- trieu_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.trieu, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=trieu_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=trieu_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(trieu_plot$prop.trieu[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Triệu")
+```
+
+### Phương trình hàm phân bố tỉ lệ
+
+```{r, message=FALSE, warning=FALSE, lazy=TRUE}
+trieu <- dat_sff %>% filter(Ho=="Triệu") %>% st_as_sf(crs = 4326)
+trieu$centroid <- sf::st_transform(trieu, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+library(geosphere)
+trieu <- trieu %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Vinh Tien" & NAME_2=="Trang Dinh"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km2=distm_km^2,
+         sum_distm_km2=sum(distm_km2),
+         var=sum_distm_km2/(n()-1),
+         sd=sqrt(var))
+
+trieu_radius <- trieu %>%
+  arrange(distm_km) %>%
+  mutate(rank=row_number())
+
+distm_km<-trieu_radius$distm_km
+pro.pop<-trieu_radius$pro.pop
+rank<-trieu_radius$rank
+commune<-trieu_radius$NAME_3
+rank<-factor(rank, labels = commune)
+estimate<-85*exp(-(distm_km^2)/(2*100))
+
+library(dplyr)
+df<-data.frame(distm_km, rank, commune, estimate, pro.pop)
+
+df <- df %>%
+  mutate(num=sum((pro.pop-estimate)^2),
+         den=nrow(df)-1,
+         var=num/den,
+         sd=sqrt(var),
+         rank_com=as.numeric(reorder(factor(rank), distm_km)))
+
+breaks <- c(0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200)
+
+plot_df <- df %>%
+  filter(row_number()<=1000) %>%
+  ggplot(aes(x=reorder(factor(rank), distm_km), y=pro.pop, fill=distm_km)) +
+  geom_bar(aes(x=reorder(factor(rank), distm_km), y=pro.pop), stat = "identity", width = 0.5) + 
+  #stat_smooth(method = 'lm', aes(colour = 'linear'), se = FALSE) +
+  #geom_line(aes(x=as.numeric(reorder(factor(rank), distm_km)), y=estimate)) +
+  stat_smooth(aes(y=pro.pop, x=as.numeric(reorder(factor(rank), distm_km))),method="gam",se=TRUE,formula=y~s(x,k=20)) +
+  scale_x_discrete(name = "Xã/Phường", 
+                   breaks = reorder(factor(rank), distm_km), 
+                   labels = reorder(factor(rank), distm_km)) +
+  scale_fill_gradientn("Khoảng cách tới tâm (km)", colours = terrain.colors(10), breaks=breaks) +
+  scale_y_continuous(name="Tỉ lệ (%)") +
+  theme_bw() + 
+  theme(text = element_text(size=45), axis.text.x = element_blank(), axis.ticks.x = element_blank(), axis.text.y = element_text(size=30),
+        legend.text=element_text(size=30), legend.key.size = unit(6, "cm"), legend.key.height = unit(3, "cm"), legend.key.width = unit(5, "cm"), legend.position = "bottom") +
+  theme(panel.grid.major = element_blank()) + 
+  #annotate(geom='text', x=30, y=200, label="y == 55*e^-{(x^{2}+y^{2})/2*(160)}", parse = TRUE,size=10) +
+  #annotate(geom='text', x=30, y=180, label="s.e. = 130 người/xã",parse=F,size=8) +
+  #coord_flip() +
+  ggtitle("Triệu")
+
+plot_df
+```
+
+### Phân bố mật độ
+
+```{r, lazy = TRUE}
+trieu_sff <- dat_sff %>% mutate(prop.trieu=(sum(subset(., Ho=="Triệu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Triệu")
+trieu_plotf <- trieu_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.trieu, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=trieu_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="orange") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(trieu_plotf$prop.trieu[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Triệu")
+```
+
+### Phương trình hàm phân bố mật độ
+
+```{r, message=FALSE, warning=FALSE, lazy=TRUE}
+trieu <- dat_sff %>% filter(Ho=="Triệu") %>% st_as_sf(crs = 4326)
+trieu$centroid <- sf::st_transform(trieu, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+library(geosphere)
+trieu <- trieu %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Vinh Tien" & NAME_2=="Trang Dinh"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km2=distm_km^2,
+         sum_distm_km2=sum(distm_km2),
+         var=sum_distm_km2/(n()-1),
+         sd=sqrt(var))
+
+trieu_radius <- trieu %>%
+  arrange(distm_km) %>%
+  mutate(rank=row_number())
+
+distm_km<-trieu_radius$distm_km
+songuoi_km<-trieu_radius$songuoi_km
+rank<-trieu_radius$rank
+commune<-trieu_radius$NAME_3
+rank<-factor(rank, labels = commune)
+estimate<-14*exp(-(distm_km^2)/(2*100))
+
+library(dplyr)
+df<-data.frame(distm_km, rank, commune, estimate, songuoi_km)
+
+df <- df %>%
+  mutate(num=sum((songuoi_km-estimate)^2),
+         den=nrow(df)-1,
+         var=num/den,
+         sd=sqrt(var),
+         rank_com=as.numeric(reorder(factor(rank), distm_km)))
+
+breaks <- c(0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200)
+
+plot_df <- df %>%
+  filter(row_number()<=1000) %>%
+  ggplot(aes(x=reorder(factor(rank), distm_km), y=songuoi_km, fill=distm_km)) +
+  geom_bar(aes(x=reorder(factor(rank), distm_km), y=songuoi_km), stat = "identity", width = 0.5) + 
+  #stat_smooth(method = 'lm', aes(colour = 'linear'), se = FALSE) +
+  #geom_line(aes(x=as.numeric(reorder(factor(rank), distm_km)), y=estimate)) +
+  stat_smooth(aes(y=songuoi_km, x=as.numeric(reorder(factor(rank), distm_km))),method="gam",se=TRUE,formula=y~s(x,k=20)) +
+  scale_x_discrete(name = "Xã/Phường", 
+                   breaks = reorder(factor(rank), distm_km), 
+                   labels = reorder(factor(rank), distm_km)) +
+  scale_fill_gradientn("Khoảng cách tới tâm (km)", colours = terrain.colors(10), breaks=breaks) +
+  scale_y_continuous(name="Mật độ (người/km2)") +
+  theme_bw() + 
+  theme(text = element_text(size=45), axis.text.x = element_blank(), axis.ticks.x = element_blank(), axis.text.y = element_text(size=30),
+        legend.text=element_text(size=30), legend.key.size = unit(6, "cm"), legend.key.height = unit(3, "cm"), legend.key.width = unit(5, "cm"), legend.position = "bottom") +
+  theme(panel.grid.major = element_blank()) + 
+  #annotate(geom='text', x=30, y=200, label="y == 55*e^-{(x^{2}+y^{2})/2*(160)}", parse = TRUE,size=10) +
+  #annotate(geom='text', x=30, y=180, label="s.e. = 130 người/xã",parse=F,size=8) +
+  #coord_flip() +
+  ggtitle("Triệu")
+
+plot_df
+```
+
 ## A
 
 ```{r, warning=FALSE, message=FALSE, lazy=TRUE}
