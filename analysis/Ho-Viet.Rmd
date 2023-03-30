@@ -1122,7 +1122,7 @@ ggplot() + geom_sf() + geom_sf(data=nguyen_plot, color=NA) +
 
 Về vấn đề xác định các dòng họ trước thế kỷ thứ 10.
 
-Theo quan điểm của tác giả, các dòng họ liên quan tới vua trước thế kỷ thứu 10 như Mai, Khúc, Dương, Phùng, Ngô không có sự biến động lớn kiểu như đổi họ Lý sang Nguyễn hay Trần sang các dòng họ khác. Như thế phân bố dòng họ tương đối ổn định trong một khu vực nhỏ. Phân bố ở khu vực nhỏ là vì đã trải qua 1000 năm, nên các dòng họ của vua đời sau lấn át. Phân bố tương đối ổn định vì không gây ra xung đột với các đời vua sau, kiểu như Lê, Lý, Trần, Nguyễn... 
+Theo quan điểm của tác giả, các dòng họ liên quan tới vua trước thế kỷ thứ 10 như Mai, Khúc, Dương, Phùng, Ngô không có sự biến động lớn kiểu như đổi họ Lý sang Nguyễn hay Trần sang các dòng họ khác. Như thế phân bố dòng họ tương đối ổn định trong một khu vực nhỏ. Phân bố ở khu vực nhỏ là vì đã trải qua 1000 năm, nên các dòng họ của vua đời sau lấn át. Phân bố tương đối ổn định vì không gây ra xung đột với các đời vua sau, kiểu như Lê, Lý, Trần, Nguyễn... 
 
 ## Mai
 
