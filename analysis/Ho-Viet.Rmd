@@ -1,6 +1,6 @@
 ---
 title: "Họ Việt"
-author: "Duc Du"
+author: "Duc Du, Nguyen Le Anh"
 date: '`r format(Sys.time(), "%d %B, %Y")`'
 output: lazyhtml_document
 editor_options: 
