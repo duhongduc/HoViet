@@ -43,7 +43,7 @@ options(max.print=1000000)
 ```
 
 ```{r load data, message=FALSE, warning=FALSE}
-load("data/hoviet_full.RData")
+load("data/hoviet.RData")
 ```
 
 # Tổng họ Việt Nam
