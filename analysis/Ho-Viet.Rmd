@@ -1120,6 +1120,10 @@ ggplot() + geom_sf() + geom_sf(data=nguyen_plot, color=NA) +
 
 # Phân bố dòng họ cả nước
 
+Về vấn đề xác định các dòng họ trước thế kỷ thứ 10.
+
+Theo quan điểm của tác giả, các dòng họ liên quan tới vua trước thế kỷ thứu 10 như Mai, Khúc, Dương, Phùng, Ngô không có sự biến động lớn kiểu như đổi họ Lý sang Nguyễn hay Trần sang các dòng họ khác. Như thế phân bố dòng họ tương đối ổn định trong một khu vực nhỏ. Phân bố ở khu vực nhỏ là vì đã trải qua 1000 năm, nên các dòng họ của vua đời sau lấn át. Phân bố tương đối ổn định vì không gây ra xung đột với các đời vua sau, kiểu như Lê, Lý, Trần, Nguyễn... 
+
 ## Mai
 
 Mai Hắc Đế (梅黑帝; 670 – 723). 
@@ -1700,6 +1704,35 @@ plot_df
 ```
 
 ## Khúc
+
+Họ Khúc.
+
+(Ngược dòng lịch sử)
+
+Họ Khúc truyền nối làm chức Tiết Độ Sứ (tức làm Vua) gồm 3 đời: Khúc Thừa Dụ, Khúc Hạo, Khúc Thừa Mỹ, trị vì từ năm 905 tới năm 923 (hoặc 930). Đền thờ Khúc Thừa Dụ, Khúc Hạo, Khúc Thừa Mỹ, được xây dựng vào năm 2005 cạnh đình cổ làng Cúc Bồ bên bờ sông Luộc thuộc tỉnh Hải Dương.
+
+Theo thống kê học sinh phổ thông năm 2017 thì họ Khúc có mật độ phân bố lớn nhất ở vùng Hải Dương, Hưng Yên, Ninh Bình, và Hà Nội. Phân bố thống kê mật độ người mang họ Khúc này hoàn toàn phù hợp với sử liệu về nơi phát tích gia tộc họ Khúc.
+
+Năm Bính Dần (906) đời vua Chiêu Tuyên, nhà Đường rơi vào tay quyền thần Chu Ôn, các thế lực cát cứ nổi lên đánh giết lẫn nhau, tạo ra thế chia cắt 5 đời 10 nước (Ngũ đại Thập quốc).
+Năm 905, ở Tĩnh Hải quân (tên gọi Việt Nam lúc đó), Tiết độ sứ Độc Cô Tổn bị Chu Ôn dời tiếp ra đảo Hải Nam và giết chết. Tĩnh Hải quân do đó không có người cai quản. 
+
+Khúc Thừa Dụ 曲承裕 quê ở Hồng Châu (thuộc địa hạt Bàng Giang, Ninh Giang cũ ở Hải Dương), gặp thời buổi loạn lạc, nhân danh là hào trưởng một xứ, Thừa Dụ tự xưng là Tiết độ sứ" và cho dựng đô ở La Thành. Cương mục dẫn sách An Nam kỷ yếu, ghi thêm: "Cuối thời Đường, Khúc Hạo làm Tiết độ sứ thay cho Độc Cô Tôn; đổi các hương ở các huyện làm giáp, đặt ở mỗi giáp một viên quản giáp và một phó tri giáp để giữ việc đánh thuế. Hạo giữ chức Tiết độ sứ được hơn 4 năm thì mất".
+
+Ngày 7 tháng 2 năm 906, vua Đường phong thêm cho Tĩnh Hải quân Tiết độ sứ Khúc Thừa Dụ tước "Đồng bình chương sự". Sau đó, Khúc Thừa Dụ tự lấy quyền mình, phong cho con là Khúc Hạo chức vụ "Tĩnh Hải hành quân tư mã quyền tri lưu hậu", tức là chức vụ chỉ huy quân đội và sẽ kế vị quyền Tiết độ sứ.
+
+Ngày 23 tháng 7 năm 907, Khúc Thừa Dụ mất, Khúc Hạo lên kế vị và phong cho con là Khúc Thừa Mỹ làm "Tĩnh Hải hành quân tư mã quyền tri lưu hậu" để kế vị. 
+
+Khúc Hạo người làng Cúc Bồ, huyện Ninh Thanh, tỉnh Hải Hưng ngày nay, ở đó hiện còn đình thờ họ Khúc. Việt sử thông giám cương mục (Tiền biên, quyển 5) viết: "Họ Khúc là một họ lớn lâu đời ở Hồng Châu. 
+
+Năm sau nhà Đường mất ngôi (907), nhà Hậu Lương lên thay, phong cho Lưu Ẩn làm Nam Bình Vương, kiêm chức Tiết độ sứ Quảng Châu và Tĩnh Hải, có ý để lấy lại Giao Châu.
+Khúc Thừa Mỹ chủ trương kết thân với nhà Hậu Lương ở Trung nguyên mà gây hấn với nước Nam Hán liền kề. Năm 919, ông sai sứ sang Biện Kinh xin tiết việt của nhà Hậu Lương. Vua Lương là Mạt đế Chu Hữu Trinh bấy giờ bận đối phó với các nước lớn ở Trung nguyên nên ban tiết việt cho Khúc Thừa Mỹ và phong ông làm Tiết độ sứ Giao châu.
+Được sự hậu thuẫn của Hậu Lương, Thừa Mỹ chủ quan cho rằng uy thế của nhà Lương rộng lớn ở Trung nguyên có thể kìm chế được Nam Hán nhỏ hơn ở Quảng Châu. Ông công khai gọi nước Nam Hán là "ngụy đình" (triều đình tiếm ngôi, không chính thống). Chính sách đối ngoại đó của Khúc Thừa Mỹ khiến vua Nam Hán tức giận và quyết định sai Lý Khắc Chính cầm quân sang đánh chiếm Tĩnh Hải quân.
+
+Sách Tân Ngũ Đại sử, phần Nam Hán thế gia ghi: Đại Hữu năm thứ ba (930), [Lưu Nghiễm] sai tướng Lý Thủ Dung và Lương Khắc Trinh đánh Giao Chỉ, bắt được Khúc Thừa Mỹ... Thừa Mỹ là con của Khúc Hạo. Lương Khắc Trinh lại đánh Chiêm Thành, cướp lấy đồ quý mang về.
+
+Việc quân Nam Hán sang đánh Giao Châu (tức nước ta), bắt Khúc Thừa Mỹ, sử liệu Trung Quốc như Thông giám ghi vào tháng 9 năm Trường Hưng thứ 1 (930). Tân Ngũ Đại sử, Nam Hán thế gia ghi vào niên hiệu Đại Hữu thứ 3, cũng tức là năm 930. Chưa rõ vì sao cả Toàn thư và Cương mục đều ghi vào năm Quý Mùi (923)?
+
+Từ sự liên kết các sự kiện nêu trong sử liệu Phương Bắc với các sử liệu có trong trong Đại Việt Sử Ký Toàn Thư, cộng với sự phù hợp về địa lý của hàm phân bố mật độ dân mang họ Khúc cho thấy các thông tin lịch sử về triều đại họ Khúc trong khoảng thời gian từ 905 tới năm 923 (hoặc 930) là đáng tin cậy.
 
 ### Dữ liệu
 
@@ -2525,6 +2558,171 @@ plot_df
 
 ## Lý
 
+Họ Lý 李, Trần 陳, và Nguyễn 阮
+
+Con tự họ Lý 李 hàm ý đứa con của cây rừng trên núi cao. Con tự dòng Nguyễn 阮 được hiểu là người thân phận như những mô đất (dòng họ) bị đè nén không ngóc đầu lên được. Con Tự dòng họ Trần 陳 là những mô đất (dòng họ) ở phía Đông nơi có cây bao phủ. Dòng Họ Lý 李 là ở phía rừng núi Quảng Tây, dòng họ Trần 陳 là ở về phía đồng bằng Quảng Đông. 
+
+Trong bài khảo cứu về dòng họ Lý được đăng trên trithucvn.org, anh Việt giám đốc Trung Tâm Tiền Sử Đông Nam Á có khẳng định như sau. 
+
+Trên một dụng cụ bằng đồng khai quật tại Quảng Đông còn nguyên dòng minh văn: “Nguyên Sơ ngũ niên thất nguyệt trung Tây Vu Lý Văn Sơn trị xạ trước (chú) hữu”. Tạm dịch: Vào trung tuần tháng bảy năm thứ năm đời Nguyên Sơ (năm 143 sau Công nguyên) Lý Văn Sơn người Tây Vu điều hành việc đúc đồng. 
+
+Trên một chiếc vò sành đời Hán được Clemant Huet sưu tầm tại Thanh Hóa trước Chiến tranh thế giới lần thứ nhất, hiện trưng bày tại gian Việt Nam của Bảo tàng Hoàng gia Bỉ về Nghệ thuật và Lịch sử (Brussel) có khắc dòng chữ: “Kiến hòa tam niên nhuận nguyệt trấp nhật Lý thị tác”. Tạm dịch: Họ Lý sản xuất ngày hai mươi tháng nhuận năm thứ ba đời Kiến Hòa (năm 149 sau Công nguyên).
+
+Huyện Tây Vu đời Nguyên Sơ bao gồm cả vùng đất Bắc Ninh, Bắc Giang trọng tâm là các vùng Quế Võ, Phả Lại, Thiên Thai… Mã Viện đã tách ra từ huyện Tây Vu cũ thành ba huyện: Tây Vu, Phong Châu và Vọng Hải. Anh Việt cũng cho biết thêm tổ của Lý Bí cũng từ phía Bắc sang đất Việt từ thời Tây Hán, 200 năm trước Công Nguyên.
+
+Như thế họ Lý được biết đến ở Đại Việt tương đối sớm. Lần ngược lại lịch sử thì chúng ta được biết họ Nguyễn ở Đại Việt được hình thành một cách "nhân tạo" như sau.
+
+Năm 1232, nhà Lý suy vong, Trần Thủ Độ đã bắt con cháu họ Lý đổi sang họ Nguyễn với lý do phạm húy bởi ông nội của Trần Cảnh tức vua Trần Thái Tông là Trần Lý. Trên thực tế lý do bắt đổi họ Lý 李 thành họ Nguyễn 阮 là hàm ý nhục mạ và để tiêu diệt tận gốc sự chống đối. 
+
+Không riêng gì dòng họ Lý, trong lịch sử Việt Nam, tất cả các dòng họ khác với họ của Vua đều bị quy chuyển về Nguyễn. 
+
+Suốt 1000 năm, từ năm 457 đến thời Hồ Quý Ly ở vùng đất Hải Dương và một phần Hải Phòng ngày nay có huyện Phí Gia người họ Phí. Vào thời nhà Trần đã bị đổi sang thành họ Nguyễn. Năm 1592, nhà Mạc suy tàn, con cháu họ Mạc cũng đổi sang họ Nguyễn.
+
+Trần Quang Diệu (và vợ là Bùi Thị Xuân) làm quan lớn cho nhà Tây Sơn, chống lại Nguyễn Ánh, sau khi nhà Tây Sơn cáo chung, con cháu Trần Quang Diệu, Bùi Thị Xuân bị trả thù khốc liệt, phải đổi thành nhiều họ, trong đó một số thành họ Nguyễn.
+
+Căn cứ vào thống kê sau chúng ta thấy ở Việt Nam có 3 loại họ được sử dụng nhiều hơn cả. Đó là họ Nguyễn, họ Trần, và họ Lê. Trong đó họ Nguyễn chiếm tới gần 40% tổng số họ được sử dụng. 
+
+Về mặt nguyên tắc thì sau khi có lệnh của Trần Thủ Độ, ở Đại Việt không thể có người mang họ Lý. Hiện vẫn còn một phần rất ít người mang họ Lý. Vậy họ từ đâu mà ra? 
+
+Xét về lịch sử, kể từ sau nhà Trần, nhà Lý không còn tham gia chính sự. Hơn thế dòng họ Lý chỉ chiếm rất ít 0.5% trong tỷ lệ dân số Đại Việt. Như thế biến động về tỷ lệ dân số của họ Lý là không lớn. 
+
+Cho tới tận khi Pháp sang phương thức sản xuất ở đồng bằng Bắc Bộ vẫn không thay đổi so với thời kỳ từ đầu Công Nguyên. Mật độ dân cư vẫn là khoảng 1 hộ trên 1 heta, tức khoảng 6 nhân khẩu gồm 3 thế hệ trên 1 heta. Vào thời Nhà Trần bờ biển ở vào khoảng Nam Định, diện tích đồng bằng Bắc Bộ vào khoảng 670 nghìn heta. Như thế dân số thời Nhà Trần vào khoảng trên dưới 4 triệu. Theo cổ sử thì dân số thì thời nhà Trần có 3790000 người. Con số này là đáng tin cậy. Với tỷ lệ này thì 0.5%  là khoảng 20 nghìn. Đây có thể chính là số quân của Đại Lý sau khi làm phản đánh lại 15 nghìn quân Mông Cổ trong trận đánh Mông lần thứ nhất 1258 ở lại Đại Việt. Đây là lực lượng tạo ra chiến thắng cho nhà Trần và không liên quan gì tới dòng của các vua Lý. Hơn thế Trần Thủ Độ (1194–1264) chết già khoảng 8 năm sau cuộc chiến khốc liệt. Và có thể vì các lý do đó mà 20 nghìn quân Đại Lý đã không bị đổi họ.
+
+Như thế rất có thể 0.5% dân số mang họ Lý là hậu duệ của 20 nghìn quân từ Đại Lý làm chư hầu cho 15 nghìn quân Mông Cổ tiến đánh Đại Việt lần thứ nhất vào năm 1258. 
+
+Trận đánh thắng quân Mông - Đại Lý năm 1258 là trận đánh tầm cỡ thế giới, bởi đấy là trận thua đầu tiên của quân Mông sau khi đã bình định khắp cả lục địa Á Âu. 
+
+Vào cuối thời kỳ nhà Lý xã hội rối ren suy tàn, vua chúa ham tửu sắc mà bỏ bê việc nước, cướp nổi lên khắp nơi. Năm 1225, Lý Huệ Tông truyền ngôi cho con gái 7 tuổi là Chiêu Thánh, tức vua Lý Chiêu Hoàng. Trần Thủ Độ chú của Lý Chiêu Hoàng đã dàn xếp việc truyền lại ngôi từ nhà Lý sang nhà Trần. Trần Thủ Độ tiến cử Trần Cảnh, lúc đó mới 8 tuổi, làm Chi hậu chính chi ứng cục hầu hạ trong cung. Ngày 11 tháng 12 năm ấy (tức 10 tháng 1 năm 1226), Chiêu Hoàng trao hoàng bào cho Trần Cảnh ở điện Thiên An. Nhà Lý chấm dứt sau 216 năm tồn tại. 
+32 năm, từ năm 1226 đến năm 1258, là khoảng thời gian may mắn vừa để dẹp nạn cướp, vừa để củng cố sức mạnh quân sự đủ để đương đầu chống lại cuộc chiến với quân Mông Cổ. 
+
+Diến tiến trận đánh như sau 
+- Ngày 12 tháng chạp (17/1/1258), quân Nguyên từ Đại Lý thuộc Vân Nam sang giao chiến với quân nhà Trần trận đầu tiên ở Bình Lệ Nguyên (nay là khoảng Bình Xuyên, Vĩnh Phúc). 
+- Ngày 13 tháng chạp (18/1/1258) giao chiến lần thứ 2 bên sông Phù Lỗ (tức sông Cà Lồ).
+- Ngày 21 tháng 1 năm đó, quân Trần rút khỏi thành Thăng Long về Thiên Mạc. Quân Nguyên Mông chiếm được thành. 
+- Ngày 24 tháng chạp (29/1/1258) giao chiến trận thứ 3 ở Đông Bộ Đầu. Trần Thái Tông cùng thái tử Trần Hoảng (sau là vua Trần Thánh Tông) dẫn quân ngược sông Nhị tiến đánh Đông Bộ Đầu. Quân Nguyên Mông rút chạy về Vân Nam.
+
+Theo Đại Việt Sử Ký Toàn Thư thì trận đánh trên sông Cà Lồ quân của Trần Thái Tông bị thua trận quân lính tan tác. Sự kiện chỉ sau có 11 ngày, từ chỗ ngày 18/1 quân Trần đại bại, tới 29/1 quân Trần đại thắng, đánh bại 15 nghìn quân Mông được giải thích như sau. 
+
+Đặc điểm của quân Mông là cưỡi ngựa, bắn tên rất giỏi. Đội quân này không mang theo lương thực. Họ đánh phá các làng mạc thành trì, cướp lương ăn, hãm hiếp phụ nữ, cứ như thế mà di chuyển đánh khắp cả châu Á châu Âu. Như vậy sức mạnh của quân Mông Cổ là ở khả năng di chuyển bằng ngựa chiến. Hiển nhiên là trận thua đầu tiên của quân Mông Cổ phải là do các vấn đề liên quan tới ngựa chiến. Sự thật có thể đã là thế nào?
+
+Nhiều sử gia rất hoang mang khi nói đến số quân Mông Cổ huy động đánh Nhà Trần lần thứ 1, và càng hoang mang hơn khi lập luận về cuộc chiến đánh thắng quân Mông. 
+
+Thủ phủ của Đại Lý ở hồ Nhĩ Hà, mà phía Tây của nó là thượng nguồn con sông Thao. Hốt Tất Liệt đưa 100 nghìn quân tiến từ Nội Mông qua Tân Cương xuống đánh Đại Lý. Đội quân này chia thành 3 cánh, Hốt Tất Liệt chỉ quy cánh giữa 70 nghìn quân. Cánh phải do Uriyangqatai chỉ huy với 15 nghìn quân. Sau khi đánh chiếm kinh thành của Đại Lý, Hôt Tất Liệt thu quân về đánh nhau với Tống. Uriyangqatai bình định nốt phần còn lại của Đại Lý rồi tiến quân xuống Đại Việt nhằm mở hướng tấn công Tống từ phía Nam.  
+Số quân của Uriyangqatai là 35 nghìn, trong đó có 20 nghìn quân chư hầu Đại Lý. Đường đi ở vùng núi ít thay đổi theo thời gian. Ngày nay chúng là các đại lộ lớn. Như thế đường tiến quân của Uriyangqatai là qua Hà Giang rồi theo QL2, xuống Tam Quan.  
+
+Đại Việt Sử Ký Toàn Thư nói tương đối rõ về bối cảnh trận chiến này. Vào tháng 11/1257 có lệnh "Mùa đông, tháng 11, Trần Thái Tông ra lệnh cả nước sắm sửa vũ khí." 
+Các tình tiết sau chứng tỏ sự bị động của Đại Việt khi cuộc chiến bắt đầu. Cuộc chiến diễn ra tại vùng Bình Lệ Nguyên là vùng gồm Vinh Yên, Hương Canh ra tới tận bờ sông Hồng nay. Vào thế kỷ 12 sông Phan và sông Cà Lồ rộng khoảng 200m (bằng 2 lần tên bắn từ bờ ra giữa sông. Độ rộng này rộng hơn sông Thiên Phù -- vì sông Thiên Phù nay đã cạn.  Độ rộng của sông Thiên Phù gấp 2 lần sông Tô Lịch, và sông Tô Lịch thì rộng 70m từ Hàng Buồm qua Chợ Gạo). Bối cảnh chung thì Nhà Trần thi hành quan hệ hữu hảo với các tù trưởng ở biên cương. Quan hệ với Tống ở phía Bắc cũng rất tốt.
+
+Nhắc lại diễn tiến 
+- Mùa đông, tháng 11, lệnh truyền cả nước sắm sửa vũ khí.
+- Tháng 12, ngày 12, tướng Nguyên Uriyangqatai (Ngột Lương Hợp Đải) xâm phạm Bình Lệ Nguyên.
+- Vua thân hành đốc chiến, xông pha tên đạn. Quan quân hơi núng, vua ngoảnh trông tả hữu, chỉ có Lê Phụ Trần (tức Lê Trần) một mình một ngựa, ra vào trận giặc, sắc mặt bình thản như không.
+- Lúc ấy, có người khuyên vua dừng lại để chỉ huy chiến đấu. Phụ Trần cố sức can vua: "Nay thì bệ hạ chỉ đánh một ván dốc túi thôi! Hãy nên tạm lánh chúng, sao lại có thể dễ dàng tin lời người ta thế!".
+Bấy giờ, vua mới lui quân đóng ở sông Lô. Phụ Trần giữ phía sau. Quân giặc bắn loạn xạ, Phụ Trần lấy ván thuyền che cho vua khỏi trúng tên giặc. Thế giặc rất mạnh, vua lại phải lui giữ sông Thiên Mạc. Phụ Trần theo vua bàn những việc cơ mật, rất ít người biết được đều đó.
+- Vua ngự thuyền nhỏ đến thuyền Thái úy Nhật Hiệu hỏi kế sách (chống giặc). Nhật Hiệu đương dựa mạn thuyền, cứ ngồi chứ không đứng dậy nổi, chỉ lấy ngón tay chấm nước viết hai chỉ "nhập Tống" lên mạn thuyền. Vua hỏi quân Tinh Cương ở đâu? (Tinh Cương là quân do Nhật Hiệu chỉ huy).
+Nhật Hiệu trả lời: "Không gọi được chúng đến"
+- Vua lập tức dời thuyền đến hỏi Thái sư Trần Thủ Độ, Thủ Độ trả lời: "Đầu thần chưa rơi xuống đất, bệ hạ đừng lo gì khác".
+Như thế ngay từ phút giáp trận đầu tiên quân của Trần Thái Tông đã bị vỡ trận, bỏ chạy, tướng không còn thấy quân ở đâu. Tuy nhiên chỉ sau có 1 tháng quân của Uriyangqatai đã phải tháo chạy khỏi Đại Việt không còn đủ 3 nghìn quân. Vậy điều gì đã xảy ra.
+Vào thế kỷ 12 đồng bằng Bắc Bộ thấp hơn hiện nay 4m. Vậy cuộc chiến xảy ra ở vùng sông nước. 
+Mật độ dân cư đồng bằng Bắc Bộ ước tính 1 hộ/1ha, dân ở trong làng và đào hào quanh để lấy đất làm nhà làm đường. Quanh làng có lũy tre để ngăn cướp. Trên các con đường vào làng mà đào hố thì chả ngựa nào tấn công được. Như thế việc bình định nhanh vùng đầm hồ là không thể. Ưu thế của kị binh đánh nhanh thắng nhanh không còn. Cỏ ăn cho ngựa không hợp thổ nhưỡng, cũng có thể là nguyên nhân dẫn đến giảm sức chiến đấu. Quân của Mông Cổ hiển nhiên là đối tượng cho đội quân 20 nghìn quân thiện chiến của Đại Lý trả thù. Và chỉ sau chưa đầy 1 tháng thì "gậy ông đập lưng ông" chính quân Mông Cổ bị 20 nghìn quân chư hầu đánh lại. Quân của vua Trần Thái Tông cũng tập hợp lại và theo đà đánh đuổi quân Mông. Quân Mông Cổ chết gần hết. 20 nghìn quân Đại Lý này ở lại Đại Việt. Có thể những người này sống ở vùng rừng núi  ít liên quan tới nhà Trần, và cũng có thể nhà Trần đã đăng ký nhân khẩu và cấp họ cho những người này là Lý. 
+
+Lần theo nguồn Đại Việt Sử Ký Toàn Thư, chúng ta thấy cái tên Đông Bộ Đầu được nhắc đến 10 lần, trong đó 9 lần đề đích danh Đông Bộ Đầu 東步頭, 1 lần đề là bến Triều Đông朝東津:
+Vị trí của Đông Bộ Đầu được xác định nhờ bia "chùa Hòe Nhai".
+https://yeuhannom.blogspot.com/.../bia-chua-hong-phuc-voi?fbclid=IwAR3s6qFXt__KF4_vOQSxbThNeq33iikJsPEoqxEpPZcmlwcdyEa1C7Xw1go
+
+Theo các nhà sử học, người soạn tấm bia này là tiến sĩ Hà Tông Mục - tác giả của nhiều văn bia có giá trị vào thế kỷ 17. Hà Tông Mục 何宗穆 sinh ngày 25-9 năm Quý Tỵ (1653) mất ngày 7-3 Ðinh Hợi (1707), người làng Tỉnh Thạch huyện Thiên Lộc (nay là xã Tùng Lộc huyện Can Lộc) tỉnh Hà Tĩnh. Là một danh thần nổi tiếng triều Lê có tham gia biên soạn Đại Việt sử ký tục biên.
+
+Mặt 1: 盛德宏功
+蓋 聞：夫善之種福之宗而修福行善者，豈必於山巔水涯足跡穻到之所然後為至哉！我大越昇龍城之 "東步頭" 槐街坊有寺名洪福，帶瀘江而襟蘇瀝，控傘嶺而拱宸居。風景 有情精氣所萃，自古僧伽大士住持焚誦，上祝聖人壽下願民物康，國禱民祈應若桴鼓。誠古跡大伽藍都會中之勝概也。日月跡久平波靡常鄰房纔闕於鴟魚，梵宇盡灰 於回祿。一區淨土侵尋為讙鬧之場，幾座金身零落於福林之境。禪扃煙鎖僧砌苔漫，歷閱星霜六十餘年，皈依像教者睹之者莫不太息然未有修而復之者。睠玆
+Dịch là 
+THỊNH ĐỨC HOẰNG CÔNG
+Từng nghe: Gieo mầm thiện là nối dòng phúc, mà tu phúc làm thiện, há phải ở những nơi góc biển chân trời nơi chân người ít đến mới được đâu! Phường Hòe Nhai, khu "Đông Bộ Đầu", thành Thăng Long nước Đại Việt ta có ngôi chùa tên Hồng Phúc, men dòng Lô giang (sông Hồng) mà bao dòng Tô Lịch, chống non Tản mà chầu hướng thần cư. Phong cảnh hữu tình là nơi tinh khí hội tụ, từ xưa là nơi các bậc tăng già đại sĩ trụ trì khấn tụng, trên thì chúc vua thánh thọ dưới nguyện dân vật an khang, quốc cúng dân cầu linh ứng vang truyền như trống dậy. Thực là nơi đại già lam cổ tích, thắng cảnh chốn đô thành. Năm tháng dài lâu, phong ba biến đổi, xóm thôn vắng vẻ đìu hiu, kèo cột tô khắc hình cá chim tiêu tán, cảnh chùa cũng mắc vòng lửa tai biến mà ra tro. Một khu Tịnh thổ dần thành chốn hoan lạc bon chen, mấy tòa tượng báu điêu tàn giữa cảnh phúc lâm. Cửa Thiền mây tỏa, thềm tăng rêu đầy, trải bao phen ngó sao nằm sương hơn sáu chục năm, những người quy y Tượng giáo (Phật Giáo) mà trông cảnh ấy không ai không than thở vì chưa có người tu sửa mà khôi phục lại.
+
+Chùa Hòe Nhai ở Hà Nội là địa danh Đông Bộ Đầu 東步頭, tức "Bến đỗ thuyền phía đông". 
+
+Khảo sát thực địa khu vực Hòe Nhai là một gò đất cao gần chân cầu Long Biên. Khảo sát thực tế chúng ta biết cửa sông Tô Lịch xưa là ở khoảng giữa Chợ Gạo và Hội Quán Quảng Đông trên phố Hàng Buồm. Như thế vào khoảng năm 1800 sông Hồng chảy theo đường Yên Phụ. Từ chùa Hòe Nhai, tức Đông Bộ Đầu, đi theo phố Hàng Than tới Hàng Ngang chính là bờ sông Hồng vào thời năm 1258. 
+
+Khoảng cách từ phố Hàng Ngang tới đền Bạch Mã là 100m. Đền Bạch Mã có trên bản đồ 1490, như thế vận tốc bồi của phù sa làm bờ sông tiến dần ra là khoảng 100m cho 200 năm. Khoảng cách từ Đền Bạch Mã ra tới cửa sông Tô Lịch là 200m. Vậy 200m này ứng với 400 năm phù sa bồi. Như thế hội Quán Quảng Đông được dựng ra tại vị trí như hiện nay trên phố Hàng Buồm là vào khoảng năm 1900. 
+
+Khoảng cách từ Hội Quán Phúc Kiến tới phố Hàng Ngang là 100m, vậy Hội Quán Phúc Kiến được dựng vào khoảng năm 1000, tức gần thời gian với vua Lý Công Uẩn rời đô ra Thăng Long. Đây chính là thời gian Nhà Trần từ Phúc Kiến di cư tới Đại Việt. Khu vực phát tích của Nhà Trần là ở Mỹ Lộc, Nam Định. Khoảng cách từ Mỹ Lộc tới cửa Ba Lạt là khoảng 50km. Cứ 1000 năm thì cửa sông Hồng tiến ra biển được 45km, vậy 50km ứng với khoảng 1000 năm. Đó chính là thời điểm xây dựng Hội Quán Phúc Kiến.
+
+Như vậy chúng ta có thể tin vào khẳng định bờ sông Hồng vào năm 1258 là từ Hòe Nhai tới Hàng Ngang, rồi qua hồ Gươm. Vào năm 1400 bờ sông Hồng đã được phù sa bồi lấn tới phố Nguyễn Thiếp, Hàng Giầy, và do Hàng Bạc là một gò đất cao nên, bờ sông là vòng theo phố Lương Ngọc Quyến. Chùa Bạch Mã thờ Mã Viện thực chất là một miếu trên gò nổi ở bãi nổi giữa sông. Như vậy Đền Bạch Mã nơi thờ Mã Viện là được hình thành từ một cái miếu hoang ngoài bãi nổi giữa sông Hồng vào thời cư dân vùng ven biển Phúc Kiến di sang làm ăn buôn bán..
+
+ĐVSKTT (Đại Việt Sử Ký Toàn Thư), là chính sử Ngô Sĩ Liên viết vào năm 1479. Sau nhiều năm kiểm duyệt, sửa đổi, và bổ sung, bộ sử 15 quyển được khắc in và phát hành vào năm 1697.
+Ngô Sĩ Liên đã dựa vào hai bộ sử, bộ sử của Lê Văn Hưu và bộ sử của Phan Phu Tiên để biên soạn.
+
+Bộ sử của Lê Văn Hưu biên soạn và hoàn thành vào năm 1272, Bộ Đại Việt sử ký 大越史記, là bộ quốc sử Việt Nam sớm nhất được ghi nhận,. Bộ sử ghi chép lịch sử Đại Việt từ thời đại Triệu Vũ Đế năm 207 TCN đến hết năm 1225 đời Lý Chiêu Hoàng nhà Lý.
+
+Lê Văn Hưu theo lệnh vua Trần Thái Tông biên soạn bộ chính sử đầu tiên của nhà Trần mang tên Đại Việt Sử Ký. Bộ sách này bao gồm 30 quyển được hoàn thành và dâng lên vua Trần Thánh Tông vào tháng 1 năm 1272 và được vua Thánh Tông hết sức khen ngợi. Lê Tắc trong An Nam Chí Lược cho rằng Đại Việt Sử Ký của Lê Văn Hưu được biên soạn dựa trên cơ sở bộ Việt Chí (越志) của Trần Phổ được viết dưới thời Trần Thái Tông.
+
+Như vậy ĐVSKTT có tham khảo Sử Ký 史記 của Đỗ Thiện thời nhà Lý, Việt chí 越志 của Hàn trưởng Trần Phổ thời nhà Trần. 
+
+Lê Tắc (1263 - 1342) cùng chủ là Trần Kiện đã đầu hàng quân Nguyên, khi quân Nguyên đánh Đại Việt lần thứ 2, Lê Tắc được vua Nguyên phong chức. Hẳn là Lê Trác đã có được điều kiện để truy cập vào kho cổ sử các triều đại phong kiến Phương Bắc để viết An Nam Chí Lược. An Nam Chí Lược là cuốn cổ sử được viết dưới dạng cổ xúy cho các triều đại phong kiến Phương Bắc vì thế mà nó được phát hành, và cũng vì lý do đó mà các sự kiện lịch sử liên quan tới Đại Việt mới tới được với Ngô Sỹ Liên và chúng ta ngày nay. 
+
+Về Nhà Trần ĐVSKTT viết: Có người tên là Kinh từ đất Mân di cư đến ở hương Tức Mặc, phủ Thiên Trường, sinh ra Hấp, Hấp sinh ra Lý, Lý sinh ra Thừa, đời đời làm nghề đánh cá. Trần Cảnh (1226-1258) là con thứ của Thừa, mẹ họ Lê, sinh ngày 16 tháng 6 năm Mậu Dần, Kiến Gia thứ 8. 
+
+Như vậy Trần Cảnh là đời thứ 5 của Kinh di cưu tới  Mỹ Lộc thuộc Nam Định vào khoảng năm 1100. Cứ 1000 năm thì cửa Ba Lạt của sông Hồng tiến ra biển được khoảng 45km. Khoảng cách từ Mỹ Lộc tới cửa Ba Lạt khoảng 50km, tương ứng với khoảng 1000 năm về trước Mỹ Lộc là bờ biển. Điều này phù hợp với sử kiện ghi chép là tổ tiên của Nhà Trần tới vùng này làm nghề chài lưới vào khoảng năm 1100.
+
+Trần Thủ Độ là chú họ bên ngoại của Lý Chiêu Hoàng (1218 - 1278) và là người sắp đặt cho việc Lý Chiêu Hoàng lấy Trần Cảnh (Trần Thái Tông) vào năm 1226, để chuyển ngôi từ nhà Lý sang nhà Trần.  Vào năm 1237, Trần Cảnh phế bỏ Hoàng Hậu Lý Chiêu Hoàng để lấy chị ruột của bà là  Hiển Từ Thuận Thiên Hoàng Hậu. Khi quân Mông tắt đường đánh chiếm kinh thành Thăng Long, Linh Từ (tức Lý Chiêu Hoàng) đã đưa hoàng thái tử, cung phi, công chúa và vợ con các tướng soái trốn thoát khỏi giặc cướp. 
+
+Sau đại thắng quân Mông vào năm 1258, ở tuổi 40 Lý Chiêu Hoàng tái giá lấy Lê Phụ Trần. Lê Phụ Trần là một danh tướng phục vụ Trần Thái Tông, Trần Thánh Tông và Trần Nhân Tông. Ông đã có công cứu giúp Trần Thái Tông khỏi bị truy kích trong trận đánh với quân Mông ở Bình Lệ Nguyên.  
+
+Bối cảnh trận đánh lần đầu tiên của quân Mông Cổ vào Đại Việt như sau.
+
+Dali (Đại Lý) và Nam Tống là hai nước ở về phía Bắc của Đại Việt. Đế quốc Đại Lý hình thành vào năm 937 bao gồm cao nguyên Vân Nam 云南 và Tây Tứ Xuyên 四川西. Thủ phủ của Dali nằm ở phía nam hồ nước Erhai Lake 洱海. Hồ Erhai Lake dài 40km rộng 8km ở cao độ 2000m, bao quanh bởi các dãy núi dốc đứng cao 3500m. Đại Lý là nơi bắt đầu của tuyến đường tiến quân xuống Đông Nam Á, và là sườn phía Đông của Nam Tống. 
+
+Năm 1252, đại hãn Mông Cổ Monkhe lệnh cho em trai mình là Hốt Tất Liệt 忽必烈 và tướng Ngột Lương Hợp Thai (Wulianghetai 兀良合台 sinh năm 1201 chết năm 1272, là  Wulianghetai con trai của Subutai  速不台 thuộc "Tứ linh Mông Cổ") dẫn 100 nghìn quân kỵ binh thiện chiến chinh phạt nước Đại Lý ở Vân Nam. 
+
+Đây là cuộc viễn chinh quân sự đầu tiên của Hốt Tất Liệt và cũng là viễn chinh nổi tiếng trong lịch sử Trung Quốc. Muốn đánh Vân Nam thì phải qua Tứ Xuyên, nhưng Tứ Xuyên lúc này vẫn là đất của nhà Nam Tống. Tháng 7 năm 1252, Hốt Tất Liệt 忽必烈 khi ấy 36 tuổi, dẫn đội kỵ binh tiến hàng nghìn dặm dọc theo con đường qua Tây Tạng. Phải đến tháng 9 năm 1252, Hốt Tất Liệt mới tới được biên giới Đại Lý. Mục đích của việc đánh chiếm Dali là tạo thế gọng kìm để đánh quân Nam Tống từ phía bắc và từ phía Đông Nam. Sau khi đánh chiếm Dali, quân Mông Cổ đã tiến đánh Đại Việt với mực đích tấn công Tống từ phía Nam.
+
+Cùng lúc ấy Meng Ge Khan 命汪德臣 (Wang Dechen), dẫn quân vào đánh Tứ Xuyên để hỗ trợ.
+
+Vào mùa hè năm 1253, Quân Mông Cổ đi qua núi Liupan 六盘 và từ Lintao临洮 đến Tula 忒剌(nay là Dalagou, huyện Diebu, Cam Túc). Sau đó đội quân của Hốt Tất Liệt chia thành 3 cánh quân tiến về thành Kinh Thành Đại Lý ở phía nam. Wuliang Hetai dẫn quân tiến về theo đường phía Tây dọc theo Yandang (nay là đồng cỏ Aba ở Tứ Xuyên). Zong Wangchao và Yezhilie tiến theo đường phía Đông qua Mao Châu 茂州 (nay là Maowen) đến Huichuan 会川 (nay là Huilixi) và đến sông Lệ Giang Jinsha 沙江. Cánh quân giữa do Hốt Tất Liệt chỉ huy tiến qua thành phố Mantuo (nay là Hanyuan North, Tứ Xuyên) qua sông Dadu 渡大, dọc theo lãnh thổ nhà Thanh cổ đi hơn 1000 km về phía nam, vào đầu tháng 11, đến bờ sông Jinsha. Ước tính, trong tổng số 100 nghìn quân của cả 3 mũi thì cánh quân phía Tây của Wuliang Hetai có không ít hơn 15 nghìn quân.  
+
+Vua Đại Lý Duẩn Hành Chi 段兴智 cử Tể tướng Cao Tương Gaoxiang Kublai 高祥 dẫn 100 nghìn quân từ Thiểm Tây tiến ra Huichuan 会川 đối phó. 
+
+Cánh quân phía Tây của Wuliang Hetai chiếm được Lệ Giang. Cao Tương phải rút lui về chấn giữ đèo Đầu Rồng 龙首关. Sau khi hội quân, cả 3 toán quân Mông Cổ tập trung tấn công và đã đánh bại đại quân của Cao Tương tại Đèo Đầu Rồng 龙首关.
+
+Sau khi trận chiến kết thúc, Hốt Tất Liệt đã ra lệnh cho Wuliang tiếp tục chinh phục các bộ lạc còn lại, và lệnh cho Liu Shizhong làm sứ thần áp đặt sự cai trịcủa Mông Cổ lên Đại Lý. Hốt Tất Liệt dẫn quân quay về phía bắc. WuLiang tiến vào Keab Chicheng. Vào mùa thu năm 1254 (năm thứ tư của Hoàng đế Xianzong ở Mông Cổ và năm thứ ba của Tianding ở Đại Lý), Wuliang Hetai dẫn quân đánh chiếm Bechicheng (nay là Côn Minh) truy đuổi Duẫn Hành Chi đến Côn Minh, và khi Duẫn Hành Chi chạy đến Kunze (nay là Yiliang) thì bị bắt. Duẫn Hành Chi bị dẫn giải đến Triều đình Khan miền bắc Mông Cổ. Meng Ge Khan cho phép Duẫn Hành Chi tiếp tục cai quản các bộ thuộc về ông. Wuliang Hetai sử dụng 20000 quân của gia tộc Duẩn làm tiên phong chiếm toàn bộ lãnh thổ Đại Lý.
+
+Sau hai năm chiến đấu ác liệt, WuLiang đã chinh phục được Vương quốc Bare and Bald (tức là Luo Shigui, miền tây Quý Châu ngày nay), Luoluosi (tỉnh Tứ Xuyên Xichang ngày nay và tỉnh tự trị Liangshan Yi ), và Vương quốc Ziman Boli (khu vực Yuanjiang ngày nay). Thủ lĩnh Baiman Xilaifu bị bắt.
+
+http://www.qulishi.com/article/201811/306471.html
+http://www.qulishi.com/huati/menggumiedalizhizhan01/
+
+Vào năm 1254 WuLiang  đưa đội kỵ binh 15 nghìn quân Mông Cổ cùng với 20000 quân của gia tộc Duẩn xâm nhập vào Đại Việt dọc theo phía hữu ngạn sông Hồng. Phần Đại Việt tiếp với Nam Tống kéo dài tới Lạng Sơn, có lẽ đường tiến quân của WuLiang là đi qua Lào Cai. 
+
+Địa hình Đại Việt không giống như vùng cao nguyên Vân Nam. Phần phía Bắc và Tây giáp với Đại Lý, là các dáy núi đá dốc và rừng rậm đổ dọc về phía từ Tây Bắc xuống Đông Nam. Phần đồng bằng sông Hồng có cấu trúc gò đồi bao quanh là nước chảy. Do địa hình không phải là bình nguyên mà là rừng rậm nhiệt đới và đầm lầy nên không thể có đủ lượng cỏ cho ngựa ăn. Các mũi tiến quân của WuLiang không thể triển khai được.
+
+Để biết được chiến sự đã diễn ra thế nào chúng ta căn cứ vào quy tắc, các đường đi trong vùng núi đá là đi theo các hẻm giữa các dãy núi và các đường này hầu như không hề thay đổi theo thời gian. Chúng là các con đường đi cả nghìn năm, vì thế mà nay chúng là các đường quốc lộ. Tiếp theo nữa là do việc các con sông liên tục mang phù sa bồi đắp mà nhiều vùng nay là đồng bằng thì trước đây là đầm lầy. Cũng như thế các con sông cũng rộng hơn ngày nay nhiều. Hàng năm vào mùa mưa, nước sông Hồng chảy lênh láng khắp vùng đồng bằng khu vực sông Phan. Phù sa bồi thêm một lớp dày 5mm mỗi năm. Như thế sau 800 năm nó bồi được một lớp đất khoảng 4m. Điều này cho thấy vào thế kỷ thứ 12 thì vùng đất này thấp hơn hiện nay tới 4m và con sông Phan thì rộng tới 150m. Vào thế kỷ 12 đầm hồ còn rất nhiều, người dân sống trên các gò đồi và đi lại chủ yếu bằng thuyền mảng nhỏ. Mỗi gò đồi là một làng. Người dân vợt đất làm nhà và làm đường trong làng vì thế bao quanh làng là dãy tre, mương nước, và ao sâu. Khả năng là quân của WuLiang đã tiến dọc theo đường QL14 giữa các dãy núi theo rồi qua QL2C để tránh đầm lầy phía nam hồ Thác Bà. Tiếp theo chúng tiến theo chân dãy núi Tam Đảo vào vùng đồi đất đỏ Hương Canh. 
+
+Cuộc chiến đánh quân Mông ĐVSKTT viết
+- Mùa đông, tháng 11, lệnh truyền cả nước sắm sửa vũ khí.
+- Tháng 12, ngày 12, tướng Mông Uriyangqatai (1200-1271) xâm phạm Bình Lệ Nguyên.
+- Vua thân hành đốc chiến, xông pha tên đạn. Quan quân hơi núng, vua ngoảnh trông tả hữu, chỉ có Lê Phụ Trần (tức Lê Trần) một mình một ngựa, ra vào trận giặc, sắc mặt bình thản như không.
+- Lúc ấy, có người khuyên Trần Cảnh ở lại để chỉ huy chiến đấu. Phụ Trần cố sức can: "Nay thì bệ hạ chỉ đánh một ván dốc túi thôi! Hãy nên tạm lánh chúng, sao lại có thể dễ dàng tin lời người ta thế!". Bấy giờ, vua mới lui quân đóng ở sông Lô. Phụ Trần giữ phía sau. Quân giặc bắn loạn xạ, Phụ Trrần lấy ván thuyền che cho vua khỏi trúng tên giặc.
+- Thế giặc rất mạnh, Trần Cảnh lui giữ sông Thiên Mạc. Phụ Trần theo vua bàn những việc cơ mật, rất ít người biết được đều đó. 
+- Vua ngự thuyền nhỏ đến thuyền Thái úy Nhật Hiệu hỏi kế sách (chống giặc). Nhật Hiệu đương dựa mạn thuyền, cứ ngồi chứ không đứng dậy nổi, chỉ lấy ngón tay chấm nước viết hai chỉ "nhập
+Tống" lên mạn thuyền. Vua hỏi quân Tinh Cương ở đâu? (Tinh Cương là quân do Nhật Hiệu chỉ huy). Nhật Hiệu trả lời: "Không gọi được chúng đến"
+- Vua lập tức dời thuyền đến hỏi Thái sư Trần Thủ Độ, Thủ Độ trả lời: "Đầu thần chưa rơi xuống đất, bệ hạ đừng lo gì khác".
+- Ngày 24, vua và Thái Tử ngự lâu thuyền, tiến quân đến Đông Bộ Đầu, đón đánh, cả phá được quân giặc. Quân Mông chạy trốn về, đến trại Quy Hóa, chủ trại là Hà Bổng chiêu tập người Man ra tập kích, lại cả phá bọn chúng.
+
+Uriyangqatai (WuLiang) là con của Subotai, là một trong tứ dũng của Thành Cát Tư Hãn. Con của Uriyangqatai là Ajiu nguyên soái chỉ huy 700 nghìn quân đánh chiếm thành Tương Dương tiêu diệt Nam Tống. Quân của Uriyangqatai rất giỏi cưỡi ngựa bắn cung. Đoạn "Quân giặc bắn loạn xạ, Phụ Trrần lấy ván thuyền che cho vua khỏi trúng tên giặc." cho thấy việc "Vua Trần Cảnh ngoảnh trông tả hữu, chỉ có Lê Phụ Trần (tức Lê Trần) một mình một ngựa, ra vào trận giặc, sắc mặt bình thản như không." là viết phịa. Lê Phụ Trần không thể một mình một ngựa mà sống sót được dưới làn tên bắn của đội quân thiện chiến đánh khắp cả châu Âu - Châu Á. 
+
+Bình Lệ Nguyên là vùng đất thận lợi cho kỵ binh Mông Cổ. Việc Trần Cảnh hỏi quân của Nhật Hiệu ở đâu? Nhật Hiệu trả lời: "Không gọi được chúng đến" là cho thấy quân của nhà Trần đã thua trận và tan tác. 
+
+Chỉ 2 ngày sau trận đại bại ở Bình Lệ Nguyên, ngày 24/2/1258 xảy ra trận thắng ở Đông Bộ Đầu. 
+
+Đông Bộ Đầu được cho là ở vùng Hòe Nhai nay, tức dốc Hàng Than ở đầu cầu Long Biên, là nơi quân của Trần Cảnh đón đánh cản phá được quân Mông. Đông Bộ Đầu ở ven sông phía bên này sông Hồng. Rõ ràng là ĐVSKTT đã nói rõ, quân Mông đã tiến đánh Thăng Long và Linh Từ Thái Hâu đã kịp đưa hoàng thái tử, cung phi, công chúa và vợ con các tướng soái trốn thoát. Như thế việc khẳng định Đông Bộ Đầu là trận đánh quyết định khiến cho quân Mông phải tự rút về nước có phần không đúng. Trận Đông Bộ Đầu cùng lắm là đánh nhau với toán quân Mông đánh vào Kinh Thành Thăng Long. Toàn bộ 35 nghìn quân Mông và Đại Lý vẫn còn cố thủ ở Bình Lệ Nguyên. Việc quân Mông bại trận và phải rút về nước có thể là do 20 nghìn quân Đại Lý làm binh biến đánh lại 15 nghìn quân kỵ binh Mông Cổ. 
+
+Trần Thủ Độ đã cho đổi họ Lý thành họ Nguyễn từ trước cuộc xâm lược lần thứ nhất của quân Nguyên -  Mông, vậy những người mang họ Lý hiện nay có thể là 20 nghìn quân Đại Lý năm xưa, được đăng triều đình cho nhận họ Lý.
+
+ĐVSKTT viết 
+
+Tháng 1/1259, phu nhân Trần Thủ Độ là Linh Từ quốc mẫu Trần thị mất. Trần thị được gọi là quốc mẫu vì đó vốn là hiệu của Ngô phu nhân trước kia, tức là hoàng hậu Thái Tông thấy Linh Từ đã từng làm hoàng hậu của Lý Huệ Tông, không nỡ gọi là công chúa, cho nên phong làm quốc mẫu, cũng là biệt danh của hoàng hậu. Xe kiệu, mũ áo, quân hầu của bà đều ngang với hoàng 
+
+Đến khi người Nguyên tắt đường vào cướp, kinh thành thất thủ, Linh Từ ở Hoàng Giang, giữ gìn hoàng thái tử, cung phi, công chúa và vợ con các tướng soái thoát khỏi giặc cướp, lại khám xét thuyền các nhà chứa giấu quân khí đều đưa dùng vào việc quân.
+
 ### Dữ liệu
 
 ```{r, warning=FALSE, message=FALSE, lazy=FALSE}
@@ -3137,6 +3335,627 @@ plot_df <- df %>%
   #annotate(geom='text', x=30, y=180, label="s.e. = 130 người/xã",parse=F,size=8) +
   #coord_flip() +
   ggtitle("Triệu")
+
+plot_df
+```
+
+## Nguyễn
+
+### Dữ liệu
+
+```{r, warning=FALSE, message=FALSE, lazy = FALSE}
+nguyen_sff <- dat_sff %>% mutate(prop.nguyen=(sum(subset(., Ho=="Nguyễn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Nguyễn")
+nguyen_plot <- nguyen_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.nguyen, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+nguyen_plot$centroid <- sf::st_transform(nguyen_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+nguyen <- nguyen_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Viet Thong" & NAME_2=="Que Vo"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.nguyen=as.numeric(round(prop.nguyen, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.nguyen, area_km, songuoi_km, lng, lat, distm_km)
+
+nguyen_peak <- nguyen_plot %>% filter(NAME_3=="Xa Viet Thong" & NAME_2=="Que Vo")
+
+datatable(nguyen, colnames = c("STT", "Tỉnh/Thành phố", "Quận/Huyện", "Phường/Xã", "Số người", "Dân số", "Tỉ lệ/xã phường", "Tỉ lệ/cả nước", "Diện tích (km2)", "Mật độ (người/km2)", "Kinh độ", "Vĩ độ", "Khoảng cách tới tâm (km)"), extensions = 'Buttons', options = list(
+  dom = 'Bfrtip',
+  buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
+))
+
+```
+
+### Phân bố tỉ lệ
+
+```{r, warning=FALSE, message=FALSE, lazy = TRUE}
+nguyen_sf <- dat_sf %>% mutate(prop.nguyen=(sum(subset(., Ho=="Nguyễn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Nguyễn")
+nguyen_plot <- nguyen_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.nguyen, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=nguyen_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=nguyen_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(nguyen_plot$prop.nguyen[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Nguyễn")
+```
+
+### Phương trình hàm phân bố tỉ lệ
+
+```{r, message=FALSE, warning=FALSE, lazy=TRUE}
+nguyen <- dat_sff %>% filter(Ho=="Nguyễn") %>% st_as_sf(crs = 4326)
+nguyen$centroid <- sf::st_transform(nguyen, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+library(geosphere)
+nguyen <- nguyen %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Viet Thong" & NAME_2=="Que Vo"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km2=distm_km^2,
+         sum_distm_km2=sum(distm_km2),
+         var=sum_distm_km2/(n()-1),
+         sd=sqrt(var))
+
+nguyen_radius <- nguyen %>%
+  arrange(distm_km) %>%
+  mutate(rank=row_number())
+
+distm_km<-nguyen_radius$distm_km
+pro.pop<-nguyen_radius$pro.pop
+rank<-nguyen_radius$rank
+commune<-nguyen_radius$NAME_3
+rank<-factor(rank, labels = commune)
+estimate<-88*exp(-(distm_km^2)/(2*100))
+
+library(dplyr)
+df<-data.frame(distm_km, rank, commune, estimate, pro.pop)
+
+df <- df %>%
+  mutate(num=sum((pro.pop-estimate)^2),
+         den=nrow(df)-1,
+         var=num/den,
+         sd=sqrt(var),
+         rank_com=as.numeric(reorder(factor(rank), distm_km)))
+
+breaks <- c(0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200)
+
+plot_df <- df %>%
+  filter(row_number()<=1000) %>%
+  ggplot(aes(x=reorder(factor(rank), distm_km), y=pro.pop, fill=distm_km)) +
+  geom_bar(aes(x=reorder(factor(rank), distm_km), y=pro.pop), stat = "identity", width = 0.5) + 
+  #stat_smooth(method = 'lm', aes(colour = 'linear'), se = FALSE) +
+  #geom_line(aes(x=as.numeric(reorder(factor(rank), distm_km)), y=estimate)) +
+  stat_smooth(aes(y=pro.pop, x=as.numeric(reorder(factor(rank), distm_km))),method="gam",se=TRUE,formula=y~s(x,k=20)) +
+  scale_x_discrete(name = "Xã/Phường", 
+                   breaks = reorder(factor(rank), distm_km), 
+                   labels = reorder(factor(rank), distm_km)) +
+  scale_fill_gradientn("Khoảng cách tới tâm (km)", colours = terrain.colors(10), breaks=breaks) +
+  scale_y_continuous(name="Tỉ lệ (%)") +
+  theme_bw() + 
+  theme(text = element_text(size=45), axis.text.x = element_blank(), axis.ticks.x = element_blank(), axis.text.y = element_text(size=30),
+        legend.text=element_text(size=30), legend.key.size = unit(6, "cm"), legend.key.height = unit(3, "cm"), legend.key.width = unit(5, "cm"), legend.position = "bottom") +
+  theme(panel.grid.major = element_blank()) + 
+  #annotate(geom='text', x=30, y=200, label="y == 55*e^-{(x^{2}+y^{2})/2*(160)}", parse = TRUE,size=10) +
+  #annotate(geom='text', x=30, y=180, label="s.e. = 130 người/xã",parse=F,size=8) +
+  #coord_flip() +
+  ggtitle("Nguyễn")
+
+plot_df
+```
+
+### Phân bố mật độ
+
+```{r, lazy = TRUE}
+nguyen_sff <- dat_sff %>% mutate(prop.nguyen=(sum(subset(., Ho=="Nguyễn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Nguyễn")
+nguyen_plotf <- nguyen_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.nguyen, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=nguyen_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="orange") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(nguyen_plotf$prop.nguyen[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Nguyễn")
+```
+
+### Phương trình hàm phân bố mật độ
+
+```{r, message=FALSE, warning=FALSE, lazy=TRUE}
+nguyen <- dat_sff %>% filter(Ho=="Nguyễn") %>% st_as_sf(crs = 4326)
+nguyen$centroid <- sf::st_transform(nguyen, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+library(geosphere)
+nguyen <- nguyen %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Viet Thong" & NAME_2=="Que Vo"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km2=distm_km^2,
+         sum_distm_km2=sum(distm_km2),
+         var=sum_distm_km2/(n()-1),
+         sd=sqrt(var))
+
+nguyen_radius <- nguyen %>%
+  arrange(distm_km) %>%
+  mutate(rank=row_number())
+
+distm_km<-nguyen_radius$distm_km
+songuoi_km<-nguyen_radius$songuoi_km
+rank<-nguyen_radius$rank
+commune<-nguyen_radius$NAME_3
+rank<-factor(rank, labels = commune)
+estimate<-1100*exp(-(distm_km^2)/(2*100))
+
+library(dplyr)
+df<-data.frame(distm_km, rank, commune, estimate, songuoi_km)
+
+df <- df %>%
+  mutate(num=sum((songuoi_km-estimate)^2),
+         den=nrow(df)-1,
+         var=num/den,
+         sd=sqrt(var),
+         rank_com=as.numeric(reorder(factor(rank), distm_km)))
+
+breaks <- c(0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200)
+
+plot_df <- df %>%
+  filter(row_number()<=1000) %>%
+  ggplot(aes(x=reorder(factor(rank), distm_km), y=songuoi_km, fill=distm_km)) +
+  geom_bar(aes(x=reorder(factor(rank), distm_km), y=songuoi_km), stat = "identity", width = 0.5) + 
+  #stat_smooth(method = 'lm', aes(colour = 'linear'), se = FALSE) +
+  #geom_line(aes(x=as.numeric(reorder(factor(rank), distm_km)), y=estimate)) +
+  stat_smooth(aes(y=songuoi_km, x=as.numeric(reorder(factor(rank), distm_km))),method="gam",se=TRUE,formula=y~s(x,k=20)) +
+  scale_x_discrete(name = "Xã/Phường", 
+                   breaks = reorder(factor(rank), distm_km), 
+                   labels = reorder(factor(rank), distm_km)) +
+  scale_fill_gradientn("Khoảng cách tới tâm (km)", colours = terrain.colors(10), breaks=breaks) +
+  scale_y_continuous(name="Mật độ (người/km2)") +
+  theme_bw() + 
+  theme(text = element_text(size=45), axis.text.x = element_blank(), axis.ticks.x = element_blank(), axis.text.y = element_text(size=30),
+        legend.text=element_text(size=30), legend.key.size = unit(6, "cm"), legend.key.height = unit(3, "cm"), legend.key.width = unit(5, "cm"), legend.position = "bottom") +
+  theme(panel.grid.major = element_blank()) + 
+  #annotate(geom='text', x=30, y=200, label="y == 55*e^-{(x^{2}+y^{2})/2*(160)}", parse = TRUE,size=10) +
+  #annotate(geom='text', x=30, y=180, label="s.e. = 130 người/xã",parse=F,size=8) +
+  #coord_flip() +
+  ggtitle("Nguyễn")
+
+plot_df
+```
+
+## Trần
+
+### Dữ liệu
+
+```{r, warning=FALSE, message=FALSE, lazy = FALSE}
+tran_sff <- dat_sff %>% mutate(prop.tran=(sum(subset(., Ho=="Trần")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Trần")
+tran_plot <- tran_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.tran, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+tran_plot$centroid <- sf::st_transform(tran_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+tran <- tran_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Hoa Hau" & NAME_2=="Ly Nhan"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.tran=as.numeric(round(prop.tran, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.tran, area_km, songuoi_km, lng, lat, distm_km)
+
+tran_peak <- tran_plot %>% filter(NAME_3=="Xa Hoa Hau" & NAME_2=="Ly Nhan")
+
+datatable(tran, colnames = c("STT", "Tỉnh/Thành phố", "Quận/Huyện", "Phường/Xã", "Số người", "Dân số", "Tỉ lệ/xã phường", "Tỉ lệ/cả nước", "Diện tích (km2)", "Mật độ (người/km2)", "Kinh độ", "Vĩ độ", "Khoảng cách tới tâm (km)"), extensions = 'Buttons', options = list(
+  dom = 'Bfrtip',
+  buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
+))
+
+```
+
+### Phân bố tỉ lệ
+
+```{r, warning=FALSE, message=FALSE, lazy = TRUE}
+tran_sf <- dat_sf %>% mutate(prop.tran=(sum(subset(., Ho=="Trần")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Trần")
+tran_plot <- tran_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.tran, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=tran_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=tran_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(tran_plot$prop.tran[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Trần")
+```
+
+### Phương trình hàm phân bố tỉ lệ
+
+```{r, message=FALSE, warning=FALSE, lazy=TRUE}
+tran <- dat_sff %>% filter(Ho=="Trần") %>% st_as_sf(crs = 4326)
+tran$centroid <- sf::st_transform(tran, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+library(geosphere)
+tran <- tran %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Hoa Hau" & NAME_2=="Ly Nhan"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km2=distm_km^2,
+         sum_distm_km2=sum(distm_km2),
+         var=sum_distm_km2/(n()-1),
+         sd=sqrt(var))
+
+tran_radius <- tran %>%
+  arrange(distm_km) %>%
+  mutate(rank=row_number())
+
+distm_km<-tran_radius$distm_km
+pro.pop<-tran_radius$pro.pop
+rank<-tran_radius$rank
+commune<-tran_radius$NAME_3
+rank<-factor(rank, labels = commune)
+estimate<-94*exp(-(distm_km^2)/(2*100))
+
+library(dplyr)
+df<-data.frame(distm_km, rank, commune, estimate, pro.pop)
+
+df <- df %>%
+  mutate(num=sum((pro.pop-estimate)^2),
+         den=nrow(df)-1,
+         var=num/den,
+         sd=sqrt(var),
+         rank_com=as.numeric(reorder(factor(rank), distm_km)))
+
+breaks <- c(0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200)
+
+plot_df <- df %>%
+  filter(row_number()<=1000) %>%
+  ggplot(aes(x=reorder(factor(rank), distm_km), y=pro.pop, fill=distm_km)) +
+  geom_bar(aes(x=reorder(factor(rank), distm_km), y=pro.pop), stat = "identity", width = 0.5) + 
+  #stat_smooth(method = 'lm', aes(colour = 'linear'), se = FALSE) +
+  #geom_line(aes(x=as.numeric(reorder(factor(rank), distm_km)), y=estimate)) +
+  stat_smooth(aes(y=pro.pop, x=as.numeric(reorder(factor(rank), distm_km))),method="gam",se=TRUE,formula=y~s(x,k=20)) +
+  scale_x_discrete(name = "Xã/Phường", 
+                   breaks = reorder(factor(rank), distm_km), 
+                   labels = reorder(factor(rank), distm_km)) +
+  scale_fill_gradientn("Khoảng cách tới tâm (km)", colours = terrain.colors(10), breaks=breaks) +
+  scale_y_continuous(name="Tỉ lệ (%)") +
+  theme_bw() + 
+  theme(text = element_text(size=45), axis.text.x = element_blank(), axis.ticks.x = element_blank(), axis.text.y = element_text(size=30),
+        legend.text=element_text(size=30), legend.key.size = unit(6, "cm"), legend.key.height = unit(3, "cm"), legend.key.width = unit(5, "cm"), legend.position = "bottom") +
+  theme(panel.grid.major = element_blank()) + 
+  #annotate(geom='text', x=30, y=200, label="y == 55*e^-{(x^{2}+y^{2})/2*(160)}", parse = TRUE,size=10) +
+  #annotate(geom='text', x=30, y=180, label="s.e. = 130 người/xã",parse=F,size=8) +
+  #coord_flip() +
+  ggtitle("Trần")
+
+plot_df
+```
+
+### Phân bố mật độ
+
+```{r, lazy = TRUE}
+tran_sff <- dat_sff %>% mutate(prop.tran=(sum(subset(., Ho=="Trần")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Trần")
+tran_plotf <- tran_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.tran, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=tran_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="orange") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(tran_plotf$prop.tran[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Trần")
+```
+
+### Phương trình hàm phân bố mật độ
+
+```{r, message=FALSE, warning=FALSE, lazy=TRUE}
+tran <- dat_sff %>% filter(Ho=="Trần") %>% st_as_sf(crs = 4326)
+tran$centroid <- sf::st_transform(tran, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+library(geosphere)
+tran <- tran %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Hoa Hau" & NAME_2=="Ly Nhan"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km2=distm_km^2,
+         sum_distm_km2=sum(distm_km2),
+         var=sum_distm_km2/(n()-1),
+         sd=sqrt(var))
+
+tran_radius <- tran %>%
+  arrange(distm_km) %>%
+  mutate(rank=row_number())
+
+distm_km<-tran_radius$distm_km
+songuoi_km<-tran_radius$songuoi_km
+rank<-tran_radius$rank
+commune<-tran_radius$NAME_3
+rank<-factor(rank, labels = commune)
+estimate<-1500*exp(-(distm_km^2)/(2*100))
+
+library(dplyr)
+df<-data.frame(distm_km, rank, commune, estimate, songuoi_km)
+
+df <- df %>%
+  mutate(num=sum((songuoi_km-estimate)^2),
+         den=nrow(df)-1,
+         var=num/den,
+         sd=sqrt(var),
+         rank_com=as.numeric(reorder(factor(rank), distm_km)))
+
+breaks <- c(0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200)
+
+plot_df <- df %>%
+  filter(row_number()<=1000) %>%
+  ggplot(aes(x=reorder(factor(rank), distm_km), y=songuoi_km, fill=distm_km)) +
+  geom_bar(aes(x=reorder(factor(rank), distm_km), y=songuoi_km), stat = "identity", width = 0.5) + 
+  #stat_smooth(method = 'lm', aes(colour = 'linear'), se = FALSE) +
+  #geom_line(aes(x=as.numeric(reorder(factor(rank), distm_km)), y=estimate)) +
+  stat_smooth(aes(y=songuoi_km, x=as.numeric(reorder(factor(rank), distm_km))),method="gam",se=TRUE,formula=y~s(x,k=20)) +
+  scale_x_discrete(name = "Xã/Phường", 
+                   breaks = reorder(factor(rank), distm_km), 
+                   labels = reorder(factor(rank), distm_km)) +
+  scale_fill_gradientn("Khoảng cách tới tâm (km)", colours = terrain.colors(10), breaks=breaks) +
+  scale_y_continuous(name="Mật độ (người/km2)") +
+  theme_bw() + 
+  theme(text = element_text(size=45), axis.text.x = element_blank(), axis.ticks.x = element_blank(), axis.text.y = element_text(size=30),
+        legend.text=element_text(size=30), legend.key.size = unit(6, "cm"), legend.key.height = unit(3, "cm"), legend.key.width = unit(5, "cm"), legend.position = "bottom") +
+  theme(panel.grid.major = element_blank()) + 
+  #annotate(geom='text', x=30, y=200, label="y == 55*e^-{(x^{2}+y^{2})/2*(160)}", parse = TRUE,size=10) +
+  #annotate(geom='text', x=30, y=180, label="s.e. = 130 người/xã",parse=F,size=8) +
+  #coord_flip() +
+  ggtitle("Trần")
+
+plot_df
+```
+
+## Lê
+
+### Dữ liệu
+
+```{r, warning=FALSE, message=FALSE, lazy = FALSE}
+le_sff <- dat_sff %>% mutate(prop.le=(sum(subset(., Ho=="Lê")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lê")
+le_plot <- le_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.le, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+le_plot$centroid <- sf::st_transform(le_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+le <- le_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Hoang Phu" & NAME_2=="Hoang Hoa"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.le=as.numeric(round(prop.le, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.le, area_km, songuoi_km, lng, lat, distm_km)
+
+le_peak <- le_plot %>% filter(NAME_3=="Xa Hoang Phu" & NAME_2=="Hoang Hoa")
+
+datatable(le, colnames = c("STT", "Tỉnh/Thành phố", "Quận/Huyện", "Phường/Xã", "Số người", "Dân số", "Tỉ lệ/xã phường", "Tỉ lệ/cả nước", "Diện tích (km2)", "Mật độ (người/km2)", "Kinh độ", "Vĩ độ", "Khoảng cách tới tâm (km)"), extensions = 'Buttons', options = list(
+  dom = 'Bfrtip',
+  buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
+))
+
+```
+
+### Phân bố tỉ lệ
+
+```{r, warning=FALSE, message=FALSE, lazy = TRUE}
+le_sf <- dat_sf %>% mutate(prop.le=(sum(subset(., Ho=="Lê")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lê")
+le_plot <- le_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.le, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=le_plot, aes(fill=pro.pop), color=NA) +
+  geom_sf(data=river3, col="orange") +
+  geom_sf_label(data=le_peak, mapping = aes(label=NAME_3), color="red", size=6, stat = "sf_coordinates", hjust=-0.1, vjust=1, label.size = 0.5) +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(le_plot$prop.le[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Tỉ lệ (%)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Lê")
+```
+
+### Phương trình hàm phân bố tỉ lệ
+
+```{r, message=FALSE, warning=FALSE, lazy=TRUE}
+le <- dat_sff %>% filter(Ho=="Lê") %>% st_as_sf(crs = 4326)
+le$centroid <- sf::st_transform(le, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+library(geosphere)
+le <- le %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Hoang Phu" & NAME_2=="Hoang Hoa"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km2=distm_km^2,
+         sum_distm_km2=sum(distm_km2),
+         var=sum_distm_km2/(n()-1),
+         sd=sqrt(var))
+
+le_radius <- le %>%
+  arrange(distm_km) %>%
+  mutate(rank=row_number())
+
+distm_km<-le_radius$distm_km
+pro.pop<-le_radius$pro.pop
+rank<-le_radius$rank
+commune<-le_radius$NAME_3
+rank<-factor(rank, labels = commune)
+estimate<-78*exp(-(distm_km^2)/(2*100))
+
+library(dplyr)
+df<-data.frame(distm_km, rank, commune, estimate, pro.pop)
+
+df <- df %>%
+  mutate(num=sum((pro.pop-estimate)^2),
+         den=nrow(df)-1,
+         var=num/den,
+         sd=sqrt(var),
+         rank_com=as.numeric(reorder(factor(rank), distm_km)))
+
+breaks <- c(0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200)
+
+plot_df <- df %>%
+  filter(row_number()<=1000) %>%
+  ggplot(aes(x=reorder(factor(rank), distm_km), y=pro.pop, fill=distm_km)) +
+  geom_bar(aes(x=reorder(factor(rank), distm_km), y=pro.pop), stat = "identity", width = 0.5) + 
+  #stat_smooth(method = 'lm', aes(colour = 'linear'), se = FALSE) +
+  #geom_line(aes(x=as.numeric(reorder(factor(rank), distm_km)), y=estimate)) +
+  stat_smooth(aes(y=pro.pop, x=as.numeric(reorder(factor(rank), distm_km))),method="gam",se=TRUE,formula=y~s(x,k=20)) +
+  scale_x_discrete(name = "Xã/Phường", 
+                   breaks = reorder(factor(rank), distm_km), 
+                   labels = reorder(factor(rank), distm_km)) +
+  scale_fill_gradientn("Khoảng cách tới tâm (km)", colours = terrain.colors(10), breaks=breaks) +
+  scale_y_continuous(name="Tỉ lệ (%)") +
+  theme_bw() + 
+  theme(text = element_text(size=45), axis.text.x = element_blank(), axis.ticks.x = element_blank(), axis.text.y = element_text(size=30),
+        legend.text=element_text(size=30), legend.key.size = unit(6, "cm"), legend.key.height = unit(3, "cm"), legend.key.width = unit(5, "cm"), legend.position = "bottom") +
+  theme(panel.grid.major = element_blank()) + 
+  #annotate(geom='text', x=30, y=200, label="y == 55*e^-{(x^{2}+y^{2})/2*(160)}", parse = TRUE,size=10) +
+  #annotate(geom='text', x=30, y=180, label="s.e. = 130 người/xã",parse=F,size=8) +
+  #coord_flip() +
+  ggtitle("Lê")
+
+plot_df
+```
+
+### Phân bố mật độ
+
+```{r, lazy = TRUE}
+le_sff <- dat_sff %>% mutate(prop.le=(sum(subset(., Ho=="Lê")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lê")
+le_plotf <- le_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi_km, prop.le, geometry) %>% st_as_sf(crs = 4326)
+
+ggplot() + geom_sf() + geom_sf(data=le_plotf, aes(fill=songuoi_km), color=NA) +
+  geom_sf(data=river3, col="orange") +
+  annotate(geom="text", x=108, y=23, color="red", size=15, label= paste(round(le_plotf$prop.le[1],1), "% dân số", sep = "")) +
+  scale_fill_viridis("Mật độ (người/km2)", direction = -1, option = "viridis") +
+  theme_bw() +
+  theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
+  ggtitle("Lê")
+```
+
+### Phương trình hàm phân bố mật độ
+
+```{r, message=FALSE, warning=FALSE, lazy=TRUE}
+le <- dat_sff %>% filter(Ho=="Lê") %>% st_as_sf(crs = 4326)
+le$centroid <- sf::st_transform(le, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+library(geosphere)
+le <- le %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Hoang Phu" & NAME_2=="Hoang Hoa"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km2=distm_km^2,
+         sum_distm_km2=sum(distm_km2),
+         var=sum_distm_km2/(n()-1),
+         sd=sqrt(var))
+
+le_radius <- le %>%
+  arrange(distm_km) %>%
+  mutate(rank=row_number())
+
+distm_km<-le_radius$distm_km
+songuoi_km<-le_radius$songuoi_km
+rank<-le_radius$rank
+commune<-le_radius$NAME_3
+rank<-factor(rank, labels = commune)
+estimate<-750*exp(-(distm_km^2)/(2*100))
+
+library(dplyr)
+df<-data.frame(distm_km, rank, commune, estimate, songuoi_km)
+
+df <- df %>%
+  mutate(num=sum((songuoi_km-estimate)^2),
+         den=nrow(df)-1,
+         var=num/den,
+         sd=sqrt(var),
+         rank_com=as.numeric(reorder(factor(rank), distm_km)))
+
+breaks <- c(0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200)
+
+plot_df <- df %>%
+  filter(row_number()<=1000) %>%
+  ggplot(aes(x=reorder(factor(rank), distm_km), y=songuoi_km, fill=distm_km)) +
+  geom_bar(aes(x=reorder(factor(rank), distm_km), y=songuoi_km), stat = "identity", width = 0.5) + 
+  #stat_smooth(method = 'lm', aes(colour = 'linear'), se = FALSE) +
+  #geom_line(aes(x=as.numeric(reorder(factor(rank), distm_km)), y=estimate)) +
+  stat_smooth(aes(y=songuoi_km, x=as.numeric(reorder(factor(rank), distm_km))),method="gam",se=TRUE,formula=y~s(x,k=20)) +
+  scale_x_discrete(name = "Xã/Phường", 
+                   breaks = reorder(factor(rank), distm_km), 
+                   labels = reorder(factor(rank), distm_km)) +
+  scale_fill_gradientn("Khoảng cách tới tâm (km)", colours = terrain.colors(10), breaks=breaks) +
+  scale_y_continuous(name="Mật độ (người/km2)") +
+  theme_bw() + 
+  theme(text = element_text(size=45), axis.text.x = element_blank(), axis.ticks.x = element_blank(), axis.text.y = element_text(size=30),
+        legend.text=element_text(size=30), legend.key.size = unit(6, "cm"), legend.key.height = unit(3, "cm"), legend.key.width = unit(5, "cm"), legend.position = "bottom") +
+  theme(panel.grid.major = element_blank()) + 
+  #annotate(geom='text', x=30, y=200, label="y == 55*e^-{(x^{2}+y^{2})/2*(160)}", parse = TRUE,size=10) +
+  #annotate(geom='text', x=30, y=180, label="s.e. = 130 người/xã",parse=F,size=8) +
+  #coord_flip() +
+  ggtitle("Lê")
 
 plot_df
 ```
