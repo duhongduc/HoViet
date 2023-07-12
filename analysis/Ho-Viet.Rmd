@@ -1118,7 +1118,7 @@ ggplot() + geom_sf() + geom_sf(data=nguyen_plot, color=NA) +
   ggtitle("Sông ngòi Việt Nam")
 ```
 
-# Phân bố dòng họ cả nước
+# Phân bố dòng họ cả nước {.tabset}
 
 Về vấn đề xác định các dòng họ trước thế kỷ thứ 10.
 
@@ -1265,7 +1265,7 @@ Họ Dương đến Dương Đình Nghệ đã nhiều đời làm hào trưởn
 
 Vậy có thể đưa ra kết luận "Các cuộc khởi nghĩa dẫn đến việc thiết lập các triều đại Vua ở Đại Việt liên quan tới việc chống lại sự áp bức bóc lột của phương Bắc trong việc khai mỏ thiếc". Tuy nhiên chúng ta cần phải có bằng chứng về việc khai thác thiếc vào thời kỳ từ năm 700 cho tới 900. Liệu có thể tìm ra được dấu vết khai mỏ không?
 
-### Dữ liệu
+
 
 ```{r, warning=FALSE, message=FALSE, lazy=FALSE}
 mai_sff <- dat_sff %>% mutate(prop.mai=(sum(subset(., Ho=="Mai")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Mai")
@@ -1302,7 +1302,7 @@ datatable(mai, colnames = c("STT", "Tỉnh/Thành phố", "Quận/Huyện", "Ph�
   ))
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy=TRUE}
 ggplot() + geom_sf() + geom_sf(data=mai_plot, aes(fill=pro.pop), color=NA) +
@@ -1315,7 +1315,7 @@ ggplot() + geom_sf() + geom_sf(data=mai_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Mai")
 ```
 
-### Phương trình hàm phân bố tỉ lệ
+
 
 ```{r, message=FALSE, warning=FALSE, lazy=TRUE}
 mai <- dat_sff %>% filter(Ho=="Mai") %>% st_as_sf(crs = 4326)
@@ -1384,7 +1384,7 @@ plot_df <- df %>%
 plot_df
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy=TRUE}
 mai_sff <- dat_sff %>% mutate(prop.mai=(sum(subset(., Ho=="Mai")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Mai")
@@ -1399,7 +1399,7 @@ ggplot() + geom_sf() + geom_sf(data=mai_plotf, aes(fill=songuoi_km), color=NA) +
   ggtitle("Mai")
 ```
 
-### Phương trình hàm phân bố mật độ
+
 
 ```{r, message=FALSE, warning=FALSE, lazy=TRUE}
 mai <- dat_sff %>% filter(Ho=="Mai") %>% st_as_sf(crs = 4326)
@@ -1486,7 +1486,7 @@ Chúng ta có thể nhận thấy dòng họ Phùng chiếm vị trí sâu về 
 
 Đây có thể là sự hình thành ra cấu trúc không gian văn hóa vua Hùng (phụ hệ) trong tổng thể văn hóa mẫu hệ ở đồng bằng Bắc Bộ.
 
-### Dữ liệu
+
 
 ```{r, warning=FALSE, message=FALSE, lazy=FALSE}
 phung_sff <- dat_sff %>% mutate(prop.phung=(sum(subset(., Ho=="Phùng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phùng")
@@ -1523,7 +1523,7 @@ datatable(phung, colnames = c("STT", "Tỉnh/Thành phố", "Quận/Huyện", "P
   ))
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, message=FALSE, warning=FALSE, lazy=TRUE}
 # library(plotly)
@@ -1552,7 +1552,7 @@ ggplot() + geom_sf() + geom_sf(data=phung_plot, aes(fill=pro.pop), color=NA) +
 # fig
 ```
 
-### Phương trình hàm phân bố tỉ lệ
+
 
 ```{r, message=FALSE, warning=FALSE, lazy=TRUE}
 phung <- dat_sff %>% filter(Ho=="Phùng") %>% st_as_sf(crs = 4326)
@@ -1620,7 +1620,7 @@ plot_df <- df %>%
 plot_df
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy=TRUE}
 phung_sff <- dat_sff %>% mutate(prop.phung=(sum(subset(., Ho=="Phùng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phùng")
@@ -1635,7 +1635,7 @@ ggplot() + geom_sf() + geom_sf(data=phung_plotf, aes(fill=songuoi_km), color=NA)
   ggtitle("Phùng")
 ```
 
-### Phương trình hàm phân bố mật độ
+
 
 ```{r, message=FALSE, warning=FALSE, lazy=TRUE}
 phung <- dat_sff %>% filter(Ho=="Phùng") %>% st_as_sf(crs = 4326)
@@ -1734,7 +1734,7 @@ Việc quân Nam Hán sang đánh Giao Châu (tức nước ta), bắt Khúc Th�
 
 Từ sự liên kết các sự kiện nêu trong sử liệu Phương Bắc với các sử liệu có trong trong Đại Việt Sử Ký Toàn Thư, cộng với sự phù hợp về địa lý của hàm phân bố mật độ dân mang họ Khúc cho thấy các thông tin lịch sử về triều đại họ Khúc trong khoảng thời gian từ 905 tới năm 923 (hoặc 930) là đáng tin cậy.
 
-### Dữ liệu
+
 
 ```{r, warning=FALSE, message=FALSE, lazy=FALSE}
 khuc_sff <- dat_sff %>% mutate(prop.khuc=(sum(subset(., Ho=="Khúc")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Khúc")
@@ -1771,7 +1771,7 @@ datatable(khuc, colnames = c("STT", "Tỉnh/Thành phố", "Quận/Huyện", "Ph
   ))
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, message=FALSE, warning=FALSE, lazy=TRUE}
 khuc_sf <- dat_sf %>% mutate(prop.khuc=(sum(subset(., Ho=="Khúc")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Khúc")
@@ -1787,7 +1787,7 @@ ggplot() + geom_sf() + geom_sf(data=khuc_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Khúc")
 ```
 
-### Phương trình hàm phân bố tỉ lệ
+
 
 ```{r, message=FALSE, warning=FALSE, lazy=TRUE}
 khuc <- dat_sff %>% filter(Ho=="Khúc") %>% st_as_sf(crs = 4326)
@@ -1855,7 +1855,7 @@ plot_df <- df %>%
 plot_df
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy=TRUE}
 khuc_sff <- dat_sff %>% mutate(prop.khuc=(sum(subset(., Ho=="Khúc")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Khúc")
@@ -1870,7 +1870,7 @@ ggplot() + geom_sf() + geom_sf(data=khuc_plotf, aes(fill=songuoi_km), color=NA) 
   ggtitle("Khúc")
 ```
 
-### Phương trình hàm phân bố mật độ
+
 
 ```{r, message=FALSE, warning=FALSE, lazy=TRUE}
 khuc <- dat_sff %>% filter(Ho=="Khúc") %>% st_as_sf(crs = 4326)
@@ -1940,7 +1940,7 @@ plot_df
 
 ## Dương
 
-### Dữ liệu
+
 
 ```{r, warning=FALSE, message=FALSE, lazy=FALSE}
 duong_sff <- dat_sff %>% mutate(prop.duong=(sum(subset(., Ho=="Dương")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Dương")
@@ -1977,7 +1977,7 @@ datatable(duong, colnames = c("STT", "Tỉnh/Thành phố", "Quận/Huyện", "P
   ))
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy=TRUE}
 duong_sf <- dat_sf %>% mutate(prop.duong=(sum(subset(., Ho=="Dương")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Dương")
@@ -1993,7 +1993,7 @@ ggplot() + geom_sf() + geom_sf(data=duong_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Dương")
 ```
 
-### Phương trình hàm phân bố tỉ lệ
+
 
 ```{r, message=FALSE, warning=FALSE, lazy=TRUE}
 duong <- dat_sff %>% filter(Ho=="Dương") %>% st_as_sf(crs = 4326)
@@ -2061,7 +2061,7 @@ plot_df <- df %>%
 plot_df
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy=TRUE}
 duong_sff <- dat_sff %>% mutate(prop.duong=(sum(subset(., Ho=="Dương")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Dương")
@@ -2076,7 +2076,7 @@ ggplot() + geom_sf() + geom_sf(data=duong_plotf, aes(fill=songuoi_km), color=NA)
   ggtitle("Dương")
 ```
 
-### Phương trình hàm phân bố mật độ
+
 
 ```{r, message=FALSE, warning=FALSE, lazy=TRUE}
 duong <- dat_sff %>% filter(Ho=="Dương") %>% st_as_sf(crs = 4326)
@@ -2146,7 +2146,7 @@ plot_df
 
 ## Ngô
 
-### Dữ liệu
+
 
 ```{r, warning=FALSE, message=FALSE, lazy=FALSE}
 ngo_sff <- dat_sff %>% mutate(prop.ngo=(sum(subset(., Ho=="Ngô")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ngô")
@@ -2183,7 +2183,7 @@ datatable(ngo, colnames = c("STT", "Tỉnh/Thành phố", "Quận/Huyện", "Ph�
   ))
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy=TRUE}
 ngo_sf <- dat_sf %>% mutate(prop.ngo=(sum(subset(., Ho=="Ngô")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ngô")
@@ -2199,7 +2199,7 @@ ggplot() + geom_sf() + geom_sf(data=ngo_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Ngô")
 ```
 
-### Phương trình hàm phân bố tỉ lệ
+
 
 ```{r, message=FALSE, warning=FALSE, lazy=TRUE}
 ngo <- dat_sff %>% filter(Ho=="Ngô") %>% st_as_sf(crs = 4326)
@@ -2267,7 +2267,7 @@ plot_df <- df %>%
 plot_df
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy=TRUE}
 ngo_sff <- dat_sff %>% mutate(prop.ngo=(sum(subset(., Ho=="Ngô")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ngô")
@@ -2282,7 +2282,7 @@ ggplot() + geom_sf() + geom_sf(data=ngo_plotf, aes(fill=songuoi_km), color=NA) +
   ggtitle("Ngô")
 ```
 
-### Phương trình hàm phân bố mật độ
+
 
 ```{r, message=FALSE, warning=FALSE, lazy=TRUE}
 ngo <- dat_sff %>% filter(Ho=="Ngô") %>% st_as_sf(crs = 4326)
@@ -2352,7 +2352,7 @@ plot_df
 
 ## Lương
 
-### Dữ liệu
+
 
 ```{r, warning=FALSE, message=FALSE, lazy=FALSE}
 luong_sff <- dat_sff %>% mutate(prop.luong=(sum(subset(., Ho=="Lương")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lương")
@@ -2389,7 +2389,7 @@ datatable(luong, colnames = c("STT", "Tỉnh/Thành phố", "Quận/Huyện", "P
   ))
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy=TRUE}
 luong_sf <- dat_sf %>% mutate(prop.luong=(sum(subset(., Ho=="Lương")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lương")
@@ -2405,7 +2405,7 @@ ggplot() + geom_sf() + geom_sf(data=luong_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Lương")
 ```
 
-### Phương trình hàm phân bố tỉ lệ
+
 
 ```{r, message=FALSE, warning=FALSE, lazy=TRUE}
 luong <- dat_sff %>% filter(Ho=="Lương") %>% st_as_sf(crs = 4326)
@@ -2473,7 +2473,7 @@ plot_df <- df %>%
 plot_df
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy=TRUE}
 luong_sff <- dat_sff %>% mutate(prop.luong=(sum(subset(., Ho=="Lương")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lương")
@@ -2488,7 +2488,7 @@ ggplot() + geom_sf() + geom_sf(data=luong_plotf, aes(fill=songuoi_km), color=NA)
   ggtitle("Lương")
 ```
 
-### Phương trình hàm phân bố mật độ
+
 
 ```{r, message=FALSE, warning=FALSE, lazy=TRUE}
 luong <- dat_sff %>% filter(Ho=="Lương") %>% st_as_sf(crs = 4326)
@@ -2723,7 +2723,7 @@ Tháng 1/1259, phu nhân Trần Thủ Độ là Linh Từ quốc mẫu Trần th
 
 Đến khi người Nguyên tắt đường vào cướp, kinh thành thất thủ, Linh Từ ở Hoàng Giang, giữ gìn hoàng thái tử, cung phi, công chúa và vợ con các tướng soái thoát khỏi giặc cướp, lại khám xét thuyền các nhà chứa giấu quân khí đều đưa dùng vào việc quân.
 
-### Dữ liệu
+
 
 ```{r, warning=FALSE, message=FALSE, lazy=FALSE}
 ly_sff <- dat_sff %>% mutate(prop.ly=(sum(subset(., Ho=="Lý")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lý")
@@ -2760,7 +2760,7 @@ datatable(ly, colnames = c("STT", "Tỉnh/Thành phố", "Quận/Huyện", "Phư
   ))
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy=TRUE}
 ly_sf <- dat_sf %>% mutate(prop.ly=(sum(subset(., Ho=="Lý")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lý")
@@ -2776,7 +2776,7 @@ ggplot() + geom_sf() + geom_sf(data=ly_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Lý")
 ```
 
-### Phương trình hàm phân bố tỉ lệ
+
 
 ```{r, message=FALSE, warning=FALSE, lazy=TRUE}
 ly <- dat_sff %>% filter(Ho=="Lý") %>% st_as_sf(crs = 4326)
@@ -2844,7 +2844,7 @@ plot_df <- df %>%
 plot_df
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy=TRUE}
 ly_sff <- dat_sff %>% mutate(prop.ly=(sum(subset(., Ho=="Lý")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lý")
@@ -2859,7 +2859,7 @@ ggplot() + geom_sf() + geom_sf(data=ly_plotf, aes(fill=songuoi_km), color=NA) +
   ggtitle("Lý")
 ```
 
-### Phương trình hàm phân bố mật độ
+
 
 ```{r, message=FALSE, warning=FALSE, lazy=TRUE}
 ly <- dat_sff %>% filter(Ho=="Lý") %>% st_as_sf(crs = 4326)
@@ -2929,7 +2929,7 @@ plot_df
 
 ## Hoàng
 
-### Dữ liệu
+
 
 ```{r, warning=FALSE, message=FALSE, lazy=FALSE}
 hoang_sff <- dat_sff %>% mutate(prop.hoang=(sum(subset(., Ho=="Hoàng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hoàng")
@@ -2966,7 +2966,7 @@ datatable(hoang, colnames = c("STT", "Tỉnh/Thành phố", "Quận/Huyện", "P
   ))
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy=TRUE}
 hoang_sf <- dat_sf %>% mutate(prop.hoang=(sum(subset(., Ho=="Hoàng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hoàng")
@@ -2982,7 +2982,7 @@ ggplot() + geom_sf() + geom_sf(data=hoang_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Hoàng")
 ```
 
-### Phương trình hàm phân bố tỉ lệ
+
 
 ```{r, message=FALSE, warning=FALSE, lazy=TRUE}
 hoang <- dat_sff %>% filter(Ho=="Hoàng") %>% st_as_sf(crs = 4326)
@@ -3050,7 +3050,7 @@ plot_df <- df %>%
 plot_df
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy=TRUE}
 hoang_sff <- dat_sff %>% mutate(prop.hoang=(sum(subset(., Ho=="Hoàng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hoàng")
@@ -3065,7 +3065,7 @@ ggplot() + geom_sf() + geom_sf(data=hoang_plotf, aes(fill=songuoi_km), color=NA)
   ggtitle("Hoàng")
 ```
 
-### Phương trình hàm phân bố mật độ
+
 
 ```{r, message=FALSE, warning=FALSE, lazy=TRUE}
 hoang <- dat_sff %>% filter(Ho=="Hoàng") %>% st_as_sf(crs = 4326)
@@ -3135,7 +3135,7 @@ plot_df
 
 ## Triệu
 
-### Dữ liệu
+
 
 ```{r, warning=FALSE, message=FALSE, lazy=FALSE}
 trieu_sff <- dat_sff %>% mutate(prop.trieu=(sum(subset(., Ho=="Triệu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Triệu")
@@ -3172,7 +3172,7 @@ datatable(trieu, colnames = c("STT", "Tỉnh/Thành phố", "Quận/Huyện", "P
 ))
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 trieu_sf <- dat_sf %>% mutate(prop.trieu=(sum(subset(., Ho=="Triệu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Triệu")
@@ -3188,7 +3188,7 @@ ggplot() + geom_sf() + geom_sf(data=trieu_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Triệu")
 ```
 
-### Phương trình hàm phân bố tỉ lệ
+
 
 ```{r, message=FALSE, warning=FALSE, lazy=TRUE}
 trieu <- dat_sff %>% filter(Ho=="Triệu") %>% st_as_sf(crs = 4326)
@@ -3256,7 +3256,7 @@ plot_df <- df %>%
 plot_df
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 trieu_sff <- dat_sff %>% mutate(prop.trieu=(sum(subset(., Ho=="Triệu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Triệu")
@@ -3271,7 +3271,7 @@ ggplot() + geom_sf() + geom_sf(data=trieu_plotf, aes(fill=songuoi_km), color=NA)
   ggtitle("Triệu")
 ```
 
-### Phương trình hàm phân bố mật độ
+
 
 ```{r, message=FALSE, warning=FALSE, lazy=TRUE}
 trieu <- dat_sff %>% filter(Ho=="Triệu") %>% st_as_sf(crs = 4326)
@@ -3341,7 +3341,7 @@ plot_df
 
 ## Nguyễn
 
-### Dữ liệu
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = FALSE}
 nguyen_sff <- dat_sff %>% mutate(prop.nguyen=(sum(subset(., Ho=="Nguyễn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Nguyễn")
@@ -3379,7 +3379,7 @@ datatable(nguyen, colnames = c("STT", "Tỉnh/Thành phố", "Quận/Huyện", "
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 nguyen_sf <- dat_sf %>% mutate(prop.nguyen=(sum(subset(., Ho=="Nguyễn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Nguyễn")
@@ -3395,7 +3395,7 @@ ggplot() + geom_sf() + geom_sf(data=nguyen_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Nguyễn")
 ```
 
-### Phương trình hàm phân bố tỉ lệ
+
 
 ```{r, message=FALSE, warning=FALSE, lazy=TRUE}
 nguyen <- dat_sff %>% filter(Ho=="Nguyễn") %>% st_as_sf(crs = 4326)
@@ -3463,7 +3463,7 @@ plot_df <- df %>%
 plot_df
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 nguyen_sff <- dat_sff %>% mutate(prop.nguyen=(sum(subset(., Ho=="Nguyễn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Nguyễn")
@@ -3478,7 +3478,7 @@ ggplot() + geom_sf() + geom_sf(data=nguyen_plotf, aes(fill=songuoi_km), color=NA
   ggtitle("Nguyễn")
 ```
 
-### Phương trình hàm phân bố mật độ
+
 
 ```{r, message=FALSE, warning=FALSE, lazy=TRUE}
 nguyen <- dat_sff %>% filter(Ho=="Nguyễn") %>% st_as_sf(crs = 4326)
@@ -3548,7 +3548,7 @@ plot_df
 
 ## Trần
 
-### Dữ liệu
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = FALSE}
 tran_sff <- dat_sff %>% mutate(prop.tran=(sum(subset(., Ho=="Trần")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Trần")
@@ -3586,7 +3586,7 @@ datatable(tran, colnames = c("STT", "Tỉnh/Thành phố", "Quận/Huyện", "Ph
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 tran_sf <- dat_sf %>% mutate(prop.tran=(sum(subset(., Ho=="Trần")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Trần")
@@ -3602,7 +3602,7 @@ ggplot() + geom_sf() + geom_sf(data=tran_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Trần")
 ```
 
-### Phương trình hàm phân bố tỉ lệ
+
 
 ```{r, message=FALSE, warning=FALSE, lazy=TRUE}
 tran <- dat_sff %>% filter(Ho=="Trần") %>% st_as_sf(crs = 4326)
@@ -3670,7 +3670,7 @@ plot_df <- df %>%
 plot_df
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 tran_sff <- dat_sff %>% mutate(prop.tran=(sum(subset(., Ho=="Trần")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Trần")
@@ -3685,7 +3685,7 @@ ggplot() + geom_sf() + geom_sf(data=tran_plotf, aes(fill=songuoi_km), color=NA) 
   ggtitle("Trần")
 ```
 
-### Phương trình hàm phân bố mật độ
+
 
 ```{r, message=FALSE, warning=FALSE, lazy=TRUE}
 tran <- dat_sff %>% filter(Ho=="Trần") %>% st_as_sf(crs = 4326)
@@ -3755,7 +3755,7 @@ plot_df
 
 ## Lê
 
-### Dữ liệu
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = FALSE}
 le_sff <- dat_sff %>% mutate(prop.le=(sum(subset(., Ho=="Lê")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lê")
@@ -3793,7 +3793,7 @@ datatable(le, colnames = c("STT", "Tỉnh/Thành phố", "Quận/Huyện", "Phư
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 le_sf <- dat_sf %>% mutate(prop.le=(sum(subset(., Ho=="Lê")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lê")
@@ -3809,7 +3809,7 @@ ggplot() + geom_sf() + geom_sf(data=le_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Lê")
 ```
 
-### Phương trình hàm phân bố tỉ lệ
+
 
 ```{r, message=FALSE, warning=FALSE, lazy=TRUE}
 le <- dat_sff %>% filter(Ho=="Lê") %>% st_as_sf(crs = 4326)
@@ -3877,7 +3877,7 @@ plot_df <- df %>%
 plot_df
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 le_sff <- dat_sff %>% mutate(prop.le=(sum(subset(., Ho=="Lê")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lê")
@@ -3892,7 +3892,7 @@ ggplot() + geom_sf() + geom_sf(data=le_plotf, aes(fill=songuoi_km), color=NA) +
   ggtitle("Lê")
 ```
 
-### Phương trình hàm phân bố mật độ
+
 
 ```{r, message=FALSE, warning=FALSE, lazy=TRUE}
 le <- dat_sff %>% filter(Ho=="Lê") %>% st_as_sf(crs = 4326)
@@ -3993,7 +3993,7 @@ a_peak <- a_plot %>% filter(NAME_3=="Xa Ngoc Linh" & NAME_2=="Dak Glei")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, message=FALSE, warning=FALSE, lazy=TRUE}
 a_sf <- dat_sf %>% mutate(prop.a=(sum(subset(., Ho=="A")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="A")
@@ -4009,7 +4009,7 @@ ggplot() + geom_sf() + geom_sf(data=a_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("A")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy=TRUE}
 a_sff <- dat_sff %>% mutate(prop.a=(sum(subset(., Ho=="A")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="A")
@@ -4057,7 +4057,7 @@ an_peak <- an_plot %>% filter(NAME_3=="Xa Cao Thang" & NAME_2=="Thanh Mien")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, message=FALSE, warning=FALSE, lazy=TRUE}
 an_sf <- dat_sf %>% mutate(prop.an=(sum(subset(., Ho=="An")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="An")
@@ -4073,7 +4073,7 @@ ggplot() + geom_sf() + geom_sf(data=an_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("An")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy=TRUE}
 an_sff <- dat_sff %>% mutate(prop.an=(sum(subset(., Ho=="An")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="An")
@@ -4121,7 +4121,7 @@ au_peak <- au_plot %>% filter(NAME_3=="Xa Na Mao" & NAME_2=="Dai Tu")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, message=FALSE, warning=FALSE, lazy=TRUE}
 au_sf <- dat_sf %>% mutate(prop.au=(sum(subset(., Ho=="Âu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Âu")
@@ -4137,7 +4137,7 @@ ggplot() + geom_sf() + geom_sf(data=au_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Âu")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy=TRUE}
 au_sff <- dat_sff %>% mutate(prop.au=(sum(subset(., Ho=="Âu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Âu")
@@ -4185,7 +4185,7 @@ bac_peak <- bac_plot %>% filter(NAME_3=="Xa Chieng Khoang" & NAME_2=="Quynh Nhai
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, message=FALSE, warning=FALSE}
 bac_sf <- dat_sf %>% mutate(prop.bac=(sum(subset(., Ho=="Bạc")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Bạc")
@@ -4201,7 +4201,7 @@ ggplot() + geom_sf() + geom_sf(data=bac_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Bạc")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy=TRUE}
 bac_sff <- dat_sff %>% mutate(prop.bac=(sum(subset(., Ho=="Bạc")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Bạc")
@@ -4249,7 +4249,7 @@ bach_peak <- bach_plot %>% filter(NAME_3=="Xa Mi Hoa" & NAME_2=="Kim Boi")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, message=FALSE, warning=FALSE}
 bach_sf <- dat_sf %>% mutate(prop.bach=(sum(subset(., Ho=="Bạch")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Bạch")
@@ -4265,7 +4265,7 @@ ggplot() + geom_sf() + geom_sf(data=bach_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Bạch")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 bach_sff <- dat_sff %>% mutate(prop.bach=(sum(subset(., Ho=="Bạch")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Bạch")
@@ -4313,7 +4313,7 @@ ban_peak <- ban_plot %>% filter(NAME_3=="Xa Nam Muoi" & NAME_2=="Van Chan")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, message=FALSE, warning=FALSE}
 ban_sf <- dat_sf %>% mutate(prop.ban=(sum(subset(., Ho=="Bàn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Bàn")
@@ -4329,7 +4329,7 @@ ggplot() + geom_sf() + geom_sf(data=ban_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Bàn")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 ban_sff <- dat_sff %>% mutate(prop.ban=(sum(subset(., Ho=="Bàn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Bàn")
@@ -4377,7 +4377,7 @@ banh_peak <- banh_plot %>% filter(NAME_3=="Xa Yen Thinh" & NAME_2=="Huu Lung")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, message=FALSE, warning=FALSE}
 banh_sf <- dat_sf %>% mutate(prop.banh=(sum(subset(., Ho=="Bành")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Bành")
@@ -4393,7 +4393,7 @@ ggplot() + geom_sf() + geom_sf(data=banh_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Bành")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 banh_sff <- dat_sff %>% mutate(prop.banh=(sum(subset(., Ho=="Bành")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Bành")
@@ -4441,7 +4441,7 @@ be_peak <- be_plot %>% filter(NAME_3=="Xa Doc Lap" & NAME_2=="Quang Uyen")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, message=FALSE, warning=FALSE}
 be_sf <- dat_sf %>% mutate(prop.be=(sum(subset(., Ho=="Bế")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Bế")
@@ -4457,7 +4457,7 @@ ggplot() + geom_sf() + geom_sf(data=be_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Bế")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 be_sff <- dat_sff %>% mutate(prop.be=(sum(subset(., Ho=="Bế")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Bế")
@@ -4505,7 +4505,7 @@ bien_peak <- bien_plot %>% filter(NAME_3=="Xa Ha Man" & NAME_2=="Thuan Thanh")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, message=FALSE, warning=FALSE}
 bien_sf <- dat_sf %>% mutate(prop.bien=(sum(subset(., Ho=="Biện")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Biện")
@@ -4521,7 +4521,7 @@ ggplot() + geom_sf() + geom_sf(data=bien_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Biện")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 bien_sff <- dat_sff %>% mutate(prop.bien=(sum(subset(., Ho=="Biện")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Biện")
@@ -4569,7 +4569,7 @@ bui_peak <- bui_plot %>% filter(NAME_3=="Xa Lac Sy" & NAME_2=="Yen Thuy")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, message=FALSE, warning=FALSE}
 bui_sf <- dat_sf %>% mutate(prop.bui=(sum(subset(., Ho=="Bùi")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Bùi")
@@ -4585,7 +4585,7 @@ ggplot() + geom_sf() + geom_sf(data=bui_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Bùi")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 bui_sff <- dat_sff %>% mutate(prop.bui=(sum(subset(., Ho=="Bùi")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Bùi")
@@ -4633,7 +4633,7 @@ ca_peak <- ca_plot %>% filter(NAME_3=="Xa Giang Ly" & NAME_2=="Khanh Vinh")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, message=FALSE, warning=FALSE}
 ca_sf <- dat_sf %>% mutate(prop.ca=(sum(subset(., Ho=="Cà")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Cà")
@@ -4649,7 +4649,7 @@ ggplot() + geom_sf() + geom_sf(data=ca_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Cà")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 ca_sff <- dat_sff %>% mutate(prop.ca=(sum(subset(., Ho=="Cà")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Cà")
@@ -4697,7 +4697,7 @@ cam_peak <- cam_plot %>% filter(NAME_3=="Xa Xuan Chinh" & NAME_2=="Thuong Xuan")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, message=FALSE, warning=FALSE}
 cam_sf <- dat_sf %>% mutate(prop.cam=(sum(subset(., Ho=="Cầm")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Cầm")
@@ -4713,7 +4713,7 @@ ggplot() + geom_sf() + geom_sf(data=cam_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Cầm")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, message=FALSE, warning=FALSE}
 cam_sff <- dat_sff %>% mutate(prop.cam=(sum(subset(., Ho=="Cầm")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Cầm")
@@ -4761,7 +4761,7 @@ can_peak <- can_plot %>% filter(NAME_3=="Xa Phu Kim" & NAME_2=="Thach That")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 can_sf <- dat_sf %>% mutate(prop.can=(sum(subset(., Ho=="Cấn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Cấn")
@@ -4777,7 +4777,7 @@ ggplot() + geom_sf() + geom_sf(data=can_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Cấn")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 can_sff <- dat_sff %>% mutate(prop.can=(sum(subset(., Ho=="Cấn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Cấn")
@@ -4825,7 +4825,7 @@ cao_peak <- cao_plot %>% filter(NAME_3=="Xa Khanh Thanh" & NAME_2=="Khanh Vinh")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 cao_sf <- dat_sf %>% mutate(prop.cao=(sum(subset(., Ho=="Cao")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Cao")
@@ -4841,7 +4841,7 @@ ggplot() + geom_sf() + geom_sf(data=cao_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Cao")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 cao_sff <- dat_sff %>% mutate(prop.cao=(sum(subset(., Ho=="Cao")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Cao")
@@ -4889,7 +4889,7 @@ chang_peak <- chang_plot %>% filter(NAME_3=="Xa Pu Sam Cap" & NAME_2=="Sin Ho")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 chang_sf <- dat_sf %>% mutate(prop.chang=(sum(subset(., Ho=="Chang")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Chang")
@@ -4905,7 +4905,7 @@ ggplot() + geom_sf() + geom_sf(data=chang_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Chang")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 chang_sff <- dat_sff %>% mutate(prop.chang=(sum(subset(., Ho=="Chang")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Chang")
@@ -4953,7 +4953,7 @@ chao_peak <- chao_plot %>% filter(NAME_3=="Xa Suoi Thau" & NAME_2=="Sa Pa")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 chao_sf <- dat_sf %>% mutate(prop.chao=(sum(subset(., Ho=="Chảo")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Chảo")
@@ -4969,7 +4969,7 @@ ggplot() + geom_sf() + geom_sf(data=chao_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Chảo")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 chao_sff <- dat_sff %>% mutate(prop.chao=(sum(subset(., Ho=="Chảo")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Chảo")
@@ -5017,7 +5017,7 @@ chau_peak <- chau_plot %>% filter(NAME_3=="Xa O Lam" & NAME_2=="Tri Ton")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 chau_sf <- dat_sf %>% mutate(prop.chau=(sum(subset(., Ho=="Châu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Châu")
@@ -5033,7 +5033,7 @@ ggplot() + geom_sf() + geom_sf(data=chau_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Châu")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 chau_sff <- dat_sff %>% mutate(prop.chau=(sum(subset(., Ho=="Châu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Châu")
@@ -5081,7 +5081,7 @@ che_peak <- che_plot %>% filter(NAME_3=="Xa Phan Dung" & NAME_2=="Tuy Phong")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 che_sf <- dat_sf %>% mutate(prop.che=(sum(subset(., Ho=="Chế")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Chế")
@@ -5097,7 +5097,7 @@ ggplot() + geom_sf() + geom_sf(data=che_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Chế")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 che_sff <- dat_sff %>% mutate(prop.che=(sum(subset(., Ho=="Chế")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Chế")
@@ -5145,7 +5145,7 @@ chiu_peak <- chiu_plot %>% filter(NAME_3=="Xa Quang Lam" & NAME_2=="Dam Ha")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 chiu_sf <- dat_sf %>% mutate(prop.chiu=(sum(subset(., Ho=="Chìu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Chìu")
@@ -5161,7 +5161,7 @@ ggplot() + geom_sf() + geom_sf(data=chiu_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Chìu")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 chiu_sff <- dat_sff %>% mutate(prop.chiu=(sum(subset(., Ho=="Chìu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Chìu")
@@ -5209,7 +5209,7 @@ chu_peak <- chu_plot %>% filter(NAME_3=="Xa Phu Dong" & NAME_2=="Ba Vi")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 chu_sf <- dat_sf %>% mutate(prop.chu=(sum(subset(., Ho=="Chu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Chu")
@@ -5225,7 +5225,7 @@ ggplot() + geom_sf() + geom_sf(data=chu_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Chu")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 chu_sff <- dat_sff %>% mutate(prop.chu=(sum(subset(., Ho=="Chu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Chu")
@@ -5273,7 +5273,7 @@ chu2_peak <- chu2_plot %>% filter(NAME_3=="Xa Van Duc" & NAME_2=="Gia Lam")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 chu2_sf <- dat_sf %>% mutate(prop.chu2=(sum(subset(., Ho=="Chử")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Chử")
@@ -5289,7 +5289,7 @@ ggplot() + geom_sf() + geom_sf(data=chu2_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Chử")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 chu2_sff <- dat_sff %>% mutate(prop.chu2=(sum(subset(., Ho=="Chử")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Chử")
@@ -5337,7 +5337,7 @@ cu_peak <- cu_plot %>% filter(NAME_3=="Xa Van Luong" & NAME_2=="Tam Nong")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 cu_sf <- dat_sf %>% mutate(prop.cu=(sum(subset(., Ho=="Cù")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Cù")
@@ -5353,7 +5353,7 @@ ggplot() + geom_sf() + geom_sf(data=cu_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Cù")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 cu_sff <- dat_sff %>% mutate(prop.cu=(sum(subset(., Ho=="Cù")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Cù")
@@ -5401,7 +5401,7 @@ cu2_peak <- cu2_plot %>% filter(NAME_3=="Xa Quan Than San" & NAME_2=="Si Ma Cai"
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 cu2_sf <- dat_sf %>% mutate(prop.cu2=(sum(subset(., Ho=="Cư")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Cư")
@@ -5417,7 +5417,7 @@ ggplot() + geom_sf() + geom_sf(data=cu2_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Cư")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 cu2_sff <- dat_sff %>% mutate(prop.cu2=(sum(subset(., Ho=="Cư")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Cư")
@@ -5465,7 +5465,7 @@ cu1_peak <- cu1_plot %>% filter(NAME_3=="Xa Chieng An" & NAME_2=="Muong La")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 cu1_sf <- dat_sf %>% mutate(prop.cu1=(sum(subset(., Ho=="Cứ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Cứ")
@@ -5481,7 +5481,7 @@ ggplot() + geom_sf() + geom_sf(data=cu1_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Cứ")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 cu1_sff <- dat_sff %>% mutate(prop.cu1=(sum(subset(., Ho=="Cứ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Cứ")
@@ -5529,7 +5529,7 @@ dam_peak <- dam_plot %>% filter(NAME_3=="Xa Quang Chau" & NAME_2=="Quang Trach")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 dam_sf <- dat_sf %>% mutate(prop.dam=(sum(subset(., Ho=="Đàm")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đàm")
@@ -5545,7 +5545,7 @@ ggplot() + geom_sf() + geom_sf(data=dam_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Đàm")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 dam_sff <- dat_sff %>% mutate(prop.dam=(sum(subset(., Ho=="Đàm")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đàm")
@@ -5593,7 +5593,7 @@ dang_peak <- dang_plot %>% filter(NAME_3=="Xa My Hung" & NAME_2=="My Loc")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 dang_sf <- dat_sf %>% mutate(prop.dang=(sum(subset(., Ho=="Đặng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đặng")
@@ -5609,7 +5609,7 @@ ggplot() + geom_sf() + geom_sf(data=dang_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Đặng")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 dang_sff <- dat_sff %>% mutate(prop.dang=(sum(subset(., Ho=="Đặng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đặng")
@@ -5657,7 +5657,7 @@ danh_peak <- danh_plot %>% filter(NAME_3=="Xa Dinh Hoa" & NAME_2=="Go Quao")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 danh_sf <- dat_sf %>% mutate(prop.danh=(sum(subset(., Ho=="Danh")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Danh")
@@ -5673,7 +5673,7 @@ ggplot() + geom_sf() + geom_sf(data=danh_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Danh")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 danh_sff <- dat_sff %>% mutate(prop.danh=(sum(subset(., Ho=="Danh")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Danh")
@@ -5721,7 +5721,7 @@ dao_peak <- dao_plot %>% filter(NAME_3=="Xa Dai Hung" & NAME_2=="Khoai Chau")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 dao_sf <- dat_sf %>% mutate(prop.dao=(sum(subset(., Ho=="Đào")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đào")
@@ -5737,7 +5737,7 @@ ggplot() + geom_sf() + geom_sf(data=dao_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Đào")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 dao_sff <- dat_sff %>% mutate(prop.dao=(sum(subset(., Ho=="Đào")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đào")
@@ -5785,7 +5785,7 @@ dau_peak <- dau_plot %>% filter(NAME_3=="Xa Ngoc Linh" & NAME_2=="Tinh Gia")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 dau_sf <- dat_sf %>% mutate(prop.dau=(sum(subset(., Ho=="Đậu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đậu")
@@ -5801,7 +5801,7 @@ ggplot() + geom_sf() + geom_sf(data=dau_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Đậu")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 dau_sff <- dat_sff %>% mutate(prop.dau=(sum(subset(., Ho=="Đậu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đậu")
@@ -5849,7 +5849,7 @@ diep_peak <- diep_plot %>% filter(NAME_3=="Xa Tan Loi" & NAME_2=="Dong Hy")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 diep_sf <- dat_sf %>% mutate(prop.diep=(sum(subset(., Ho=="Diệp")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Diệp")
@@ -5865,7 +5865,7 @@ ggplot() + geom_sf() + geom_sf(data=diep_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Diệp")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 diep_sff <- dat_sff %>% mutate(prop.diep=(sum(subset(., Ho=="Diệp")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Diệp")
@@ -5913,7 +5913,7 @@ dieu_peak <- dieu_plot %>% filter(NAME_3=="Xa Hung Do" & NAME_2=="Tam Nong")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 dieu_sf <- dat_sf %>% mutate(prop.dieu=(sum(subset(., Ho=="Điêu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Điêu")
@@ -5929,7 +5929,7 @@ ggplot() + geom_sf() + geom_sf(data=dieu_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Điêu")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 dieu_sff <- dat_sff %>% mutate(prop.dieu=(sum(subset(., Ho=="Điêu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Điêu")
@@ -5977,7 +5977,7 @@ dieu2_peak <- dieu2_plot %>% filter(NAME_3=="Xa Dong Nai" & NAME_2=="Bu Dang")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 dieu2_sf <- dat_sf %>% mutate(prop.dieu2=(sum(subset(., Ho=="Điểu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Điểu")
@@ -5993,7 +5993,7 @@ ggplot() + geom_sf() + geom_sf(data=dieu2_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Điểu")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 dieu2_sff <- dat_sff %>% mutate(prop.dieu2=(sum(subset(., Ho=="Điểu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Điểu")
@@ -6041,7 +6041,7 @@ dinh_peak <- dinh_plot %>% filter(NAME_3=="Xa Long Mon" & NAME_2=="Minh Long")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 dinh_sf <- dat_sf %>% mutate(prop.dinh=(sum(subset(., Ho=="Đinh")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đinh")
@@ -6057,7 +6057,7 @@ ggplot() + geom_sf() + geom_sf(data=dinh_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Đinh")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 dinh_sff <- dat_sff %>% mutate(prop.dinh=(sum(subset(., Ho=="Đinh")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đinh")
@@ -6105,7 +6105,7 @@ do1_peak <- do1_plot %>% filter(NAME_3=="Xa Phuong Hung" & NAME_2=="Gia Loc")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 do1_sf <- dat_sf %>% mutate(prop.do1=(sum(subset(., Ho=="Đô")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đô")
@@ -6121,7 +6121,7 @@ ggplot() + geom_sf() + geom_sf(data=do1_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Đô")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 do1_sff <- dat_sff %>% mutate(prop.do1=(sum(subset(., Ho=="Đô")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đô")
@@ -6169,7 +6169,7 @@ do_peak <- do_plot %>% filter(NAME_3=="Xa Xuan Truong" & NAME_2=="Tho Xuan")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 do_sf <- dat_sf %>% mutate(prop.do=(sum(subset(., Ho=="Đỗ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đỗ")
@@ -6185,7 +6185,7 @@ ggplot() + geom_sf() + geom_sf(data=do_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Đỗ")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 do_sff <- dat_sff %>% mutate(prop.do=(sum(subset(., Ho=="Đỗ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đỗ")
@@ -6233,7 +6233,7 @@ doan1_peak <- doan1_plot %>% filter(NAME_3=="Xa Dong Thinh" & NAME_2=="Dong Son"
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 doan1_sf <- dat_sf %>% mutate(prop.doan1=(sum(subset(., Ho=="Doãn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Doãn")
@@ -6249,7 +6249,7 @@ ggplot() + geom_sf() + geom_sf(data=doan1_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Doãn")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 doan1_sff <- dat_sff %>% mutate(prop.doan1=(sum(subset(., Ho=="Doãn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Doãn")
@@ -6297,7 +6297,7 @@ doan_peak <- doan_plot %>% filter(NAME_3=="Xa Quang Dinh" & NAME_2=="Quang Xuong
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 doan_sf <- dat_sf %>% mutate(prop.doan=(sum(subset(., Ho=="Đoàn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đoàn")
@@ -6313,7 +6313,7 @@ ggplot() + geom_sf() + geom_sf(data=doan_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Đoàn")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 doan_sff <- dat_sff %>% mutate(prop.doan=(sum(subset(., Ho=="Đoàn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đoàn")
@@ -6361,7 +6361,7 @@ doi_peak <- doi_plot %>% filter(NAME_3=="Xa Quang Hai" & NAME_2=="Quang Xuong")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 doi_sf <- dat_sf %>% mutate(prop.doi=(sum(subset(., Ho=="Đới")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đới")
@@ -6377,7 +6377,7 @@ ggplot() + geom_sf() + geom_sf(data=doi_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Đới")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 doi_sff <- dat_sff %>% mutate(prop.doi=(sum(subset(., Ho=="Đới")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đới")
@@ -6425,7 +6425,7 @@ dong_peak <- dong_plot %>% filter(NAME_3=="Xa Nghia Hoa" & NAME_2=="Lang Giang")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 dong_sf <- dat_sf %>% mutate(prop.dong=(sum(subset(., Ho=="Đồng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đồng")
@@ -6441,7 +6441,7 @@ ggplot() + geom_sf() + geom_sf(data=dong_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Đồng")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 dong_sff <- dat_sff %>% mutate(prop.dong=(sum(subset(., Ho=="Đồng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đồng")
@@ -6489,7 +6489,7 @@ du_peak <- du_plot %>% filter(NAME_3=="Xa Nghia Loi" & NAME_2=="Nghia Dan")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 du_sf <- dat_sf %>% mutate(prop.du=(sum(subset(., Ho=="Dư")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Dư")
@@ -6505,7 +6505,7 @@ ggplot() + geom_sf() + geom_sf(data=du_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Dư")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 du_sff <- dat_sff %>% mutate(prop.du=(sum(subset(., Ho=="Dư")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Dư")
@@ -6553,7 +6553,7 @@ duong_peak <- duong_plot %>% filter(NAME_3=="Xa Quynh Son" & NAME_2=="Bac Son")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 duong_sf <- dat_sf %>% mutate(prop.duong=(sum(subset(., Ho=="Dương")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Dương")
@@ -6569,7 +6569,7 @@ ggplot() + geom_sf() + geom_sf(data=duong_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Dương")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 duong_sff <- dat_sff %>% mutate(prop.duong=(sum(subset(., Ho=="Dương")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Dương")
@@ -6617,7 +6617,7 @@ duong2_peak <- duong2_plot %>% filter(NAME_3=="Xa Dong Van" & NAME_2=="Binh Lieu
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 duong2_sf <- dat_sf %>% mutate(prop.duong2=(sum(subset(., Ho=="Đường")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đường")
@@ -6633,7 +6633,7 @@ ggplot() + geom_sf() + geom_sf(data=duong2_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Đường")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 duong2_sff <- dat_sff %>% mutate(prop.duong2=(sum(subset(., Ho=="Đường")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đường")
@@ -6681,7 +6681,7 @@ giang_peak <- giang_plot %>% filter(NAME_3=="Xa My Loc" & NAME_2=="Thai Thuy")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 giang_sf <- dat_sf %>% mutate(prop.giang=(sum(subset(., Ho=="Giang")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Giang")
@@ -6697,7 +6697,7 @@ ggplot() + geom_sf() + geom_sf(data=giang_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Giang")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 giang_sff <- dat_sff %>% mutate(prop.giang=(sum(subset(., Ho=="Giang")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Giang")
@@ -6745,7 +6745,7 @@ giang2_peak <- giang2_plot %>% filter(NAME_3=="Xa Thuong Tan" & NAME_2=="Bac Me"
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 giang2_sf <- dat_sf %>% mutate(prop.giang2=(sum(subset(., Ho=="Giàng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Giàng")
@@ -6761,7 +6761,7 @@ ggplot() + geom_sf() + geom_sf(data=giang2_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Giàng")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 giang2_sff <- dat_sff %>% mutate(prop.giang2=(sum(subset(., Ho=="Giàng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Giàng")
@@ -6809,7 +6809,7 @@ giap_peak <- giap_plot %>% filter(NAME_3=="Xa Dai Lam" & NAME_2=="Lang Giang")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 giap_sf <- dat_sf %>% mutate(prop.giap=(sum(subset(., Ho=="Giáp")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Giáp")
@@ -6825,7 +6825,7 @@ ggplot() + geom_sf() + geom_sf(data=giap_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Giáp")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 giap_sff <- dat_sff %>% mutate(prop.giap=(sum(subset(., Ho=="Giáp")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Giáp")
@@ -6873,7 +6873,7 @@ h_peak <- h_plot %>% filter(NAME_3=="Xa Ea Tul" & NAME_2=="Cu M'gar")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 h_sf <- dat_sf %>% mutate(prop.h=(sum(subset(., Ho=="H")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="H")
@@ -6889,7 +6889,7 @@ ggplot() + geom_sf() + geom_sf(data=h_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("H")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 h_sff <- dat_sff %>% mutate(prop.h=(sum(subset(., Ho=="H")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="H")
@@ -6937,7 +6937,7 @@ h1_peak <- h1_plot %>% filter(NAME_3=="Xa Chu A" & NAME_2=="Pleiku")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 h1_sf <- dat_sf %>% mutate(prop.h1=(sum(subset(., Ho=="H'")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="H'")
@@ -6953,7 +6953,7 @@ ggplot() + geom_sf() + geom_sf(data=h1_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("H'")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 h1_sff <- dat_sff %>% mutate(prop.h1=(sum(subset(., Ho=="H'")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="H'")
@@ -7001,7 +7001,7 @@ ha1_peak <- ha1_plot %>% filter(NAME_3=="Xa Ky Tan" & NAME_2=="Ba Thuoc")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 ha1_sf <- dat_sf %>% mutate(prop.ha1=(sum(subset(., Ho=="Ha")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ha")
@@ -7017,7 +7017,7 @@ ggplot() + geom_sf() + geom_sf(data=ha1_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Ha")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 ha1_sff <- dat_sff %>% mutate(prop.ha1=(sum(subset(., Ho=="Ha")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ha")
@@ -7065,7 +7065,7 @@ ha_peak <- ha_plot %>% filter(NAME_3=="Xa Tan Son" & NAME_2=="Tan Son")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 ha_sf <- dat_sf %>% mutate(prop.ha=(sum(subset(., Ho=="Hà")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hà")
@@ -7081,7 +7081,7 @@ ggplot() + geom_sf() + geom_sf(data=ha_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Hà")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 ha_sff <- dat_sff %>% mutate(prop.ha=(sum(subset(., Ho=="Hà")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hà")
@@ -7129,7 +7129,7 @@ ha2_peak <- ha2_plot %>% filter(NAME_3=="Xa Tay Son" & NAME_2=="Ky Son")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 ha2_sf <- dat_sf %>% mutate(prop.ha2=(sum(subset(., Ho=="Hạ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hạ")
@@ -7145,7 +7145,7 @@ ggplot() + geom_sf() + geom_sf(data=ha2_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Hạ")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 ha2_sff <- dat_sff %>% mutate(prop.ha2=(sum(subset(., Ho=="Hạ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hạ")
@@ -7193,7 +7193,7 @@ han1_peak <- han1_plot %>% filter(NAME_3=="Xa Gia Thanh" & NAME_2=="Phu Ninh")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 han1_sf <- dat_sf %>% mutate(prop.han1=(sum(subset(., Ho=="Hán")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hán")
@@ -7209,7 +7209,7 @@ ggplot() + geom_sf() + geom_sf(data=han1_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Hán")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 han1_sff <- dat_sff %>% mutate(prop.han1=(sum(subset(., Ho=="Hán")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hán")
@@ -7257,7 +7257,7 @@ han2_peak <- han2_plot %>% filter(NAME_3=="Xa Thieu Quang" & NAME_2=="Thieu Hoa"
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 han2_sf <- dat_sf %>% mutate(prop.han2=(sum(subset(., Ho=="Hàn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hàn")
@@ -7273,7 +7273,7 @@ ggplot() + geom_sf() + geom_sf(data=han2_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Hàn")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 han2_sff <- dat_sff %>% mutate(prop.han2=(sum(subset(., Ho=="Hàn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hàn")
@@ -7290,7 +7290,7 @@ ggplot() + geom_sf() + geom_sf(data=han2_plotf, aes(fill=songuoi_km), color=NA) 
 
 ## Hàng
 
-### Dữ liệu
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 hang1_sff <- dat_sff %>% mutate(prop.hang1=(sum(subset(., Ho=="Hàng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hàng")
@@ -7323,7 +7323,7 @@ hang1_peak <- hang1_plot %>% filter(NAME_3=="Xa Lung Phinh" & NAME_2=="Bac Ha")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 hang1_sf <- dat_sf %>% mutate(prop.hang1=(sum(subset(., Ho=="Hàng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hàng")
@@ -7339,7 +7339,7 @@ ggplot() + geom_sf() + geom_sf(data=hang1_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Hàng")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 hang1_sff <- dat_sff %>% mutate(prop.hang1=(sum(subset(., Ho=="Hàng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hàng")
@@ -7356,7 +7356,7 @@ ggplot() + geom_sf() + geom_sf(data=hang1_plotf, aes(fill=songuoi_km), color=NA)
 
 ## Hảng
 
-### Dữ liệu
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 hang2_sff <- dat_sff %>% mutate(prop.hang2=(sum(subset(., Ho=="Hảng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hảng")
@@ -7389,7 +7389,7 @@ hang2_peak <- hang2_plot %>% filter(NAME_3=="Xa Ta Leng" & NAME_2=="Tam Duong")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 hang2_sf <- dat_sf %>% mutate(prop.hang2=(sum(subset(., Ho=="Hảng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hảng")
@@ -7405,7 +7405,7 @@ ggplot() + geom_sf() + geom_sf(data=hang2_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Hảng")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 hang2_sff <- dat_sff %>% mutate(prop.hang2=(sum(subset(., Ho=="Hảng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hảng")
@@ -7453,7 +7453,7 @@ hang3_peak <- hang3_plot %>% filter(NAME_3=="Xa Lang Cheu" & NAME_2=="Bac Yen")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 hang3_sf <- dat_sf %>% mutate(prop.hang3=(sum(subset(., Ho=="Hạng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hạng")
@@ -7469,7 +7469,7 @@ ggplot() + geom_sf() + geom_sf(data=hang3_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Hạng")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 hang3_sff <- dat_sff %>% mutate(prop.hang3=(sum(subset(., Ho=="Hạng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hạng")
@@ -7516,7 +7516,7 @@ hau <- hau_plot %>%
 hau_peak <- hau_plot %>% filter(NAME_3=="Xa Bat Dai Son" & NAME_2=="Quan Ba")
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 hau_sf <- dat_sf %>% mutate(prop.hau=(sum(subset(., Ho=="Hầu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hầu")
@@ -7532,7 +7532,7 @@ ggplot() + geom_sf() + geom_sf(data=hau_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Hầu")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 hau_sff <- dat_sff %>% mutate(prop.hau=(sum(subset(., Ho=="Hầu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hầu")
@@ -7580,7 +7580,7 @@ ho1_peak <- ho1_plot %>% filter(NAME_3=="Xa Phi Nhu" & NAME_2=="Dien Bien Dong")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 ho1_sf <- dat_sf %>% mutate(prop.ho1=(sum(subset(., Ho=="Ho")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ho")
@@ -7596,7 +7596,7 @@ ggplot() + geom_sf() + geom_sf(data=ho1_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Ho")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 ho1_sff <- dat_sff %>% mutate(prop.ho1=(sum(subset(., Ho=="Ho")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ho")
@@ -7644,7 +7644,7 @@ ho2_peak <- ho2_plot %>% filter(NAME_3=="Xa Thanh" & NAME_2=="Huong Hoa")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 ho2_sf <- dat_sf %>% mutate(prop.ho2=(sum(subset(., Ho=="Hồ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hồ")
@@ -7660,7 +7660,7 @@ ggplot() + geom_sf() + geom_sf(data=ho2_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Hồ")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 ho2_sff <- dat_sff %>% mutate(prop.ho2=(sum(subset(., Ho=="Hồ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hồ")
@@ -7708,7 +7708,7 @@ ho3_peak <- ho3_plot %>% filter(NAME_3=="Xa Che Cu Nha" & NAME_2=="Mu Cang Chai"
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 ho3_sf <- dat_sf %>% mutate(prop.ho3=(sum(subset(., Ho=="Hờ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hờ")
@@ -7724,7 +7724,7 @@ ggplot() + geom_sf() + geom_sf(data=ho3_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Hờ")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 ho3_sff <- dat_sff %>% mutate(prop.ho3=(sum(subset(., Ho=="Hờ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hờ")
@@ -7772,7 +7772,7 @@ hoang_peak <- hoang_plot %>% filter(NAME_3=="Xa Ban Ria" & NAME_2=="Quang Binh")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 hoang_sf <- dat_sf %>% mutate(prop.hoang=(sum(subset(., Ho=="Hoàng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hoàng")
@@ -7788,7 +7788,7 @@ ggplot() + geom_sf() + geom_sf(data=hoang_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Hoàng")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 hoang_sff <- dat_sff %>% mutate(prop.hoang=(sum(subset(., Ho=="Hoàng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hoàng")
@@ -7836,7 +7836,7 @@ hua_peak <- hua_plot %>% filter(NAME_3=="Xa Vinh Lai" & NAME_2=="Van Quan")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 hua_sf <- dat_sf %>% mutate(prop.hua=(sum(subset(., Ho=="Hứa")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hứa")
@@ -7852,7 +7852,7 @@ ggplot() + geom_sf() + geom_sf(data=hua_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Hứa")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 hua_sff <- dat_sff %>% mutate(prop.hua=(sum(subset(., Ho=="Hứa")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hứa")
@@ -7900,7 +7900,7 @@ hung_peak <- hung_plot %>% filter(NAME_3=="Xa Tan Bac" & NAME_2=="Quang Binh")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 hung_sf <- dat_sf %>% mutate(prop.hung=(sum(subset(., Ho=="Hùng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hùng")
@@ -7916,7 +7916,7 @@ ggplot() + geom_sf() + geom_sf(data=hung_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Hùng")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 hung_sff <- dat_sff %>% mutate(prop.hung=(sum(subset(., Ho=="Hùng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Hùng")
@@ -7964,7 +7964,7 @@ huynh_peak <- huynh_plot %>% filter(NAME_3=="Xa Pho Minh" & NAME_2=="Duc Pho")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 huynh_sf <- dat_sf %>% mutate(prop.huynh=(sum(subset(., Ho=="Huỳnh")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Huỳnh")
@@ -7980,7 +7980,7 @@ ggplot() + geom_sf() + geom_sf(data=huynh_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Huỳnh")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 huynh_sff <- dat_sff %>% mutate(prop.huynh=(sum(subset(., Ho=="Huỳnh")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Huỳnh")
@@ -8028,7 +8028,7 @@ k_peak <- k_plot %>% filter(NAME_3=="Xa Dong Giang" & NAME_2=="Ham Thuan Bac")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, message=FALSE, warning=FALSE}
 k_sf <- dat_sf %>% mutate(prop.k=(sum(subset(., Ho=="K")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="K")
@@ -8044,7 +8044,7 @@ ggplot() + geom_sf() + geom_sf(data=k_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("K")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 k_sff <- dat_sff %>% mutate(prop.k=(sum(subset(., Ho=="K")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="K")
@@ -8092,7 +8092,7 @@ k1_peak <- k1_plot %>% filter(NAME_3=="Xa Bao Thuan" & NAME_2=="Di Linh")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, message=FALSE, warning=FALSE}
 k1_sf <- dat_sf %>% mutate(prop.k1=(sum(subset(., Ho=="K'")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="K'")
@@ -8108,7 +8108,7 @@ ggplot() + geom_sf() + geom_sf(data=k1_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("K'")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 k1_sff <- dat_sff %>% mutate(prop.k1=(sum(subset(., Ho=="K'")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="K'")
@@ -8156,7 +8156,7 @@ ka_peak <- ka_plot %>% filter(NAME_3=="Xa Son Dien" & NAME_2=="Di Linh")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, message=FALSE, warning=FALSE}
 ka_sf <- dat_sf %>% mutate(prop.ka=(sum(subset(., Ho=="Ka")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ka")
@@ -8172,7 +8172,7 @@ ggplot() + geom_sf() + geom_sf(data=ka_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Ka")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 ka_sff <- dat_sff %>% mutate(prop.ka=(sum(subset(., Ho=="Ka")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ka")
@@ -8220,7 +8220,7 @@ kator_peak <- kator_plot %>% filter(NAME_3=="Xa Phuoc Binh" & NAME_2=="Bac Ai")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, message=FALSE, warning=FALSE}
 kator_sf <- dat_sf %>% mutate(prop.kator=(sum(subset(., Ho=="Katơr")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Katơr")
@@ -8236,7 +8236,7 @@ ggplot() + geom_sf() + geom_sf(data=kator_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Katơr")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 kator_sff <- dat_sff %>% mutate(prop.kator=(sum(subset(., Ho=="Katơr")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Katơr")
@@ -8284,7 +8284,7 @@ kha_peak <- kha_plot %>% filter(NAME_3=="Xa Binh Chuan" & NAME_2=="Con Cuong")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, message=FALSE, warning=FALSE}
 kha_sf <- dat_sf %>% mutate(prop.kha=(sum(subset(., Ho=="Kha")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Kha")
@@ -8300,7 +8300,7 @@ ggplot() + geom_sf() + geom_sf(data=kha_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Kha")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 kha_sff <- dat_sff %>% mutate(prop.kha=(sum(subset(., Ho=="Kha")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Kha")
@@ -8348,7 +8348,7 @@ khong_peak <- khong_plot %>% filter(NAME_3=="Xa Cao Phong" & NAME_2=="Song Lo")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, message=FALSE, warning=FALSE}
 khong_sf <- dat_sf %>% mutate(prop.khong=(sum(subset(., Ho=="Khổng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Khổng")
@@ -8364,7 +8364,7 @@ ggplot() + geom_sf() + geom_sf(data=khong_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Khổng")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 khong_sff <- dat_sff %>% mutate(prop.khong=(sum(subset(., Ho=="Khổng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Khổng")
@@ -8412,7 +8412,7 @@ khuat_peak <- khuat_plot %>% filter(NAME_3=="Xa Cam Yen" & NAME_2=="Thach That")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, message=FALSE, warning=FALSE}
 khuat_sf <- dat_sf %>% mutate(prop.khuat=(sum(subset(., Ho=="Khuất")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Khuất")
@@ -8428,7 +8428,7 @@ ggplot() + geom_sf() + geom_sf(data=khuat_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Khuất")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 khuat_sff <- dat_sff %>% mutate(prop.khuat=(sum(subset(., Ho=="Khuất")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Khuất")
@@ -8476,7 +8476,7 @@ khuc_peak <- khuc_plot %>% filter(NAME_3=="Xa Canh Tan" & NAME_2=="Hung Ha")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, message=FALSE, warning=FALSE}
 khuc_sf <- dat_sf %>% mutate(prop.khuc=(sum(subset(., Ho=="Khúc")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Khúc")
@@ -8492,7 +8492,7 @@ ggplot() + geom_sf() + geom_sf(data=khuc_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Khúc")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 khuc_sff <- dat_sff %>% mutate(prop.khuc=(sum(subset(., Ho=="Khúc")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Khúc")
@@ -8540,7 +8540,7 @@ khuong_peak <- khuong_plot %>% filter(NAME_3=="Xa Tien Lu" & NAME_2=="Lap Thach"
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 khuong_sf <- dat_sf %>% mutate(prop.khuong=(sum(subset(., Ho=="Khương")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Khương")
@@ -8556,7 +8556,7 @@ ggplot() + geom_sf() + geom_sf(data=khuong_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Khương")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 khuong_sff <- dat_sff %>% mutate(prop.khuong=(sum(subset(., Ho=="Khương")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Khương")
@@ -8604,7 +8604,7 @@ khuu_peak <- khuu_plot %>% filter(NAME_3=="Xa Hoa Dong" & NAME_2=="Vinh Chau")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 khuu_sf <- dat_sf %>% mutate(prop.khuu=(sum(subset(., Ho=="Khưu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Khưu")
@@ -8620,7 +8620,7 @@ ggplot() + geom_sf() + geom_sf(data=khuu_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Khưu")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 khuu_sff <- dat_sff %>% mutate(prop.khuu=(sum(subset(., Ho=="Khưu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Khưu")
@@ -8668,7 +8668,7 @@ kien_peak <- kien_plot %>% filter(NAME_3=="Xa Thanh Hoa Son" & NAME_2=="Cau Ngan
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 kien_sf <- dat_sf %>% mutate(prop.kien=(sum(subset(., Ho=="Kiên")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Kiên")
@@ -8684,7 +8684,7 @@ ggplot() + geom_sf() + geom_sf(data=kien_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Kiên")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 kien_sff <- dat_sff %>% mutate(prop.kien=(sum(subset(., Ho=="Kiên")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Kiên")
@@ -8732,7 +8732,7 @@ kieu_peak <- kieu_plot %>% filter(NAME_3=="Xa Can Kiem" & NAME_2=="Thach That")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 kieu_sf <- dat_sf %>% mutate(prop.kieu=(sum(subset(., Ho=="Kiều")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Kiều")
@@ -8748,7 +8748,7 @@ ggplot() + geom_sf() + geom_sf(data=kieu_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Kiều")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 kieu_sff <- dat_sff %>% mutate(prop.kieu=(sum(subset(., Ho=="Kiều")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Kiều")
@@ -8796,7 +8796,7 @@ kim_peak <- kim_plot %>% filter(NAME_3=="Xa Tan Son" & NAME_2=="Tra Cu")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 kim_sf <- dat_sf %>% mutate(prop.kim=(sum(subset(., Ho=="Kim")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Kim")
@@ -8812,7 +8812,7 @@ ggplot() + geom_sf() + geom_sf(data=kim_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Kim")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 kim_sff <- dat_sff %>% mutate(prop.kim=(sum(subset(., Ho=="Kim")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Kim")
@@ -8860,7 +8860,7 @@ ko_peak <- ko_plot %>% filter(NAME_3=="Xa Da Nhim" & NAME_2=="Lac Duong")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 ko_sf <- dat_sf %>% mutate(prop.ko=(sum(subset(., Ho=="Kơ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Kơ")
@@ -8876,7 +8876,7 @@ ggplot() + geom_sf() + geom_sf(data=ko_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Kơ")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 ko_sff <- dat_sff %>% mutate(prop.ko=(sum(subset(., Ho=="Kơ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Kơ")
@@ -8924,7 +8924,7 @@ kpa_peak <- kpa_plot %>% filter(NAME_3=="Xa Suoi Trai" & NAME_2=="Son Hoa")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 kpa_sf <- dat_sf %>% mutate(prop.kpa=(sum(subset(., Ho=="Kpă")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Kpă")
@@ -8940,7 +8940,7 @@ ggplot() + geom_sf() + geom_sf(data=kpa_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Kpă")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 kpa_sff <- dat_sff %>% mutate(prop.kpa=(sum(subset(., Ho=="Kpă")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Kpă")
@@ -8988,7 +8988,7 @@ kpuih_peak <- kpuih_plot %>% filter(NAME_3=="Xa Ia Tor" & NAME_2=="Chu Prong")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 kpuih_sf <- dat_sf %>% mutate(prop.kpuih=(sum(subset(., Ho=="Kpuih")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Kpuih")
@@ -9004,7 +9004,7 @@ ggplot() + geom_sf() + geom_sf(data=kpuih_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Kpuih")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 kpuih_sff <- dat_sff %>% mutate(prop.kpuih=(sum(subset(., Ho=="Kpuih")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Kpuih")
@@ -9052,7 +9052,7 @@ ksor_peak <- ksor_plot %>% filter(NAME_3=="Xa Ea Lam" & NAME_2=="Song Hinh")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 ksor_sf <- dat_sf %>% mutate(prop.ksor=(sum(subset(., Ho=="Ksor")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ksor")
@@ -9068,7 +9068,7 @@ ggplot() + geom_sf() + geom_sf(data=ksor_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Ksor")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 ksor_sff <- dat_sff %>% mutate(prop.ksor=(sum(subset(., Ho=="Ksor")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ksor")
@@ -9116,7 +9116,7 @@ la_peak <- la_plot %>% filter(NAME_3=="Xa Phu Mo" & NAME_2=="Dong Xuan")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 la_sf <- dat_sf %>% mutate(prop.la=(sum(subset(., Ho=="La")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="La")
@@ -9132,7 +9132,7 @@ ggplot() + geom_sf() + geom_sf(data=la_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("La")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 la_sff <- dat_sff %>% mutate(prop.la=(sum(subset(., Ho=="La")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="La")
@@ -9180,7 +9180,7 @@ la2_peak <- la2_plot %>% filter(NAME_3=="Xa Khanh Thinh" & NAME_2=="Yen Mo")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 la2_sf <- dat_sf %>% mutate(prop.la2=(sum(subset(., Ho=="Lã")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lã")
@@ -9196,7 +9196,7 @@ ggplot() + geom_sf() + geom_sf(data=la2_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Lã")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 la2_sff <- dat_sff %>% mutate(prop.la2=(sum(subset(., Ho=="Lã")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lã")
@@ -9244,7 +9244,7 @@ lai_peak <- lai_plot %>% filter(NAME_3=="Xa Lac Hoa" & NAME_2=="Vinh Chau")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 lai_sf <- dat_sf %>% mutate(prop.lai=(sum(subset(., Ho=="Lai")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lai")
@@ -9260,7 +9260,7 @@ ggplot() + geom_sf() + geom_sf(data=lai_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Lai")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 lai_sff <- dat_sff %>% mutate(prop.lai=(sum(subset(., Ho=="Lai")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lai")
@@ -9308,7 +9308,7 @@ lai1_peak <- lai1_plot %>% filter(NAME_3=="Xa Liem Chung" & NAME_2=="Phu Ly")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 lai1_sf <- dat_sf %>% mutate(prop.lai1=(sum(subset(., Ho=="Lại")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lại")
@@ -9324,7 +9324,7 @@ ggplot() + geom_sf() + geom_sf(data=lai1_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Lại")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 lai1_sff <- dat_sff %>% mutate(prop.lai1=(sum(subset(., Ho=="Lại")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lại")
@@ -9372,7 +9372,7 @@ lam_peak <- lam_plot %>% filter(NAME_3=="Xa Minh Khai" & NAME_2=="Binh Gia")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 lam_sf <- dat_sf %>% mutate(prop.lam=(sum(subset(., Ho=="Lâm")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lâm")
@@ -9388,7 +9388,7 @@ ggplot() + geom_sf() + geom_sf(data=lam_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Lâm")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 lam_sff <- dat_sff %>% mutate(prop.lam=(sum(subset(., Ho=="Lâm")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lâm")
@@ -9436,7 +9436,7 @@ lang_peak <- lang_plot %>% filter(NAME_3=="Xa Bat Mot" & NAME_2=="Thuong Xuan")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 lang_sf <- dat_sf %>% mutate(prop.lang=(sum(subset(., Ho=="Lang")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lang")
@@ -9452,7 +9452,7 @@ ggplot() + geom_sf() + geom_sf(data=lang_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Lang")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 lang_sff <- dat_sff %>% mutate(prop.lang=(sum(subset(., Ho=="Lang")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lang")
@@ -9500,7 +9500,7 @@ lang2_peak <- lang2_plot %>% filter(NAME_3=="Xa Za Hung" & NAME_2=="Dong Giang")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 lang2_sf <- dat_sf %>% mutate(prop.lang2=(sum(subset(., Ho=="Lăng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lăng")
@@ -9516,7 +9516,7 @@ ggplot() + geom_sf() + geom_sf(data=lang2_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Lăng")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 lang2_sff <- dat_sff %>% mutate(prop.lang2=(sum(subset(., Ho=="Lăng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lăng")
@@ -9564,7 +9564,7 @@ lanh_peak <- lanh_plot %>% filter(NAME_3=="Xa Tam Gia" & NAME_2=="Loc Binh")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 lanh_sf <- dat_sf %>% mutate(prop.lanh=(sum(subset(., Ho=="Lành")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lành")
@@ -9580,7 +9580,7 @@ ggplot() + geom_sf() + geom_sf(data=lanh_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Lành")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 lanh_sff <- dat_sff %>% mutate(prop.lanh=(sum(subset(., Ho=="Lành")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lành")
@@ -9628,7 +9628,7 @@ lau_peak <- lau_plot %>% filter(NAME_3=="Xa Xa Dung" & NAME_2=="Dien Bien Dong")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 lau_sf <- dat_sf %>% mutate(prop.lau=(sum(subset(., Ho=="Lầu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lầu")
@@ -9644,7 +9644,7 @@ ggplot() + geom_sf() + geom_sf(data=lau_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Lầu")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 lau_sff <- dat_sff %>% mutate(prop.lau=(sum(subset(., Ho=="Lầu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lầu")
@@ -9692,7 +9692,7 @@ le_peak <- le_plot %>% filter(NAME_3=="Xa Hoang Phu" & NAME_2=="Hoang Hoa")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 le_sf <- dat_sf %>% mutate(prop.le=(sum(subset(., Ho=="Lê")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lê")
@@ -9708,7 +9708,7 @@ ggplot() + geom_sf() + geom_sf(data=le_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Lê")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 le_sff <- dat_sff %>% mutate(prop.le=(sum(subset(., Ho=="Lê")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lê")
@@ -9756,7 +9756,7 @@ leo_peak <- leo_plot %>% filter(NAME_3=="Xa Hua La" & NAME_2=="Son La")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 leo_sf <- dat_sf %>% mutate(prop.leo=(sum(subset(., Ho=="Lèo")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lèo")
@@ -9772,7 +9772,7 @@ ggplot() + geom_sf() + geom_sf(data=leo_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Lèo")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 leo_sff <- dat_sff %>% mutate(prop.leo=(sum(subset(., Ho=="Lèo")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lèo")
@@ -9820,7 +9820,7 @@ lo_peak <- lo_plot %>% filter(NAME_3=="Xa Bac Son" & NAME_2=="Quy Hop")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 lo_sf <- dat_sf %>% mutate(prop.lo=(sum(subset(., Ho=="Lo")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lo")
@@ -9836,7 +9836,7 @@ ggplot() + geom_sf() + geom_sf(data=lo_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Lo")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 lo_sff <- dat_sff %>% mutate(prop.lo=(sum(subset(., Ho=="Lo")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lo")
@@ -9884,7 +9884,7 @@ lo1_peak <- lo1_plot %>% filter(NAME_3=="Xa Na Tam" & NAME_2=="Tam Duong")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 lo1_sf <- dat_sf %>% mutate(prop.lo1=(sum(subset(., Ho=="Lò")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lò")
@@ -9900,7 +9900,7 @@ ggplot() + geom_sf() + geom_sf(data=lo1_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Lò")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 lo1_sff <- dat_sff %>% mutate(prop.lo1=(sum(subset(., Ho=="Lò")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lò")
@@ -9948,7 +9948,7 @@ lo2_peak <- lo2_plot %>% filter(NAME_3=="Xa Cam Muon" & NAME_2=="Que Phong")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 lo2_sf <- dat_sf %>% mutate(prop.lo2=(sum(subset(., Ho=="Lô")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lô")
@@ -9964,7 +9964,7 @@ ggplot() + geom_sf() + geom_sf(data=lo2_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Lô")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 lo2_sff <- dat_sff %>% mutate(prop.lo2=(sum(subset(., Ho=="Lô")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lô")
@@ -10012,7 +10012,7 @@ loc_peak <- loc_plot %>% filter(NAME_3=="Xa Hien Kiet" & NAME_2=="Quan Hoa")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 loc_sf <- dat_sf %>% mutate(prop.loc=(sum(subset(., Ho=="Lộc")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lộc")
@@ -10028,7 +10028,7 @@ ggplot() + geom_sf() + geom_sf(data=loc_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Lộc")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 loc_sff <- dat_sff %>% mutate(prop.loc=(sum(subset(., Ho=="Lộc")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lộc")
@@ -10076,7 +10076,7 @@ long_peak <- long_plot %>% filter(NAME_3=="Xa Ban Phung" & NAME_2=="Hoang Su Phi
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 long_sf <- dat_sf %>% mutate(prop.long=(sum(subset(., Ho=="Long")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Long")
@@ -10092,7 +10092,7 @@ ggplot() + geom_sf() + geom_sf(data=long_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Long")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 long_sff <- dat_sff %>% mutate(prop.long=(sum(subset(., Ho=="Long")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Long")
@@ -10140,7 +10140,7 @@ lu_peak <- lu_plot %>% filter(NAME_3=="Xa Thang Tin" & NAME_2=="Hoang Su Phi")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 lu_sf <- dat_sf %>% mutate(prop.lu=(sum(subset(., Ho=="Lù")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lù")
@@ -10156,7 +10156,7 @@ ggplot() + geom_sf() + geom_sf(data=lu_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Lù")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 lu_sff <- dat_sff %>% mutate(prop.lu=(sum(subset(., Ho=="Lù")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lù")
@@ -10204,7 +10204,7 @@ lu1_peak <- lu1_plot %>% filter(NAME_3=="Xa Muong Khoa" & NAME_2=="Bac Yen")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 lu1_sf <- dat_sf %>% mutate(prop.lu1=(sum(subset(., Ho=="Lư")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lư")
@@ -10220,7 +10220,7 @@ ggplot() + geom_sf() + geom_sf(data=lu1_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Lư")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 lu1_sff <- dat_sff %>% mutate(prop.lu1=(sum(subset(., Ho=="Lư")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lư")
@@ -10235,7 +10235,7 @@ ggplot() + geom_sf() + geom_sf(data=lu1_plotf, aes(fill=songuoi_km), color=NA) +
   ggtitle("Lư")
 ```
 
-### Lữ
+## Lữ
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 lu2_sff <- dat_sff %>% mutate(prop.lu2=(sum(subset(., Ho=="Lữ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lữ")
@@ -10268,7 +10268,7 @@ lu2_peak <- lu2_plot %>% filter(NAME_3=="Xa Trung Xuan" & NAME_2=="Quan Son")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, message=FALSE, warning=FALSE}
 lu2_sf <- dat_sf %>% mutate(prop.lu2=(sum(subset(., Ho=="Lữ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lữ")
@@ -10284,7 +10284,7 @@ ggplot() + geom_sf() + geom_sf(data=lu2_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Lữ")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 lu2_sff <- dat_sff %>% mutate(prop.lu2=(sum(subset(., Ho=="Lữ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lữ")
@@ -10332,7 +10332,7 @@ luc_peak <- luc_plot %>% filter(NAME_3=="Xa Co Lung" & NAME_2=="Ba Thuoc")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 luc_sf <- dat_sf %>% mutate(prop.luc=(sum(subset(., Ho=="Lục")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lục")
@@ -10348,7 +10348,7 @@ ggplot() + geom_sf() + geom_sf(data=luc_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Lục")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 luc_sff <- dat_sff %>% mutate(prop.luc=(sum(subset(., Ho=="Lục")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lục")
@@ -10396,7 +10396,7 @@ luong_peak <- luong_plot %>% filter(NAME_3=="Xa Tam Van" & NAME_2=="Lang Chanh")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 luong_sf <- dat_sf %>% mutate(prop.luong=(sum(subset(., Ho=="Lương")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lương")
@@ -10412,7 +10412,7 @@ ggplot() + geom_sf() + geom_sf(data=luong_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Lương")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 luong_sff <- dat_sff %>% mutate(prop.luong=(sum(subset(., Ho=="Lương")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lương")
@@ -10460,7 +10460,7 @@ luong1_peak <- luong1_plot %>% filter(NAME_3=="Xa Dong Ruong" & NAME_2=="Da Bac"
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 luong1_sf <- dat_sf %>% mutate(prop.luong1=(sum(subset(., Ho=="Lường")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lường")
@@ -10476,7 +10476,7 @@ ggplot() + geom_sf() + geom_sf(data=luong1_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Lường")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 luong1_sff <- dat_sff %>% mutate(prop.luong1=(sum(subset(., Ho=="Lường")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lường")
@@ -10524,7 +10524,7 @@ luu_peak <- luu_plot %>% filter(NAME_3=="Xa Linh Thong" & NAME_2=="Dinh Hoa")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 luu_sf <- dat_sf %>% mutate(prop.luu=(sum(subset(., Ho=="Lưu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lưu")
@@ -10540,7 +10540,7 @@ ggplot() + geom_sf() + geom_sf(data=luu_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Lưu")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 luu_sff <- dat_sff %>% mutate(prop.luu=(sum(subset(., Ho=="Lưu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lưu")
@@ -10588,7 +10588,7 @@ ly_peak <- ly_plot %>% filter(NAME_3=="Xa Trung Leng Ho" & NAME_2=="Bat Xat")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 ly_sf <- dat_sf %>% mutate(prop.ly=(sum(subset(., Ho=="Lý")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lý")
@@ -10604,7 +10604,7 @@ ggplot() + geom_sf() + geom_sf(data=ly_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Lý")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 ly_sff <- dat_sff %>% mutate(prop.ly=(sum(subset(., Ho=="Lý")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Lý")
@@ -10652,7 +10652,7 @@ ma_peak <- ma_plot %>% filter(NAME_3=="Xa Minh Quang" & NAME_2=="Chiem Hoa")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 ma_sf <- dat_sf %>% mutate(prop.ma=(sum(subset(., Ho=="Ma")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ma")
@@ -10668,7 +10668,7 @@ ggplot() + geom_sf() + geom_sf(data=ma_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Ma")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 ma_sff <- dat_sff %>% mutate(prop.ma=(sum(subset(., Ho=="Ma")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ma")
@@ -10684,6 +10684,43 @@ ggplot() + geom_sf() + geom_sf(data=ma_plotf, aes(fill=songuoi_km), color=NA) +
 ```
 
 ## Mã
+
+
+
+```{r, warning=FALSE, message=FALSE, lazy=FALSE}
+ma2_sff <- dat_sff %>% mutate(prop.ma2=(sum(subset(., Ho=="Mã")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Mã")
+ma2_plot <- ma2_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.ma2, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
+ma2_plot$centroid <- sf::st_transform(ma2_plot, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+ma2 <- ma2_plot %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Nga Thach" & NAME_2=="Nga Son"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km=round(as.numeric(distm_km), 2),
+         lng = map(centroid,1),
+         lat = map(centroid,2),
+         lng = round(as.numeric(lng), 2),
+         lat = round(as.numeric(lat), 2),
+         pro.pop=as.numeric(round(pro.pop, 2)),
+         prop.mai=as.numeric(round(prop.ma2, 2)),
+         area_km=as.numeric(round(area_km, 2)),
+         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
+  arrange(distm_km) %>%
+  st_drop_geometry() %>%
+  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.ma2, area_km, songuoi_km, lng, lat, distm_km)
+
+ma2_peak <- ma2_plot %>% filter(NAME_3=="Xa Nga Thach" & NAME_2=="Nga Son")
+
+datatable(ma2, colnames = c("STT", "Tỉnh/Thành phố", "Quận/Huyện", "Phường/Xã", "Số người", "Dân số", "Tỉ lệ/xã phường", "Tỉ lệ/cả nước", "Diện tích (km2)", "Mật độ (người/km2)", "Kinh độ", "Vĩ độ", "Khoảng cách tới tâm (km)"), extensions = 'Buttons', options = list(
+    dom = 'Bfrtip',
+    buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
+  ))
+```
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 ma2_sff <- dat_sff %>% mutate(prop.ma2=(sum(subset(., Ho=="Mã")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Mã")
@@ -10716,7 +10753,7 @@ ma2_peak <- ma2_plot %>% filter(NAME_3=="Xa Nga Thach" & NAME_2=="Nga Son")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 ma2_sf <- dat_sf %>% mutate(prop.ma2=(sum(subset(., Ho=="Mã")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Mã")
@@ -10732,7 +10769,76 @@ ggplot() + geom_sf() + geom_sf(data=ma2_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Mã")
 ```
 
-### Phân bố mật độ
+
+
+```{r, message=FALSE, warning=FALSE, lazy=TRUE}
+ma2 <- dat_sff %>% filter(Ho=="Mã") %>% st_as_sf(crs = 4326)
+ma2$centroid <- sf::st_transform(ma2, 2154) %>% 
+  st_centroid() %>% 
+  # this is the crs from d, which has no EPSG code:
+  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
+  # since you want the centroids in a second geometry col:
+  st_geometry()
+
+library(geosphere)
+ma2 <- ma2 %>%
+  mutate(centroid_0 = centroid[NAME_3=="Xa Nga Thach" & NAME_2=="Nga Son"],
+         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
+         distm_km=distm/1000,
+         distm_km2=distm_km^2,
+         sum_distm_km2=sum(distm_km2),
+         var=sum_distm_km2/(n()-1),
+         sd=sqrt(var))
+
+ma2_radius <- ma2 %>%
+  arrange(distm_km) %>%
+  mutate(rank=row_number())
+
+distm_km<-ma2_radius$distm_km
+pro.pop<-ma2_radius$pro.pop
+rank<-ma2_radius$rank
+commune<-ma2_radius$NAME_3
+rank<-factor(rank, labels = commune)
+estimate<-27*exp(-(distm_km^2)/(2*80))
+
+library(dplyr)
+
+df <- data.frame(distm_km, rank, commune, estimate, pro.pop)
+
+df <- df %>%
+  mutate(num=sum((pro.pop-estimate)^2),
+         den=nrow(df)-1,
+         var=num/den,
+         sd=sqrt(var),
+         rank_com=as.numeric(rank))
+  
+breaks <- c(0, 20, 40, 60, 80, 100)
+
+plot_df <- df %>%
+  filter(row_number()<=300) %>%
+  ggplot(aes(x=reorder(factor(rank), distm_km), y=pro.pop, fill=distm_km)) +
+  geom_bar(aes(x=reorder(factor(rank), distm_km), y=pro.pop), stat = "identity", width = 0.5) + 
+  #stat_smooth(method = 'lm', aes(colour = 'linear'), se = FALSE) +
+  #geom_line(aes(x=as.numeric(reorder(factor(rank), distm_km)), y=estimate)) +
+  stat_smooth(aes(y=pro.pop, x=as.numeric(reorder(factor(rank), distm_km))),method="gam",se=TRUE,formula=y~s(x,k=20)) +
+  scale_x_discrete(name = "Xã/Phường", 
+                     breaks = reorder(factor(rank), distm_km), 
+                     labels = reorder(factor(rank), distm_km)) +
+  scale_fill_gradientn("Khoảng cách tới tâm (km)", colours = terrain.colors(10), breaks=breaks) +
+  scale_y_continuous(name="Tỉ lệ (%)") +
+  theme_bw() + 
+  theme(text = element_text(size=40), axis.text.x = element_blank(), axis.ticks.x = element_blank(), axis.text.y = element_text(size=30),
+        legend.text=element_text(size=30), legend.key.size = unit(6, "cm"), legend.key.height = unit(2, "cm"), legend.key.width = unit(2, "cm"), legend.position = "bottom") +
+  theme(panel.grid.major = element_blank()) + 
+  annotate(geom='text', x=80, y=10, label="y == 27*e^-{(x^{2}+y^{2})/2*(80)}", parse = TRUE,size=15) +
+  annotate(geom='text', x=80, y=9, label="s.e. = 2%/xã",parse=F,size=12) +
+  #coord_flip() +
+  ggtitle("Mã-Nga Sơn")
+
+plot_df
+```
+
+
 
 ```{r, lazy = TRUE}
 ma2_sff <- dat_sff %>% mutate(prop.ma2=(sum(subset(., Ho=="Mã")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Mã")
@@ -10780,7 +10886,7 @@ mac_peak <- mac_plot %>% filter(NAME_3=="Xa Cong Liem" & NAME_2=="Nong Cong")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 mac_sf <- dat_sf %>% mutate(prop.mac=(sum(subset(., Ho=="Mạc")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Mạc")
@@ -10796,7 +10902,7 @@ ggplot() + geom_sf() + geom_sf(data=mac_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Mạc")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 mac_sff <- dat_sff %>% mutate(prop.mac=(sum(subset(., Ho=="Mạc")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Mạc")
@@ -10844,7 +10950,7 @@ mai_peak <- mai_plot %>% filter(NAME_3=="Thi tran Nga Son" & NAME_2=="Nga Son")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 ggplot() + geom_sf() + geom_sf(data=mai_plot, aes(fill=pro.pop), color=NA) +
@@ -10857,7 +10963,7 @@ ggplot() + geom_sf() + geom_sf(data=mai_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Mai")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 mai_sff <- dat_sff %>% mutate(prop.mai=(sum(subset(., Ho=="Mai")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Mai")
@@ -10905,7 +11011,7 @@ mang_peak <- mang_plot %>% filter(NAME_3=="Xa Cam Thinh Tay" & NAME_2=="Cam Ranh
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 mang_sf <- dat_sf %>% mutate(prop.mang=(sum(subset(., Ho=="Mang")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Mang")
@@ -10921,7 +11027,7 @@ ggplot() + geom_sf() + geom_sf(data=mang_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Mang")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 mang_sff <- dat_sff %>% mutate(prop.mang=(sum(subset(., Ho=="Mang")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Mang")
@@ -10969,7 +11075,7 @@ mau_peak <- mau_plot %>% filter(NAME_3=="Xa Ba Cum Bac" & NAME_2=="Khanh Son")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 mau_sf <- dat_sf %>% mutate(prop.mau=(sum(subset(., Ho=="Mấu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Mấu")
@@ -10985,7 +11091,7 @@ ggplot() + geom_sf() + geom_sf(data=mau_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Mấu")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 mau_sff <- dat_sff %>% mutate(prop.mau=(sum(subset(., Ho=="Mấu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Mấu")
@@ -11033,7 +11139,7 @@ mong_peak <- mong_plot %>% filter(NAME_3=="Xa Bao Thang" & NAME_2=="Ky Son")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 mong_sf <- dat_sf %>% mutate(prop.mong=(sum(subset(., Ho=="Mông")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Mông")
@@ -11049,7 +11155,7 @@ ggplot() + geom_sf() + geom_sf(data=mong_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Mông")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 mong_sff <- dat_sff %>% mutate(prop.mong=(sum(subset(., Ho=="Mông")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Mông")
@@ -11097,7 +11203,7 @@ mua_peak <- mua_plot %>% filter(NAME_3=="Xa Pu Dao" & NAME_2=="Nam Nhun")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 mua_sf <- dat_sf %>% mutate(prop.mua=(sum(subset(., Ho=="Mua")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Mua")
@@ -11113,7 +11219,7 @@ ggplot() + geom_sf() + geom_sf(data=mua_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Mua")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 mua_sff <- dat_sff %>% mutate(prop.mua=(sum(subset(., Ho=="Mua")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Mua")
@@ -11161,7 +11267,7 @@ mua1_peak <- mua1_plot %>% filter(NAME_3=="Xa Ta Xua" & NAME_2=="Bac Yen")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 mua1_sf <- dat_sf %>% mutate(prop.mua1=(sum(subset(., Ho=="Mùa")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Mùa")
@@ -11177,7 +11283,7 @@ ggplot() + geom_sf() + geom_sf(data=mua1_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Mùa")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 mua1_sff <- dat_sff %>% mutate(prop.mua1=(sum(subset(., Ho=="Mùa")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Mùa")
@@ -11225,7 +11331,7 @@ mui_peak <- mui_plot %>% filter(NAME_3=="Xa Tan Hop" & NAME_2=="Moc Chau")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 mui_sf <- dat_sf %>% mutate(prop.mui=(sum(subset(., Ho=="Mùi")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Mùi")
@@ -11241,7 +11347,7 @@ ggplot() + geom_sf() + geom_sf(data=mui_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Mùi")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 mui_sff <- dat_sff %>% mutate(prop.mui=(sum(subset(., Ho=="Mùi")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Mùi")
@@ -11289,7 +11395,7 @@ nay_peak <- nay_plot %>% filter(NAME_3=="Xa Ia Sao" & NAME_2=="Ayun Pa")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 nay_sf <- dat_sf %>% mutate(prop.nay=(sum(subset(., Ho=="Nay")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Nay")
@@ -11305,7 +11411,7 @@ ggplot() + geom_sf() + geom_sf(data=nay_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Nay")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 nay_sff <- dat_sff %>% mutate(prop.nay=(sum(subset(., Ho=="Nay")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Nay")
@@ -11353,7 +11459,7 @@ neang_peak <- neang_plot %>% filter(NAME_3=="Xa O Lam" & NAME_2=="Tri Ton")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 neang_sf <- dat_sf %>% mutate(prop.neang=(sum(subset(., Ho=="Néang")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Néang")
@@ -11369,7 +11475,7 @@ ggplot() + geom_sf() + geom_sf(data=neang_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Néang")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 neang_sff <- dat_sff %>% mutate(prop.neang=(sum(subset(., Ho=="Néang")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Néang")
@@ -11417,7 +11523,7 @@ ngan_peak <- ngan_plot %>% filter(NAME_3=="Xa Thanh Son" & NAME_2=="Ba Thuoc")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 ngan_sf <- dat_sf %>% mutate(prop.ngan=(sum(subset(., Ho=="Ngân")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ngân")
@@ -11433,7 +11539,7 @@ ggplot() + geom_sf() + geom_sf(data=ngan_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Ngân")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 ngan_sff <- dat_sff %>% mutate(prop.ngan=(sum(subset(., Ho=="Ngân")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ngân")
@@ -11481,7 +11587,7 @@ ngan1_peak <- ngan1_plot %>% filter(NAME_3=="Xa Pu Pin" & NAME_2=="Mai Chau")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 ngan1_sf <- dat_sf %>% mutate(prop.ngan1=(sum(subset(., Ho=="Ngần")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ngần")
@@ -11497,7 +11603,7 @@ ggplot() + geom_sf() + geom_sf(data=ngan1_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Ngần")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 ngan1_sff <- dat_sff %>% mutate(prop.ngan1=(sum(subset(., Ho=="Ngần")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ngần")
@@ -11545,7 +11651,7 @@ nghiem_peak <- nghiem_plot %>% filter(NAME_3=="Thi tran Cho" & NAME_2=="Yen Phon
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 nghiem_sf <- dat_sf %>% mutate(prop.nghiem=(sum(subset(., Ho=="Nghiêm")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Nghiêm")
@@ -11561,7 +11667,7 @@ ggplot() + geom_sf() + geom_sf(data=nghiem_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Nghiêm")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 nghiem_sff <- dat_sff %>% mutate(prop.nghiem=(sum(subset(., Ho=="Nghiêm")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Nghiêm")
@@ -11609,7 +11715,7 @@ ngo_peak <- ngo_plot %>% filter(NAME_3=="Xa Dai Thanh" & NAME_2=="Hiep Hoa")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 ngo_sf <- dat_sf %>% mutate(prop.ngo=(sum(subset(., Ho=="Ngô")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ngô")
@@ -11625,7 +11731,7 @@ ggplot() + geom_sf() + geom_sf(data=ngo_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Ngô")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 ngo_sff <- dat_sff %>% mutate(prop.ngo=(sum(subset(., Ho=="Ngô")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ngô")
@@ -11673,7 +11779,7 @@ ngo1_peak <- ngo1_plot %>% filter(NAME_3=="Xa Chau Minh" & NAME_2=="Hiep Hoa")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 ngo1_sf <- dat_sf %>% mutate(prop.ngo1=(sum(subset(., Ho=="Ngọ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ngọ")
@@ -11689,7 +11795,7 @@ ggplot() + geom_sf() + geom_sf(data=ngo1_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Ngọ")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 ngo1_sff <- dat_sff %>% mutate(prop.ngo1=(sum(subset(., Ho=="Ngọ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ngọ")
@@ -11737,7 +11843,7 @@ ngoc_peak <- ngoc_plot %>% filter(NAME_3=="Xa Long Son" & NAME_2=="Son Dong")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 ngoc_sf <- dat_sf %>% mutate(prop.ngoc=(sum(subset(., Ho=="Ngọc")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ngọc")
@@ -11753,7 +11859,7 @@ ggplot() + geom_sf() + geom_sf(data=ngoc_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Ngọc")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 ngoc_sff <- dat_sff %>% mutate(prop.ngoc=(sum(subset(., Ho=="Ngọc")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ngọc")
@@ -11801,7 +11907,7 @@ nguy_peak <- nguy_plot %>% filter(NAME_3=="Xa Tu Mai" & NAME_2=="Yen Dung")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 nguy_sf <- dat_sf %>% mutate(prop.nguy=(sum(subset(., Ho=="Ngụy")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ngụy")
@@ -11817,7 +11923,7 @@ ggplot() + geom_sf() + geom_sf(data=nguy_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Ngụy")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 nguy_sff <- dat_sff %>% mutate(prop.nguy=(sum(subset(., Ho=="Ngụy")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ngụy")
@@ -11865,7 +11971,7 @@ nguyen_peak <- nguyen_plot %>% filter(NAME_3=="Xa Viet Thong" & NAME_2=="Que Vo"
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 nguyen_sf <- dat_sf %>% mutate(prop.nguyen=(sum(subset(., Ho=="Nguyễn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Nguyễn")
@@ -11881,7 +11987,7 @@ ggplot() + geom_sf() + geom_sf(data=nguyen_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Nguyễn")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 nguyen_sff <- dat_sff %>% mutate(prop.nguyen=(sum(subset(., Ho=="Nguyễn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Nguyễn")
@@ -11929,7 +12035,7 @@ nham_peak <- nham_plot %>% filter(NAME_3=="Xa Dong A" & NAME_2=="Dong Hung")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 nham_sf <- dat_sf %>% mutate(prop.nham=(sum(subset(., Ho=="Nhâm")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Nhâm")
@@ -11945,7 +12051,7 @@ ggplot() + geom_sf() + geom_sf(data=nham_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Nhâm")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 nham_sff <- dat_sff %>% mutate(prop.nham=(sum(subset(., Ho=="Nhâm")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Nhâm")
@@ -11993,7 +12099,7 @@ nhan_peak <- nhan_plot %>% filter(NAME_3=="Xa Quoc Phong" & NAME_2=="Quang Uyen"
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 nhan_sf <- dat_sf %>% mutate(prop.nhan=(sum(subset(., Ho=="Nhan")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Nhan")
@@ -12009,7 +12115,7 @@ ggplot() + geom_sf() + geom_sf(data=nhan_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Nhan")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 nhan_sff <- dat_sff %>% mutate(prop.nhan=(sum(subset(., Ho=="Nhan")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Nhan")
@@ -12057,7 +12163,7 @@ nhu_peak <- nhu_plot %>% filter(NAME_3=="Xa Thai Hoa" & NAME_2=="Binh Giang")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 nhu_sf <- dat_sf %>% mutate(prop.nhu=(sum(subset(., Ho=="Nhữ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Nhữ")
@@ -12073,7 +12179,7 @@ ggplot() + geom_sf() + geom_sf(data=nhu_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Nhữ")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 nhu_sff <- dat_sff %>% mutate(prop.nhu=(sum(subset(., Ho=="Nhữ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Nhữ")
@@ -12121,7 +12227,7 @@ ninh_peak <- ninh_plot %>% filter(NAME_3=="Xa Dai Duc" & NAME_2=="Tien Yen")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 ninh_sf <- dat_sf %>% mutate(prop.ninh=(sum(subset(., Ho=="Ninh")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ninh")
@@ -12137,7 +12243,7 @@ ggplot() + geom_sf() + geom_sf(data=ninh_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Ninh")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 ninh_sff <- dat_sff %>% mutate(prop.ninh=(sum(subset(., Ho=="Ninh")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ninh")
@@ -12185,7 +12291,7 @@ nong_peak <- nong_plot %>% filter(NAME_3=="Xa Minh Long" & NAME_2=="Ha Lang")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 nong_sf <- dat_sf %>% mutate(prop.nong=(sum(subset(., Ho=="Nông")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Nông")
@@ -12201,7 +12307,7 @@ ggplot() + geom_sf() + geom_sf(data=nong_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Nông")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 nong_sff <- dat_sff %>% mutate(prop.nong=(sum(subset(., Ho=="Nông")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Nông")
@@ -12249,7 +12355,7 @@ on_peak <- on_plot %>% filter(NAME_3=="Xa Ninh Lai" & NAME_2=="Son Duong")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 on_sf <- dat_sf %>% mutate(prop.on=(sum(subset(., Ho=="Ôn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ôn")
@@ -12265,7 +12371,7 @@ ggplot() + geom_sf() + geom_sf(data=on_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Ôn")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 on_sff <- dat_sff %>% mutate(prop.on=(sum(subset(., Ho=="Ôn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ôn")
@@ -12313,7 +12419,7 @@ ong_peak <- ong_plot %>% filter(NAME_3=="Xa Canh Thuy" & NAME_2=="Yen Dung")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 ong_sf <- dat_sf %>% mutate(prop.ong=(sum(subset(., Ho=="Ông")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ông")
@@ -12329,7 +12435,7 @@ ggplot() + geom_sf() + geom_sf(data=ong_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Ông")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 ong_sff <- dat_sff %>% mutate(prop.ong=(sum(subset(., Ho=="Ông")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ông")
@@ -12377,7 +12483,7 @@ pham_peak <- pham_plot %>% filter(NAME_3=="Xa Ba Nam" & NAME_2=="Ba To")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 pham_sf <- dat_sf %>% mutate(prop.pham=(sum(subset(., Ho=="Phạm")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phạm")
@@ -12393,7 +12499,7 @@ ggplot() + geom_sf() + geom_sf(data=pham_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Phạm")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 pham_sff <- dat_sff %>% mutate(prop.pham=(sum(subset(., Ho=="Phạm")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phạm")
@@ -12441,7 +12547,7 @@ phan_peak <- phan_plot %>% filter(NAME_3=="Xa Bac Trach" & NAME_2=="Bo Trach")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 phan_sf <- dat_sf %>% mutate(prop.phan=(sum(subset(., Ho=="Phan")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phan")
@@ -12457,7 +12563,7 @@ ggplot() + geom_sf() + geom_sf(data=phan_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Phan")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 phan_sff <- dat_sff %>% mutate(prop.phan=(sum(subset(., Ho=="Phan")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phan")
@@ -12505,7 +12611,7 @@ phan1_peak <- phan1_plot %>% filter(NAME_3=="Xa Sung Mang" & NAME_2=="Meo Vac")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 phan1_sf <- dat_sf %>% mutate(prop.phan1=(sum(subset(., Ho=="Phàn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phàn")
@@ -12521,7 +12627,7 @@ ggplot() + geom_sf() + geom_sf(data=phan1_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Phàn")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 phan1_sff <- dat_sff %>% mutate(prop.phan1=(sum(subset(., Ho=="Phàn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phàn")
@@ -12569,7 +12675,7 @@ phang_peak <- phang_plot %>% filter(NAME_3=="Xa Chieng Xuan" & NAME_2=="Van Ho")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 phang_sf <- dat_sf %>% mutate(prop.phang=(sum(subset(., Ho=="Phàng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phàng")
@@ -12585,7 +12691,7 @@ ggplot() + geom_sf() + geom_sf(data=phang_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Phàng")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 phang_sff <- dat_sff %>% mutate(prop.phang=(sum(subset(., Ho=="Phàng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phàng")
@@ -12633,7 +12739,7 @@ phi_peak <- phi_plot %>% filter(NAME_3=="Xa Dong A" & NAME_2=="Dong Hung")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 phi_sf <- dat_sf %>% mutate(prop.phi=(sum(subset(., Ho=="Phí")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phí")
@@ -12649,7 +12755,7 @@ ggplot() + geom_sf() + geom_sf(data=phi_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Phí")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 phi_sff <- dat_sff %>% mutate(prop.phi=(sum(subset(., Ho=="Phí")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phí")
@@ -12697,7 +12803,7 @@ pho_peak <- pho_plot %>% filter(NAME_3=="Xa Quang Duc" & NAME_2=="Hai Ha")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 pho_sf <- dat_sf %>% mutate(prop.pho=(sum(subset(., Ho=="Phó")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phó")
@@ -12713,7 +12819,7 @@ ggplot() + geom_sf() + geom_sf(data=pho_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Phó")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 pho_sff <- dat_sff %>% mutate(prop.pho=(sum(subset(., Ho=="Phó")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phó")
@@ -12761,7 +12867,7 @@ phu_peak <- phu_plot %>% filter(NAME_3=="Xa Tan Bac" & NAME_2=="Quang Binh")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 phu_sf <- dat_sf %>% mutate(prop.phu=(sum(subset(., Ho=="Phù")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phù")
@@ -12777,7 +12883,7 @@ ggplot() + geom_sf() + geom_sf(data=phu_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Phù")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 phu_sff <- dat_sff %>% mutate(prop.phu=(sum(subset(., Ho=="Phù")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phù")
@@ -12825,7 +12931,7 @@ phung_peak <- phung_plot %>% filter(NAME_3=="Xa Phu Son" & NAME_2=="Ba Vi")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 phung_sf <- dat_sf %>% mutate(prop.phung=(sum(subset(., Ho=="Phùng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phùng")
@@ -12841,7 +12947,7 @@ ggplot() + geom_sf() + geom_sf(data=phung_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Phùng")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 phung_sff <- dat_sff %>% mutate(prop.phung=(sum(subset(., Ho=="Phùng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phùng")
@@ -12889,7 +12995,7 @@ phuong_peak <- phuong_plot %>% filter(NAME_3=="Xa Ho Thau" & NAME_2=="Hoang Su P
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 phuong_sf <- dat_sf %>% mutate(prop.phuong=(sum(subset(., Ho=="Phương")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phương")
@@ -12905,7 +13011,7 @@ ggplot() + geom_sf() + geom_sf(data=phuong_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Phương")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 phuong_sff <- dat_sff %>% mutate(prop.phuong=(sum(subset(., Ho=="Phương")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Phương")
@@ -12953,7 +13059,7 @@ puih_peak <- puih_plot %>% filter(NAME_3=="Xa Ia Grang" & NAME_2=="Ia Grai")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 puih_sf <- dat_sf %>% mutate(prop.puih=(sum(subset(., Ho=="Puih")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Puih")
@@ -12969,7 +13075,7 @@ ggplot() + geom_sf() + geom_sf(data=puih_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Puih")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 puih_sff <- dat_sff %>% mutate(prop.puih=(sum(subset(., Ho=="Puih")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Puih")
@@ -13017,7 +13123,7 @@ quach_peak <- quach_plot %>% filter(NAME_3=="Xa My Thanh" & NAME_2=="Lac Son")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 quach_sf <- dat_sf %>% mutate(prop.quach=(sum(subset(., Ho=="Quách")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Quách")
@@ -13033,7 +13139,7 @@ ggplot() + geom_sf() + geom_sf(data=quach_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Quách")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 quach_sff <- dat_sff %>% mutate(prop.quach=(sum(subset(., Ho=="Quách")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Quách")
@@ -13081,7 +13187,7 @@ quan_peak <- quan_plot %>% filter(NAME_3=="Xa Tan My" & NAME_2=="Chiem Hoa")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 quan_sf <- dat_sf %>% mutate(prop.quan=(sum(subset(., Ho=="Quan")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Quan")
@@ -13097,7 +13203,7 @@ ggplot() + geom_sf() + geom_sf(data=quan_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Quan")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 quan_sff <- dat_sff %>% mutate(prop.quan=(sum(subset(., Ho=="Quan")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Quan")
@@ -13145,7 +13251,7 @@ quan1_peak <- quan1_plot %>% filter(NAME_3=="Xa Thieu Hop" & NAME_2=="Thieu Hoa"
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 quan1_sf <- dat_sf %>% mutate(prop.quan1=(sum(subset(., Ho=="Quản")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Quản")
@@ -13161,7 +13267,7 @@ ggplot() + geom_sf() + geom_sf(data=quan1_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Quản")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 quan1_sff <- dat_sff %>% mutate(prop.quan1=(sum(subset(., Ho=="Quản")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Quản")
@@ -13209,7 +13315,7 @@ quang_peak <- quang_plot %>% filter(NAME_3=="Xa Dien Lam" & NAME_2=="Quy Chau")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 quang_sf <- dat_sf %>% mutate(prop.quang=(sum(subset(., Ho=="Quang")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Quang")
@@ -13225,7 +13331,7 @@ ggplot() + geom_sf() + geom_sf(data=quang_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Quang")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 quang_sff <- dat_sff %>% mutate(prop.quang=(sum(subset(., Ho=="Quang")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Quang")
@@ -13273,7 +13379,7 @@ quang1_peak <- quang1_plot %>% filter(NAME_3=="Xa Sap Vat" & NAME_2=="Yen Chau")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 quang1_sf <- dat_sf %>% mutate(prop.quang1=(sum(subset(., Ho=="Quàng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Quàng")
@@ -13289,7 +13395,7 @@ ggplot() + geom_sf() + geom_sf(data=quang1_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Quàng")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 quang1_sff <- dat_sff %>% mutate(prop.quang1=(sum(subset(., Ho=="Quàng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Quàng")
@@ -13337,7 +13443,7 @@ rah_peak <- rah_plot %>% filter(NAME_3=="Xa Ia RSai" & NAME_2=="Krong Pa")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 rah_sf <- dat_sf %>% mutate(prop.rah=(sum(subset(., Ho=="Rah")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Rah")
@@ -13353,7 +13459,7 @@ ggplot() + geom_sf() + geom_sf(data=rah_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Rah")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 rah_sff <- dat_sff %>% mutate(prop.rah=(sum(subset(., Ho=="Rah")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Rah")
@@ -13401,7 +13507,7 @@ rmah_peak <- rmah_plot %>% filter(NAME_3=="Xa Chu Don" & NAME_2=="Chu Puh")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 rmah_sf <- dat_sf %>% mutate(prop.rmah=(sum(subset(., Ho=="Rmah")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Rmah")
@@ -13417,7 +13523,7 @@ ggplot() + geom_sf() + geom_sf(data=rmah_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Rmah")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 rmah_sff <- dat_sff %>% mutate(prop.rmah=(sum(subset(., Ho=="Rmah")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Rmah")
@@ -13465,7 +13571,7 @@ ro_peak <- ro_plot %>% filter(NAME_3=="Xa Ia Phi" & NAME_2=="Chu Pah")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 ro_sf <- dat_sf %>% mutate(prop.ro=(sum(subset(., Ho=="Rơ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Rơ")
@@ -13481,7 +13587,7 @@ ggplot() + geom_sf() + geom_sf(data=ro_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Rơ")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 ro_sff <- dat_sff %>% mutate(prop.ro=(sum(subset(., Ho=="Rơ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Rơ")
@@ -13529,7 +13635,7 @@ sa_peak <- sa_plot %>% filter(NAME_3=="Xa Huy Ha" & NAME_2=="Phu Yen")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 sa_sf <- dat_sf %>% mutate(prop.sa=(sum(subset(., Ho=="Sa")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Sa")
@@ -13545,7 +13651,7 @@ ggplot() + geom_sf() + geom_sf(data=sa_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Sa")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 sa_sff <- dat_sff %>% mutate(prop.sa=(sum(subset(., Ho=="Sa")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Sa")
@@ -13593,7 +13699,7 @@ sam_peak <- sam_plot %>% filter(NAME_3=="Xa Chau Loc" & NAME_2=="Quy Hop")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 sam_sf <- dat_sf %>% mutate(prop.sam=(sum(subset(., Ho=="Sầm")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Sầm")
@@ -13609,7 +13715,7 @@ ggplot() + geom_sf() + geom_sf(data=sam_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Sầm")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 sam_sff <- dat_sff %>% mutate(prop.sam=(sum(subset(., Ho=="Sầm")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Sầm")
@@ -13657,7 +13763,7 @@ siu_peak <- siu_plot %>% filter(NAME_3=="Xa Bar Maih" & NAME_2=="Chu Se")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 siu_sf <- dat_sf %>% mutate(prop.siu=(sum(subset(., Ho=="Siu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Siu")
@@ -13673,7 +13779,7 @@ ggplot() + geom_sf() + geom_sf(data=siu_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Siu")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 siu_sff <- dat_sff %>% mutate(prop.siu=(sum(subset(., Ho=="Siu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Siu")
@@ -13722,7 +13828,7 @@ son_peak <- son_plot %>% filter(NAME_3=="Xa Vinh Tan" & NAME_2=="Vinh Chau")
 ```
 
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 son_sf <- dat_sf %>% mutate(prop.son=(sum(subset(., Ho=="Sơn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Sơn")
@@ -13738,7 +13844,7 @@ ggplot() + geom_sf() + geom_sf(data=son_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Sơn")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 son_sff <- dat_sff %>% mutate(prop.son=(sum(subset(., Ho=="Sơn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Sơn")
@@ -13787,7 +13893,7 @@ song_peak <- song_plot %>% filter(NAME_3=="Xa Suoi To" & NAME_2=="Phu Yen")
 ```
 
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 song_sf <- dat_sf %>% mutate(prop.song=(sum(subset(., Ho=="Sồng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Sồng")
@@ -13803,7 +13909,7 @@ ggplot() + geom_sf() + geom_sf(data=song_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Sồng")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 song_sff <- dat_sff %>% mutate(prop.song=(sum(subset(., Ho=="Sồng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Sồng")
@@ -13852,7 +13958,7 @@ su_peak <- su_plot %>% filter(NAME_3=="Phuong Duc Thuan" & NAME_2=="Hong Linh")
 ```
 
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 su_sf <- dat_sf %>% mutate(prop.su=(sum(subset(., Ho=="Sử")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Sử")
@@ -13868,7 +13974,7 @@ ggplot() + geom_sf() + geom_sf(data=su_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Sử")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 su_sff <- dat_sff %>% mutate(prop.su=(sum(subset(., Ho=="Sử")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Sử")
@@ -13916,7 +14022,7 @@ sung_peak <- sung_plot %>% filter(NAME_3=="Xa Che Tao" & NAME_2=="Mu Cang Chai")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 sung_sf <- dat_sf %>% mutate(prop.sung=(sum(subset(., Ho=="Sùng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Sùng")
@@ -13932,7 +14038,7 @@ ggplot() + geom_sf() + geom_sf(data=sung_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Sùng")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 sung_sff <- dat_sff %>% mutate(prop.sung=(sum(subset(., Ho=="Sùng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Sùng")
@@ -13981,7 +14087,7 @@ ta_peak <- ta_plot %>% filter(NAME_3=="Xa Di Nau" & NAME_2=="Tam Nong")
 ```
 
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 ta_sf <- dat_sf %>% mutate(prop.ta=(sum(subset(., Ho=="Tạ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tạ")
@@ -13997,7 +14103,7 @@ ggplot() + geom_sf() + geom_sf(data=ta_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Tạ")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 ta_sff <- dat_sff %>% mutate(prop.ta=(sum(subset(., Ho=="Tạ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tạ")
@@ -14045,7 +14151,7 @@ tan_peak <- tan_plot %>% filter(NAME_3=="Xa Dong Van" & NAME_2=="Binh Lieu")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 tan_sf <- dat_sf %>% mutate(prop.tan=(sum(subset(., Ho=="Tần")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tần")
@@ -14061,7 +14167,7 @@ ggplot() + geom_sf() + geom_sf(data=tan_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Tần")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 tan_sff <- dat_sff %>% mutate(prop.tan=(sum(subset(., Ho=="Tần")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tần")
@@ -14109,7 +14215,7 @@ tan1_peak <- tan1_plot %>% filter(NAME_3=="Xa Si Lo Lau" & NAME_2=="Phong Tho")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 tan1_sf <- dat_sf %>% mutate(prop.tan1=(sum(subset(., Ho=="Tẩn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tẩn")
@@ -14125,7 +14231,7 @@ ggplot() + geom_sf() + geom_sf(data=tan1_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Tẩn")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 tan1_sff <- dat_sff %>% mutate(prop.tan1=(sum(subset(., Ho=="Tẩn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tẩn")
@@ -14173,7 +14279,7 @@ tang_peak <- tang_plot %>% filter(NAME_3=="Xa Thanh Lang" & NAME_2=="Thanh Ha")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 tang_sf <- dat_sf %>% mutate(prop.tang=(sum(subset(., Ho=="Tăng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tăng")
@@ -14189,7 +14295,7 @@ ggplot() + geom_sf() + geom_sf(data=tang_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Tăng")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 tang_sff <- dat_sff %>% mutate(prop.tang=(sum(subset(., Ho=="Tăng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tăng")
@@ -14237,7 +14343,7 @@ tao_peak <- tao_plot %>% filter(NAME_3=="Xa Ban Hon" & NAME_2=="Tam Duong")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 tao_sf <- dat_sf %>% mutate(prop.tao=(sum(subset(., Ho=="Tào")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tào")
@@ -14253,7 +14359,7 @@ ggplot() + geom_sf() + geom_sf(data=tao_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Tào")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 tao_sff <- dat_sff %>% mutate(prop.tao=(sum(subset(., Ho=="Tào")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tào")
@@ -14301,7 +14407,7 @@ thach_peak <- thach_plot %>% filter(NAME_3=="Xa Chau Dien" & NAME_2=="Cau Ke")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 thach_sf <- dat_sf %>% mutate(prop.thach=(sum(subset(., Ho=="Thạch")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Thạch")
@@ -14317,7 +14423,7 @@ ggplot() + geom_sf() + geom_sf(data=thach_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Thạch")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 thach_sff <- dat_sff %>% mutate(prop.thach=(sum(subset(., Ho=="Thạch")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Thạch")
@@ -14365,7 +14471,7 @@ thai_peak <- thai_plot %>% filter(NAME_3=="Xa Hoa Son" & NAME_2=="Do Luong")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 thai_sf <- dat_sf %>% mutate(prop.thai=(sum(subset(., Ho=="Thái")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Thái")
@@ -14381,7 +14487,7 @@ ggplot() + geom_sf() + geom_sf(data=thai_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Thái")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 thai_sff <- dat_sff %>% mutate(prop.thai=(sum(subset(., Ho=="Thái")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Thái")
@@ -14429,7 +14535,7 @@ than_peak <- than_plot %>% filter(NAME_3=="Xa Hong Thai" & NAME_2=="Viet Yen")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 than_sf <- dat_sf %>% mutate(prop.than=(sum(subset(., Ho=="Thân")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Thân")
@@ -14445,7 +14551,7 @@ ggplot() + geom_sf() + geom_sf(data=than_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Thân")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 than_sff <- dat_sff %>% mutate(prop.than=(sum(subset(., Ho=="Thân")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Thân")
@@ -14493,7 +14599,7 @@ thao_peak <- thao_plot %>% filter(NAME_3=="Xa Pa Lau" & NAME_2=="Tram Tau")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 thao_sf <- dat_sf %>% mutate(prop.thao=(sum(subset(., Ho=="Thào")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Thào")
@@ -14509,7 +14615,7 @@ ggplot() + geom_sf() + geom_sf(data=thao_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Thào")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 thao_sff <- dat_sff %>% mutate(prop.thao=(sum(subset(., Ho=="Thào")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Thào")
@@ -14557,7 +14663,7 @@ then_peak <- then_plot %>% filter(NAME_3=="Xa Ban Nhung" & NAME_2=="Hoang Su Phi
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 then_sf <- dat_sf %>% mutate(prop.then=(sum(subset(., Ho=="Thèn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Thèn")
@@ -14573,7 +14679,7 @@ ggplot() + geom_sf() + geom_sf(data=then_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Thèn")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 then_sff <- dat_sff %>% mutate(prop.then=(sum(subset(., Ho=="Thèn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Thèn")
@@ -14621,7 +14727,7 @@ thi_peak <- thi_plot %>% filter(NAME_3=="Xa Xuan Le" & NAME_2=="Loc Binh")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 thi_sf <- dat_sf %>% mutate(prop.thi=(sum(subset(., Ho=="Thi")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Thi")
@@ -14637,7 +14743,7 @@ ggplot() + geom_sf() + geom_sf(data=thi_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Thi")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 thi_sff <- dat_sff %>% mutate(prop.thi=(sum(subset(., Ho=="Thi")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Thi")
@@ -14685,7 +14791,7 @@ thi1_peak <- thi1_plot %>% filter(NAME_3=="Xa Cam Thinh Tay" & NAME_2=="Cam Ranh
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 thi1_sf <- dat_sf %>% mutate(prop.thi1=(sum(subset(., Ho=="Thị")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Thị")
@@ -14701,7 +14807,7 @@ ggplot() + geom_sf() + geom_sf(data=thi1_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Thị")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 thi1_sff <- dat_sff %>% mutate(prop.thi1=(sum(subset(., Ho=="Thị")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Thị")
@@ -14749,7 +14855,7 @@ thieu_peak <- thieu_plot %>% filter(NAME_3=="Xa Dong Tien" & NAME_2=="Dong Son")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 thieu_sf <- dat_sf %>% mutate(prop.thieu=(sum(subset(., Ho=="Thiều")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Thiều")
@@ -14765,7 +14871,7 @@ ggplot() + geom_sf() + geom_sf(data=thieu_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Thiều")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 thieu_sff <- dat_sff %>% mutate(prop.thieu=(sum(subset(., Ho=="Thiều")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Thiều")
@@ -14813,7 +14919,7 @@ tho_peak <- tho_plot %>% filter(NAME_3=="Xa Sung Trai" & NAME_2=="Dong Van")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 tho_sf <- dat_sf %>% mutate(prop.tho=(sum(subset(., Ho=="Thò")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Thò")
@@ -14829,7 +14935,7 @@ ggplot() + geom_sf() + geom_sf(data=tho_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Thò")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 tho_sff <- dat_sff %>% mutate(prop.tho=(sum(subset(., Ho=="Thò")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Thò")
@@ -14877,7 +14983,7 @@ tieu_peak <- tieu_plot %>% filter(NAME_3=="Xa Cam Che" & NAME_2=="Thanh Ha")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 tieu_sf <- dat_sf %>% mutate(prop.tieu=(sum(subset(., Ho=="Tiêu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tiêu")
@@ -14893,7 +14999,7 @@ ggplot() + geom_sf() + geom_sf(data=tieu_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Tiêu")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 tieu_sff <- dat_sff %>% mutate(prop.tieu=(sum(subset(., Ho=="Tiêu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tiêu")
@@ -14941,7 +15047,7 @@ to_peak <- to_plot %>% filter(NAME_3=="Xa Quang Thai" & NAME_2=="Quang Xuong")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 to_sf <- dat_sf %>% mutate(prop.to=(sum(subset(., Ho=="Tô")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tô")
@@ -14957,7 +15063,7 @@ ggplot() + geom_sf() + geom_sf(data=to_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Tô")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 to_sff <- dat_sff %>% mutate(prop.to=(sum(subset(., Ho=="Tô")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tô")
@@ -15005,7 +15111,7 @@ ton_peak <- ton_plot %>% filter(NAME_3=="Xa Vuong Loc" & NAME_2=="Can Loc")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 ton_sf <- dat_sf %>% mutate(prop.ton=(sum(subset(., Ho=="Tôn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tôn")
@@ -15021,7 +15127,7 @@ ggplot() + geom_sf() + geom_sf(data=ton_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Tôn")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 ton_sff <- dat_sff %>% mutate(prop.ton=(sum(subset(., Ho=="Tôn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tôn")
@@ -15069,7 +15175,7 @@ tong_peak <- tong_plot %>% filter(NAME_3=="Xa Dom Cang" & NAME_2=="Sop Cop")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 tong_sf <- dat_sf %>% mutate(prop.tong=(sum(subset(., Ho=="Tòng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tòng")
@@ -15085,7 +15191,7 @@ ggplot() + geom_sf() + geom_sf(data=tong_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Tòng")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 tong_sff <- dat_sff %>% mutate(prop.tong=(sum(subset(., Ho=="Tòng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tòng")
@@ -15133,7 +15239,7 @@ tong1_peak <- tong1_plot %>% filter(NAME_3=="Xa Ha Bac" & NAME_2=="Ha Trung")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 tong1_sf <- dat_sf %>% mutate(prop.tong1=(sum(subset(., Ho=="Tống")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tống")
@@ -15149,7 +15255,7 @@ ggplot() + geom_sf() + geom_sf(data=tong1_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Tống")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 tong1_sff <- dat_sff %>% mutate(prop.tong1=(sum(subset(., Ho=="Tống")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tống")
@@ -15197,7 +15303,7 @@ tra_peak <- tra_plot %>% filter(NAME_3=="Xa Binh Dinh Bac" & NAME_2=="Thang Binh
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 tra_sf <- dat_sf %>% mutate(prop.tra=(sum(subset(., Ho=="Trà")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Trà")
@@ -15213,7 +15319,7 @@ ggplot() + geom_sf() + geom_sf(data=tra_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Trà")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 tra_sff <- dat_sff %>% mutate(prop.tra=(sum(subset(., Ho=="Trà")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Trà")
@@ -15261,7 +15367,7 @@ tran_peak <- tran_plot %>% filter(NAME_3=="Xa Hoa Hau" & NAME_2=="Ly Nhan")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 tran_sf <- dat_sf %>% mutate(prop.tran=(sum(subset(., Ho=="Trần")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Trần")
@@ -15277,7 +15383,7 @@ ggplot() + geom_sf() + geom_sf(data=tran_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Trần")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 tran_sff <- dat_sff %>% mutate(prop.tran=(sum(subset(., Ho=="Trần")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Trần")
@@ -15325,7 +15431,7 @@ trang_peak <- trang_plot %>% filter(NAME_3=="Xa Ta Van Chu" & NAME_2=="Bac Ha")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 trang_sf <- dat_sf %>% mutate(prop.trang=(sum(subset(., Ho=="Tráng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tráng")
@@ -15341,7 +15447,7 @@ ggplot() + geom_sf() + geom_sf(data=trang_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Tráng")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 trang_sff <- dat_sff %>% mutate(prop.trang=(sum(subset(., Ho=="Tráng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tráng")
@@ -15389,7 +15495,7 @@ trieu_peak <- trieu_plot %>% filter(NAME_3=="Xa Vinh Tien" & NAME_2=="Trang Dinh
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 trieu_sf <- dat_sf %>% mutate(prop.trieu=(sum(subset(., Ho=="Triệu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Triệu")
@@ -15405,7 +15511,7 @@ ggplot() + geom_sf() + geom_sf(data=trieu_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Triệu")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 trieu_sff <- dat_sff %>% mutate(prop.trieu=(sum(subset(., Ho=="Triệu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Triệu")
@@ -15453,7 +15559,7 @@ trinh_peak <- trinh_plot %>% filter(NAME_3=="Xa Nga Van" & NAME_2=="Nga Son")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 trinh_sf <- dat_sf %>% mutate(prop.trinh=(sum(subset(., Ho=="Trinh")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Trinh")
@@ -15469,7 +15575,7 @@ ggplot() + geom_sf() + geom_sf(data=trinh_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Trinh")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 trinh_sff <- dat_sff %>% mutate(prop.trinh=(sum(subset(., Ho=="Trinh")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Trinh")
@@ -15517,7 +15623,7 @@ trinh1_peak <- trinh1_plot %>% filter(NAME_3=="Xa Lam Loi" & NAME_2=="Ha Hoa")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 trinh1_sf <- dat_sf %>% mutate(prop.trinh1=(sum(subset(., Ho=="Trình")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Trình")
@@ -15533,7 +15639,7 @@ ggplot() + geom_sf() + geom_sf(data=trinh1_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Trình")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 trinh1_sff <- dat_sff %>% mutate(prop.trinh1=(sum(subset(., Ho=="Trình")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Trình")
@@ -15581,7 +15687,7 @@ trinh2_peak <- trinh2_plot %>% filter(NAME_3=="Xa Tho Truong" & NAME_2=="Tho Xua
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 trinh2_sf <- dat_sf %>% mutate(prop.trinh2=(sum(subset(., Ho=="Trịnh")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Trịnh")
@@ -15597,7 +15703,7 @@ ggplot() + geom_sf() + geom_sf(data=trinh2_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Trịnh")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 trinh2_sff <- dat_sff %>% mutate(prop.trinh2=(sum(subset(., Ho=="Trịnh")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Trịnh")
@@ -15645,7 +15751,7 @@ truong_peak <- truong_plot %>% filter(NAME_3=="Xa Ha Trung" & NAME_2=="Ba Thuoc"
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 truong_sf <- dat_sf %>% mutate(prop.truong=(sum(subset(., Ho=="Trương")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Trương")
@@ -15661,7 +15767,7 @@ ggplot() + geom_sf() + geom_sf(data=truong_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Trương")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 truong_sff <- dat_sff %>% mutate(prop.truong=(sum(subset(., Ho=="Trương")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Trương")
@@ -15709,7 +15815,7 @@ tu_peak <- tu_plot %>% filter(NAME_3=="Xa Quang Kim" & NAME_2=="Quang Trach")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 tu_sf <- dat_sf %>% mutate(prop.tu=(sum(subset(., Ho=="Từ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Từ")
@@ -15725,7 +15831,7 @@ ggplot() + geom_sf() + geom_sf(data=tu_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Từ")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 tu_sff <- dat_sff %>% mutate(prop.tu=(sum(subset(., Ho=="Từ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Từ")
@@ -15773,7 +15879,7 @@ tuong_peak <- tuong_plot %>% filter(NAME_3=="Xa Quang Tung" & NAME_2=="Quang Tra
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 tuong_sf <- dat_sf %>% mutate(prop.tuong=(sum(subset(., Ho=="Tưởng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tưởng")
@@ -15789,7 +15895,7 @@ ggplot() + geom_sf() + geom_sf(data=tuong_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Tưởng")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 tuong_sff <- dat_sff %>% mutate(prop.tuong=(sum(subset(., Ho=="Tưởng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Tưởng")
@@ -15837,7 +15943,7 @@ ung_peak <- ung_plot %>% filter(NAME_3=="Xa Nhi Son" & NAME_2=="Muong Lat")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 ung_sf <- dat_sf %>% mutate(prop.ung=(sum(subset(., Ho=="Ung")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ung")
@@ -15853,7 +15959,7 @@ ggplot() + geom_sf() + geom_sf(data=ung_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Ung")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 ung_sff <- dat_sff %>% mutate(prop.ung=(sum(subset(., Ho=="Ung")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ung")
@@ -15901,7 +16007,7 @@ uong_peak <- uong_plot %>% filter(NAME_3=="Xa Son Phuc" & NAME_2=="Huong Son")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 uong_sf <- dat_sf %>% mutate(prop.uong=(sum(subset(., Ho=="Uông")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Uông")
@@ -15917,7 +16023,7 @@ ggplot() + geom_sf() + geom_sf(data=uong_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Uông")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 uong_sff <- dat_sff %>% mutate(prop.uong=(sum(subset(., Ho=="Uông")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Uông")
@@ -15965,7 +16071,7 @@ va_peak <- va_plot %>% filter(NAME_3=="Xa Na U" & NAME_2=="Dien Bien")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 va_sf <- dat_sf %>% mutate(prop.va=(sum(subset(., Ho=="Và")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Và")
@@ -15981,7 +16087,7 @@ ggplot() + geom_sf() + geom_sf(data=va_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Và")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 va_sff <- dat_sff %>% mutate(prop.va=(sum(subset(., Ho=="Và")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Và")
@@ -16029,7 +16135,7 @@ van_peak <- van_plot %>% filter(NAME_3=="Xa Thanh Khai" & NAME_2=="Thanh Chuong"
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 van_sf <- dat_sf %>% mutate(prop.van=(sum(subset(., Ho=="Văn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Văn")
@@ -16045,7 +16151,7 @@ ggplot() + geom_sf() + geom_sf(data=van_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Văn")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 van_sff <- dat_sff %>% mutate(prop.van=(sum(subset(., Ho=="Văn")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Văn")
@@ -16093,7 +16199,7 @@ vang_peak <- vang_plot %>% filter(NAME_3=="Xa Hang Lia" & NAME_2=="Dien Bien Don
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 vang_sf <- dat_sf %>% mutate(prop.vang=(sum(subset(., Ho=="Vàng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Vàng")
@@ -16109,7 +16215,7 @@ ggplot() + geom_sf() + geom_sf(data=vang_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Vàng")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 vang_sff <- dat_sff %>% mutate(prop.vang=(sum(subset(., Ho=="Vàng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Vàng")
@@ -16157,7 +16263,7 @@ vi_peak <- vi_plot %>% filter(NAME_3=="Xa Dong Thanh" & NAME_2=="Thanh Ba")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 vi_sf <- dat_sf %>% mutate(prop.vi=(sum(subset(., Ho=="Vi")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Vi")
@@ -16173,7 +16279,7 @@ ggplot() + geom_sf() + geom_sf(data=vi_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Vi")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 vi_sff <- dat_sff %>% mutate(prop.vi=(sum(subset(., Ho=="Vi")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Vi")
@@ -16221,7 +16327,7 @@ vi1_peak <- vi1_plot %>% filter(NAME_3=="Xa Chieng On" & NAME_2=="Yen Chau")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 vi1_sf <- dat_sf %>% mutate(prop.vi1=(sum(subset(., Ho=="Vì")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Vì")
@@ -16237,7 +16343,7 @@ ggplot() + geom_sf() + geom_sf(data=vi1_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Vì")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 vi1_sff <- dat_sff %>% mutate(prop.vi1=(sum(subset(., Ho=="Vì")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Vì")
@@ -16285,7 +16391,7 @@ vo_peak <- vo_plot %>% filter(NAME_3=="Xa Thien Loc" & NAME_2=="Can Loc")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 vo_sf <- dat_sf %>% mutate(prop.vo=(sum(subset(., Ho=="Võ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Võ")
@@ -16301,7 +16407,7 @@ ggplot() + geom_sf() + geom_sf(data=vo_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Võ")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 vo_sff <- dat_sff %>% mutate(prop.vo=(sum(subset(., Ho=="Võ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Võ")
@@ -16349,7 +16455,7 @@ vong_peak <- vong_plot %>% filter(NAME_3=="Xa Quang Son" & NAME_2=="Hai Ha")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 vong_sf <- dat_sf %>% mutate(prop.vong=(sum(subset(., Ho=="Vòng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Vòng")
@@ -16365,7 +16471,7 @@ ggplot() + geom_sf() + geom_sf(data=vong_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Vòng")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 vong_sff <- dat_sff %>% mutate(prop.vong=(sum(subset(., Ho=="Vòng")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Vòng")
@@ -16413,7 +16519,7 @@ vu1_peak <- vu1_plot %>% filter(NAME_3=="Xa Thai Tho" & NAME_2=="Thai Thuy")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 vu1_sf <- dat_sf %>% mutate(prop.vu1=(sum(subset(., Ho=="Vu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Vu")
@@ -16429,7 +16535,7 @@ ggplot() + geom_sf() + geom_sf(data=vu1_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Vu")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 vu1_sff <- dat_sff %>% mutate(prop.vu1=(sum(subset(., Ho=="Vu")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Vu")
@@ -16477,7 +16583,7 @@ vu_peak <- vu_plot %>% filter(NAME_3=="Xa Chi Lang Bac" & NAME_2=="Thanh Mien")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 vu_sf <- dat_sf %>% mutate(prop.vu=(sum(subset(., Ho=="Vũ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Vũ")
@@ -16493,7 +16599,7 @@ ggplot() + geom_sf() + geom_sf(data=vu_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Vũ")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 vu_sff <- dat_sff %>% mutate(prop.vu=(sum(subset(., Ho=="Vũ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Vũ")
@@ -16541,7 +16647,7 @@ vu2_peak <- vu2_plot %>% filter(NAME_3=="Xa Tay Son" & NAME_2=="Ky Son")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 vu2_sf <- dat_sf %>% mutate(prop.vu2=(sum(subset(., Ho=="Vừ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Vừ")
@@ -16557,7 +16663,7 @@ ggplot() + geom_sf() + geom_sf(data=vu2_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Vừ")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 vu2_sff <- dat_sff %>% mutate(prop.vu2=(sum(subset(., Ho=="Vừ")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Vừ")
@@ -16605,7 +16711,7 @@ vuong_peak <- vuong_plot %>% filter(NAME_3=="Xa Cong Hoa" & NAME_2=="Quoc Oai")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 vuong_sf <- dat_sf %>% mutate(prop.vuong=(sum(subset(., Ho=="Vương")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Vương")
@@ -16621,7 +16727,7 @@ ggplot() + geom_sf() + geom_sf(data=vuong_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Vương")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 vuong_sff <- dat_sff %>% mutate(prop.vuong=(sum(subset(., Ho=="Vương")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Vương")
@@ -16669,7 +16775,7 @@ xa_peak <- xa_plot %>% filter(NAME_3=="Xa Dong Chum" & NAME_2=="Da Bac")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 xa_sf <- dat_sf %>% mutate(prop.xa=(sum(subset(., Ho=="Xa")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Xa")
@@ -16685,7 +16791,7 @@ ggplot() + geom_sf() + geom_sf(data=xa_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Xa")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 xa_sff <- dat_sff %>% mutate(prop.xa=(sum(subset(., Ho=="Xa")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Xa")
@@ -16733,7 +16839,7 @@ y_peak <- y_plot %>% filter(NAME_3=="Xa Mang Ri" & NAME_2=="Tu Mo Rong")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 y_sf <- dat_sf %>% mutate(prop.y=(sum(subset(., Ho=="Y")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Y")
@@ -16749,7 +16855,7 @@ ggplot() + geom_sf() + geom_sf(data=y_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Y")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 y_sff <- dat_sff %>% mutate(prop.y=(sum(subset(., Ho=="Y")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Y")
@@ -16797,7 +16903,7 @@ ya_peak <- ya_plot %>% filter(NAME_3=="Xa Ta Nang" & NAME_2=="Duc Trong")
 
 ```
 
-### Phân bố tỉ lệ
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 ya_sf <- dat_sf %>% mutate(prop.ya=(sum(subset(., Ho=="Ya")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ya")
@@ -16813,7 +16919,7 @@ ggplot() + geom_sf() + geom_sf(data=ya_plot, aes(fill=pro.pop), color=NA) +
   ggtitle("Ya")
 ```
 
-### Phân bố mật độ
+
 
 ```{r, lazy = TRUE}
 ya_sff <- dat_sff %>% mutate(prop.ya=(sum(subset(., Ho=="Ya")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Ya")
