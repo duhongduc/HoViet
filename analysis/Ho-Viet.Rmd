@@ -6010,6 +6010,65 @@ ggplot() + geom_sf() + geom_sf(data=dieu2_plotf, aes(fill=songuoi_km), color=NA)
 
 ## Đinh
 
+Họ Đinh.
+Theo thống kê dân số, họ Đinh chiếm 1.6% dân số cả nước. Dựa theo phân bố % (xác suất gặp người mang họ Đinh trong khu vực) chúng ta nhận thấy phân bố xác suất gặp người mang họ Đinh cách xa biên giới cũng như bờ biển. Vậy có thể khẳng định là đã không có một cuộc di dân tự nhiên người mang họ Đinh nào tới Việt Nam. Họ Đinh là cư dân bản địa. Họ đã mang họ Đinh chỉ là vì, sau khi dẹp loạn 12 xứ quân, Đinh Tiên Hoàng cho thực hiện chế độ quản lý hành chính trong toàn Đại Cồ Việt. Chế độ quản lý hành chính được thực hiện dựa trên việc dùng chữ Hán. Hệ thống họ được dùng là từ các con Hán Tự và nhiều khi là lấy từ danh sách các họ Hán có sẵn. Chính vì thế mà rất nhiều dòng họ Việt đã sinh sống cả nhiều nghìn năm ở vùng đất quê cha mẹ đẻ, tự dưng trở thành những đứa con hoang của các dòng họ Phương Bắc. 
+Nhà Đinh 丁 bắt đầu năm 968, sau khi Vua Đinh Tiên Hoàng dẹp xong loạn 12 sứ quân thống nhất đất nước lên ngôi Hoàng Đế và kết thúc năm 980 khi con của Đinh Tiên Hoàng là Vua Đinh Phế Đế nhường ngôi cho Lê Hoàn. 
+Người mang họ Đinh tập trung khá nhiều ở Ninh Bình, đây là nơi cho đến nay được xem là khởi thủy của tộc Họ Đinh Việt Nam. 
+https://baoquangngai.vn/channel/2047/202206/nguoi-hre-ca-dong-mang-ho-dinh-tu-luc-nao-3119416/?fbclid=IwAR28UE2q0PJ_95xidTXJq-5BgUUEv7V3V4fA_o9LFbFdtpBCrPW27KUHNe8
+Từ phân bố mật độ dòng họ Đinh theo % (xác suất gặp người mang họ đinh trong khu vực) chúng ta nhận thấy phần phía Tây Nguyên có các cụm dân cư chủ yếu mang họ Đinh, lên tới 75%. Tuy nhiên ở các vùng này phân bố mật độ cư dân mang họ Đinh theo 1km2 rất thấp. Như vậy cư dân mang họ Đinh ở vùng Tây Nguyên là người dân tộc thiểu số. 
+Trong sách "Đường lên xứ Thượng" Bộ Công dân vụ xuất bản, năm 1963,  tác giả Bùi Đình cho biết: 
+Trấn Man là tên gọi có từ thời Gia Long thứ 3 (1804). Nó gồm 2 miền, là Nghĩa Biên (vùng Trà My của Quảng Nam và tất cả vùng sơn cước của Quảng Ngãi), và Định Biên (vùng sơn cước của tỉnh Bình Định). 
+Đến năm 1877 (tức năm Đồng Khánh thứ 2), thì Trấn Man được chia làm 5 châu: Trà My, Hà Tịnh, Nghĩa Hành, Đức Phổ và Bồng Sơn. Mỗi châu có Tri châu điều khiển. Dưới quyền Tri châu có các Chánh tổng và Phó tổng người Kinh và Tổng nguồn có người Thượng. Các cấp Đầu mục và Sách trưởng vẫn được duy trì. Lúc này, trai tráng được kiểm tra chặt chẽ và tên tuổi được ghi vào danh bộ. Người Thượng vốn không có họ, chỉ có tên, vì vậy khi lập danh bộ (để quản lý và đánh thuế), trai tráng từ 18 tuổi trở lên, các Chánh tổng đã ghi vào tên riêng của mỗi người một chữ Đinh (丁= tức tráng đinh) như Đinh A, Đinh B... Và từ đó về sau, chữ Đinh này biến thành tên họ chung cho đồng bào Thượng vùng Nam - Ngãi, cả nam lẫn nữ.
+Năm 1969, người Hrê ở huyện Ba Tơ đổi họ Đinh lấy họ Phạm (theo họ Thủ tướng Phạm Văn Đồng). Còn người Hrê ở hai huyện Sơn Hà, Minh Long vẫn giữ chữ Đinh trước tên riêng mà cha mẹ đã đặt cho ngay từ thuở nhỏ. Đối với người Ca Dong ở huyện Sơn Tây, đến năm 1976, cùng với việc sáp nhập huyện Sơn Tây vào huyện Sơn Hà, thì hầu hết người Ca Dong mới có họ Đinh.
+Lịch sử.
+Năm 905 Tĩnh Hải quân Tiết độ sứ Độc Cô Tổn bị triệu về nhà Đường (đời vua Đường Ai Đế) để trị tội, đất Tĩnh Hải quân vô chủ. Khúc Thừa Dụ thừa dịp dẫn quân đánh chiếm thủ phủ Đại La. Nhà Đường suy nhược, thuận cho Khúc Thừa Dụ làm Tĩnh Hải Tiết độ sứ.
+Năm 907 nhà Đường mất ngôi, nhà Hậu Lương, Hậu Đường, Hậu Tấn, Hậu Hán, Hậu Chu tranh nhau làm vua. Mỗi nhà được mấy năm. Khúc Thừa Dụ làm Tiết độ sứ được non một năm thì mất, giao quyền lại cho con là Khúc Hạo. Cuối năm 917, Khúc Hạo mất Khúc Thừa Mỹ thay cha làm Tiết độ sứ Tĩnh Hải quân. 
+Vào năm 930, Nam Hán Cao Tổ sai Lương Khắc Trinh quân sang đánh chiếm Tĩnh Hải quân, bắt được Tiết độ sứ là Khúc Thừa Mỹ. Lý Khắc Chính bị tướng của Khúc Hạo là Dương Đình Nghệ người Ái Châu đánh đuổi. Dương Đình Nghệ làm Tiết Độ Sứ được 6 năm thì bị tướng của mình là Kiều Công Tiễn làm phản, giết chết rồi lên thay.
+Sử chép rằng Dương Đình Nghệ nhận tất cả 3000 tráng sĩ đến đầu quân làm "con nuôi", trong đó có Kiều Công Tiễn và Ngô Quyền. 
+Ngô Quyền - con rể Dương Đình Nghệ chiêu binh đánh Kiều Công Tiễn. Dương Tam Kha, Đinh Công Trứ, Kiều Công Hãn, Đỗ Cảnh Thạc... về theo. Tháng 4 năm 938, Ngô Quyền tiến quân ra Bắc, hạ thành Đại La. Tháng 10/938, Kiều Công Tiễn cầu cứu quân Nam Hán. Nam Hán Cao Tổ phái con trai là Lưu Hoằng Tháo đem binh sang Tĩnh Hải quân. Nhưng khi quân Nam Hán chưa sang, mùa thu năm 938, Ngô Quyền đã giết được Kiều Công Tiễn.
+Ngô Quyền bảo các tướng tá rằng:
+Hoằng Tháo là đứa trẻ khờ dại, đem quân từ xa đến. Công Tiễn đã chết, không có người làm nội ứng. Rồi sai người đem cọc lớn vạt nhọn đầu bịt sắt đóng ngầm ở trước cửa biển, thuyền của bọn chúng theo nước triều lên vào trong hàng cọc thì sau đó ta dễ bề chế ngự, không cho chiếc nào ra thoát.
+Khu vực Quảng Yên ở cửa sông Bạch Đằng xưa là bãi đá ngầm. Ngô Quyền cho quân quấy nhiễu khiến thuyền bè của Hoằng Tháo không thể neo đậu. Khi thủy triều rút thuyền bè của quân Hoằng Tháo bị nước biển cuốn đâm cả vào bãi đá ngầm Quảng Yên mà tự vỡ. Ngô Quyền thừa thắng đuổi đánh, bắt được Hoằng Tháo giết chết. Vua Nam Hán Cao Tổ (Lưu Cung) đồn trú ở cửa biển thu nhặt quân lính còn sót rút về. 
+Sau chiến thắng quân Nam Hán ở Bạch Đằng, Ngô Quyền lên ngôi vua trị vì từ năm 939 đến năm 944. Năm 944, Ngô Quyền mất, con trưởng là Ngô Xương Ngập lên thay. Dương Tam Kha (em vợ của Ngô Quyền và là con trai của Tiết độ sứ Dương Đình Nghệ) cướp ngôi Ngô Xương Ngập, tự lập mình làm vua, xưng Dương Bình Vương, trị vì từ năm 944 đến 950. 
+Năm 950, Dương Tam Kha sai Ngô Xương Văn đi đánh loạn hai thôn Đường, Nguyễn. Ngô Xương Văn dẫn quân quay lại lật đổ Dương Tam Kha. Xương Văn không giết Tam Kha, chỉ giáng xuống làm Chương Dương công. Năm 953, Dương Tam Kha cùng gia quyến và thuộc hạ khai khẩn vùng đất mới, Giao Thủy (Nam Định). Dương Tam Kha là cha của hoàng hậu Dương Vân Nga. Ông còn sống tới lúc gả Dương Vân Nga cho Đinh Bộ Lĩnh năm 966.
+Sự kiện Dương Tam Kha cướp ngôi chính là nguyên nhân gây nên loạn 12 sứ quân. Đinh Bộ Lĩnh có công đánh dẹp loạn 12 sứ quân, thống nhất giang sơn và trở thành hoàng đế đầu tiên của Việt Nam sau thời Bắc thuộc.
+Đinh Công Trứ, nguyên là một nha tướng của Dương Đình Nghệ. Khi Dương Đình Nghệ tiếp nối làm Thống lĩnh Giao Châu của họ Khúc, đã cử ông Đinh Công Trứ làm Thứ sử Châu Hoan (Nghệ An, Hà Tĩnh ngày nay). Đinh Công Trứ sinh ra Đinh Bộ Lĩnh, nhưng ông mất sớm, Đinh Bộ Lĩnh lúc này còn nhỏ (năm 12 tuổi), theo mẹ về quê Hoa Lư sinh sống.
+Đại Việt sử ký toàn thư, ngoại kỷ, Quyển V chép là Dương Đình Nghệ kèm ghi chú: "Cương mục ghi Dương Diên Nghệ, người Ái Châu, tức Thanh Hóa.
+Dựa vào phân bố mật độ dòng họ Dương trên khắp cả nước chúng ta thấy vùng có mật độ cao và có phân bố chuẩn là ở Thanh Hóa. Dựa vào các chú dẫn về Ái Châu trong các tư liệu cổ sử của chúng ta có thể thấy rõ vùng quê của Dương Đình Nghệ là xã Thiệu Dương thuộc Thanh Hóa.
+Xa Thiệu Dương 48.66%
+Xa Tho The 11.88%
+Xa Thieu Toan 11.39%
+Xa Cam Ngoc 10.37%
+Xa Luong Trung 8.28%
+Xa Thieu Khanh 7.69%
+Xa Nga Hung 7.38%
+Xa Thieu Long 6.64%
+Phuong Ham Rong 6.25%
+Dựa vào xác suất gặp họ Đinh, 
+Hoa Binh Tan Lac Xa Phu Vinh 79.91%
+Ninh Binh Nho Quan Xa Cuc Phuong 63.66%
+Thanh Hoa Thach Thanh Xa Thanh Yen 57.56%
+Hoa Binh Da Bac Xa Tien Phong 51.17%
+Hoa Binh Mai Chau Xa Ba Khan 44.12%
+Hoa Binh Mai Chau Xa Tan Dan 38.77%
+Hoa Binh Da Bac Xa Hao Ly 38.16%
+Ninh Binh Nho Quan Xa Ky Phu 35.87%
+Hoa Binh Tan Lac Xa Phu Cuong 34.18%
+Hoa Binh Tan Lac Xa Lung Van 33.45%
+Hoa Binh Yen Thuy Xa Huu Loi 31.8%
+Ninh Binh Nho Quan Xa Thuong Hoa 30.55%
+Ninh Binh Nho Quan Xa Van Phuong 30.55%
+Hoa Binh Ky Son Xa Phuc Tien 30.45%
+Hoa Binh Cao Phong Xa Binh Thanh 30.01%
+Ninh Binh Nho Quan Xa Gia Tuong 27.74%
+Hoa Binh Tan Lac Xa Quyet Chien 27.64%
+Ninh Binh Gia Vien Xa Gia Lap 27.37%
+Ninh Binh Hoa Lu Xa Ninh Khang 27.3%
+Ninh Binh Gia Vien Xa Gia Minh 27.15%
+Hoa Binh Mai Chau Xa Tan Mai 26.87%
+Chúng ta nhận thấy nguồn gốc của Họ Đinh là ở ven hồ thủy điện Hòa Bình. Nơi phát tích là xã Phú Ninh, huyện Tân Lạc, Hòa Bình. Sau đó họ Đinh đã phát triển dần về phía biển tới Xã Cúc Phương huyện Nho Quan thuộc Ninh Bình dọc theo con sông Bôi, và xã Thành Yên huyện Thạch Thành tỉnh Thanh Hóa dọc theo con sông Bưởi.  
+Như vậy họ Đinh chẳng những là người bản xứ mà còn là những cư dân rất cổ ở khu vực.
+
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 dinh_sff <- dat_sff %>% mutate(prop.dinh=(sum(subset(., Ho=="Đinh")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đinh")
 dinh_plot <- dinh_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.dinh, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
@@ -10723,39 +10782,6 @@ datatable(ma2, colnames = c("STT", "Tỉnh/Thành phố", "Quận/Huyện", "Ph�
 ```
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
-ma2_sff <- dat_sff %>% mutate(prop.ma2=(sum(subset(., Ho=="Mã")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Mã")
-ma2_plot <- ma2_sff %>% select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.ma2, area_km, songuoi_km, geometry) %>% st_as_sf(crs = 4326)
-ma2_plot$centroid <- sf::st_transform(ma2_plot, 2154) %>% 
-  st_centroid() %>% 
-  # this is the crs from d, which has no EPSG code:
-  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
-  # since you want the centroids in a second geometry col:
-  st_geometry()
-
-ma2 <- ma2_plot %>%
-  mutate(centroid_0 = centroid[NAME_3=="Xa Nga Thach" & NAME_2=="Nga Son"],
-         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
-         distm_km=distm/1000,
-         distm_km=round(as.numeric(distm_km), 2),
-         lng = map(centroid,1),
-         lat = map(centroid,2),
-         lng = round(as.numeric(lng), 2),
-         lat = round(as.numeric(lat), 2),
-         pro.pop=as.numeric(round(pro.pop, 2)),
-         prop.ma2=as.numeric(round(prop.ma2, 2)),
-         area_km=as.numeric(round(area_km, 2)),
-         songuoi_km=as.numeric(round(songuoi_km, 2))) %>%
-  arrange(distm_km) %>%
-  st_drop_geometry() %>%
-  select(NAME_1, NAME_2, NAME_3, songuoi, danso, pro.pop, prop.ma2, area_km, songuoi_km, lng, lat, distm_km)
-
-ma2_peak <- ma2_plot %>% filter(NAME_3=="Xa Nga Thach" & NAME_2=="Nga Son")
-
-```
-
-
-
-```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 ma2_sf <- dat_sf %>% mutate(prop.ma2=(sum(subset(., Ho=="Mã")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Mã")
 ma2_plot <- ma2_sf %>% select(NAME_1, NAME_2, NAME_3, pro.pop, prop.ma2, geometry) %>% st_as_sf(crs = 4326)
 
@@ -10768,76 +10794,6 @@ ggplot() + geom_sf() + geom_sf(data=ma2_plot, aes(fill=pro.pop), color=NA) +
   theme(text = element_text(size=45), axis.text.x = element_text(size=30), axis.text.y = element_text(size=30), legend.text=element_text(size=30), legend.key.size = unit(2, "cm"), plot.title = element_text(size = 45)) +
   ggtitle("Mã")
 ```
-
-
-
-```{r, message=FALSE, warning=FALSE, lazy=TRUE}
-ma2 <- dat_sff %>% filter(Ho=="Mã") %>% st_as_sf(crs = 4326)
-ma2$centroid <- sf::st_transform(ma2, 2154) %>% 
-  st_centroid() %>% 
-  # this is the crs from d, which has no EPSG code:
-  st_transform(., '+proj=longlat +ellps=GRS80 +no_defs') %>%
-  # since you want the centroids in a second geometry col:
-  st_geometry()
-
-library(geosphere)
-ma2 <- ma2 %>%
-  mutate(centroid_0 = centroid[NAME_3=="Xa Nga Thach" & NAME_2=="Nga Son"],
-         distm = geosphere::distGeo(st_coordinates(centroid), st_coordinates(centroid_0)),
-         distm_km=distm/1000,
-         distm_km2=distm_km^2,
-         sum_distm_km2=sum(distm_km2),
-         var=sum_distm_km2/(n()-1),
-         sd=sqrt(var))
-
-ma2_radius <- ma2 %>%
-  arrange(distm_km) %>%
-  mutate(rank=row_number())
-
-distm_km<-ma2_radius$distm_km
-pro.pop<-ma2_radius$pro.pop
-rank<-ma2_radius$rank
-commune<-ma2_radius$NAME_3
-rank<-factor(rank, labels = commune)
-estimate<-27*exp(-(distm_km^2)/(2*80))
-
-library(dplyr)
-
-df <- data.frame(distm_km, rank, commune, estimate, pro.pop)
-
-df <- df %>%
-  mutate(num=sum((pro.pop-estimate)^2),
-         den=nrow(df)-1,
-         var=num/den,
-         sd=sqrt(var),
-         rank_com=as.numeric(rank))
-  
-breaks <- c(0, 20, 40, 60, 80, 100)
-
-plot_df <- df %>%
-  filter(row_number()<=300) %>%
-  ggplot(aes(x=reorder(factor(rank), distm_km), y=pro.pop, fill=distm_km)) +
-  geom_bar(aes(x=reorder(factor(rank), distm_km), y=pro.pop), stat = "identity", width = 0.5) + 
-  #stat_smooth(method = 'lm', aes(colour = 'linear'), se = FALSE) +
-  #geom_line(aes(x=as.numeric(reorder(factor(rank), distm_km)), y=estimate)) +
-  stat_smooth(aes(y=pro.pop, x=as.numeric(reorder(factor(rank), distm_km))),method="gam",se=TRUE,formula=y~s(x,k=20)) +
-  scale_x_discrete(name = "Xã/Phường", 
-                     breaks = reorder(factor(rank), distm_km), 
-                     labels = reorder(factor(rank), distm_km)) +
-  scale_fill_gradientn("Khoảng cách tới tâm (km)", colours = terrain.colors(10), breaks=breaks) +
-  scale_y_continuous(name="Tỉ lệ (%)") +
-  theme_bw() + 
-  theme(text = element_text(size=40), axis.text.x = element_blank(), axis.ticks.x = element_blank(), axis.text.y = element_text(size=30),
-        legend.text=element_text(size=30), legend.key.size = unit(6, "cm"), legend.key.height = unit(2, "cm"), legend.key.width = unit(2, "cm"), legend.position = "bottom") +
-  theme(panel.grid.major = element_blank()) + 
-  annotate(geom='text', x=80, y=10, label="y == 27*e^-{(x^{2}+y^{2})/2*(80)}", parse = TRUE,size=15) +
-  annotate(geom='text', x=80, y=9, label="s.e. = 2%/xã",parse=F,size=12) +
-  #coord_flip() +
-  ggtitle("Mã-Nga Sơn")
-
-plot_df
-```
-
 
 
 ```{r, lazy = TRUE}
