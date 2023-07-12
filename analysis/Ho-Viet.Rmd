@@ -6011,30 +6011,53 @@ ggplot() + geom_sf() + geom_sf(data=dieu2_plotf, aes(fill=songuoi_km), color=NA)
 ## Đinh
 
 Họ Đinh.
+
 Theo thống kê dân số, họ Đinh chiếm 1.6% dân số cả nước. Dựa theo phân bố % (xác suất gặp người mang họ Đinh trong khu vực) chúng ta nhận thấy phân bố xác suất gặp người mang họ Đinh cách xa biên giới cũng như bờ biển. Vậy có thể khẳng định là đã không có một cuộc di dân tự nhiên người mang họ Đinh nào tới Việt Nam. Họ Đinh là cư dân bản địa. Họ đã mang họ Đinh chỉ là vì, sau khi dẹp loạn 12 xứ quân, Đinh Tiên Hoàng cho thực hiện chế độ quản lý hành chính trong toàn Đại Cồ Việt. Chế độ quản lý hành chính được thực hiện dựa trên việc dùng chữ Hán. Hệ thống họ được dùng là từ các con Hán Tự và nhiều khi là lấy từ danh sách các họ Hán có sẵn. Chính vì thế mà rất nhiều dòng họ Việt đã sinh sống cả nhiều nghìn năm ở vùng đất quê cha mẹ đẻ, tự dưng trở thành những đứa con hoang của các dòng họ Phương Bắc. 
 Nhà Đinh 丁 bắt đầu năm 968, sau khi Vua Đinh Tiên Hoàng dẹp xong loạn 12 sứ quân thống nhất đất nước lên ngôi Hoàng Đế và kết thúc năm 980 khi con của Đinh Tiên Hoàng là Vua Đinh Phế Đế nhường ngôi cho Lê Hoàn. 
+
 Người mang họ Đinh tập trung khá nhiều ở Ninh Bình, đây là nơi cho đến nay được xem là khởi thủy của tộc Họ Đinh Việt Nam. 
+
 https://baoquangngai.vn/channel/2047/202206/nguoi-hre-ca-dong-mang-ho-dinh-tu-luc-nao-3119416/?fbclid=IwAR28UE2q0PJ_95xidTXJq-5BgUUEv7V3V4fA_o9LFbFdtpBCrPW27KUHNe8
+
 Từ phân bố mật độ dòng họ Đinh theo % (xác suất gặp người mang họ đinh trong khu vực) chúng ta nhận thấy phần phía Tây Nguyên có các cụm dân cư chủ yếu mang họ Đinh, lên tới 75%. Tuy nhiên ở các vùng này phân bố mật độ cư dân mang họ Đinh theo 1km2 rất thấp. Như vậy cư dân mang họ Đinh ở vùng Tây Nguyên là người dân tộc thiểu số. 
+
 Trong sách "Đường lên xứ Thượng" Bộ Công dân vụ xuất bản, năm 1963,  tác giả Bùi Đình cho biết: 
+
 Trấn Man là tên gọi có từ thời Gia Long thứ 3 (1804). Nó gồm 2 miền, là Nghĩa Biên (vùng Trà My của Quảng Nam và tất cả vùng sơn cước của Quảng Ngãi), và Định Biên (vùng sơn cước của tỉnh Bình Định). 
+
 Đến năm 1877 (tức năm Đồng Khánh thứ 2), thì Trấn Man được chia làm 5 châu: Trà My, Hà Tịnh, Nghĩa Hành, Đức Phổ và Bồng Sơn. Mỗi châu có Tri châu điều khiển. Dưới quyền Tri châu có các Chánh tổng và Phó tổng người Kinh và Tổng nguồn có người Thượng. Các cấp Đầu mục và Sách trưởng vẫn được duy trì. Lúc này, trai tráng được kiểm tra chặt chẽ và tên tuổi được ghi vào danh bộ. Người Thượng vốn không có họ, chỉ có tên, vì vậy khi lập danh bộ (để quản lý và đánh thuế), trai tráng từ 18 tuổi trở lên, các Chánh tổng đã ghi vào tên riêng của mỗi người một chữ Đinh (丁= tức tráng đinh) như Đinh A, Đinh B... Và từ đó về sau, chữ Đinh này biến thành tên họ chung cho đồng bào Thượng vùng Nam - Ngãi, cả nam lẫn nữ.
+
 Năm 1969, người Hrê ở huyện Ba Tơ đổi họ Đinh lấy họ Phạm (theo họ Thủ tướng Phạm Văn Đồng). Còn người Hrê ở hai huyện Sơn Hà, Minh Long vẫn giữ chữ Đinh trước tên riêng mà cha mẹ đã đặt cho ngay từ thuở nhỏ. Đối với người Ca Dong ở huyện Sơn Tây, đến năm 1976, cùng với việc sáp nhập huyện Sơn Tây vào huyện Sơn Hà, thì hầu hết người Ca Dong mới có họ Đinh.
+
 Lịch sử.
+
 Năm 905 Tĩnh Hải quân Tiết độ sứ Độc Cô Tổn bị triệu về nhà Đường (đời vua Đường Ai Đế) để trị tội, đất Tĩnh Hải quân vô chủ. Khúc Thừa Dụ thừa dịp dẫn quân đánh chiếm thủ phủ Đại La. Nhà Đường suy nhược, thuận cho Khúc Thừa Dụ làm Tĩnh Hải Tiết độ sứ.
+
 Năm 907 nhà Đường mất ngôi, nhà Hậu Lương, Hậu Đường, Hậu Tấn, Hậu Hán, Hậu Chu tranh nhau làm vua. Mỗi nhà được mấy năm. Khúc Thừa Dụ làm Tiết độ sứ được non một năm thì mất, giao quyền lại cho con là Khúc Hạo. Cuối năm 917, Khúc Hạo mất Khúc Thừa Mỹ thay cha làm Tiết độ sứ Tĩnh Hải quân. 
+
 Vào năm 930, Nam Hán Cao Tổ sai Lương Khắc Trinh quân sang đánh chiếm Tĩnh Hải quân, bắt được Tiết độ sứ là Khúc Thừa Mỹ. Lý Khắc Chính bị tướng của Khúc Hạo là Dương Đình Nghệ người Ái Châu đánh đuổi. Dương Đình Nghệ làm Tiết Độ Sứ được 6 năm thì bị tướng của mình là Kiều Công Tiễn làm phản, giết chết rồi lên thay.
 Sử chép rằng Dương Đình Nghệ nhận tất cả 3000 tráng sĩ đến đầu quân làm "con nuôi", trong đó có Kiều Công Tiễn và Ngô Quyền. 
+
 Ngô Quyền - con rể Dương Đình Nghệ chiêu binh đánh Kiều Công Tiễn. Dương Tam Kha, Đinh Công Trứ, Kiều Công Hãn, Đỗ Cảnh Thạc... về theo. Tháng 4 năm 938, Ngô Quyền tiến quân ra Bắc, hạ thành Đại La. Tháng 10/938, Kiều Công Tiễn cầu cứu quân Nam Hán. Nam Hán Cao Tổ phái con trai là Lưu Hoằng Tháo đem binh sang Tĩnh Hải quân. Nhưng khi quân Nam Hán chưa sang, mùa thu năm 938, Ngô Quyền đã giết được Kiều Công Tiễn.
+
 Ngô Quyền bảo các tướng tá rằng:
+
 Hoằng Tháo là đứa trẻ khờ dại, đem quân từ xa đến. Công Tiễn đã chết, không có người làm nội ứng. Rồi sai người đem cọc lớn vạt nhọn đầu bịt sắt đóng ngầm ở trước cửa biển, thuyền của bọn chúng theo nước triều lên vào trong hàng cọc thì sau đó ta dễ bề chế ngự, không cho chiếc nào ra thoát.
+
 Khu vực Quảng Yên ở cửa sông Bạch Đằng xưa là bãi đá ngầm. Ngô Quyền cho quân quấy nhiễu khiến thuyền bè của Hoằng Tháo không thể neo đậu. Khi thủy triều rút thuyền bè của quân Hoằng Tháo bị nước biển cuốn đâm cả vào bãi đá ngầm Quảng Yên mà tự vỡ. Ngô Quyền thừa thắng đuổi đánh, bắt được Hoằng Tháo giết chết. Vua Nam Hán Cao Tổ (Lưu Cung) đồn trú ở cửa biển thu nhặt quân lính còn sót rút về. 
+
 Sau chiến thắng quân Nam Hán ở Bạch Đằng, Ngô Quyền lên ngôi vua trị vì từ năm 939 đến năm 944. Năm 944, Ngô Quyền mất, con trưởng là Ngô Xương Ngập lên thay. Dương Tam Kha (em vợ của Ngô Quyền và là con trai của Tiết độ sứ Dương Đình Nghệ) cướp ngôi Ngô Xương Ngập, tự lập mình làm vua, xưng Dương Bình Vương, trị vì từ năm 944 đến 950. 
+
 Năm 950, Dương Tam Kha sai Ngô Xương Văn đi đánh loạn hai thôn Đường, Nguyễn. Ngô Xương Văn dẫn quân quay lại lật đổ Dương Tam Kha. Xương Văn không giết Tam Kha, chỉ giáng xuống làm Chương Dương công. Năm 953, Dương Tam Kha cùng gia quyến và thuộc hạ khai khẩn vùng đất mới, Giao Thủy (Nam Định). Dương Tam Kha là cha của hoàng hậu Dương Vân Nga. Ông còn sống tới lúc gả Dương Vân Nga cho Đinh Bộ Lĩnh năm 966.
+
 Sự kiện Dương Tam Kha cướp ngôi chính là nguyên nhân gây nên loạn 12 sứ quân. Đinh Bộ Lĩnh có công đánh dẹp loạn 12 sứ quân, thống nhất giang sơn và trở thành hoàng đế đầu tiên của Việt Nam sau thời Bắc thuộc.
+
 Đinh Công Trứ, nguyên là một nha tướng của Dương Đình Nghệ. Khi Dương Đình Nghệ tiếp nối làm Thống lĩnh Giao Châu của họ Khúc, đã cử ông Đinh Công Trứ làm Thứ sử Châu Hoan (Nghệ An, Hà Tĩnh ngày nay). Đinh Công Trứ sinh ra Đinh Bộ Lĩnh, nhưng ông mất sớm, Đinh Bộ Lĩnh lúc này còn nhỏ (năm 12 tuổi), theo mẹ về quê Hoa Lư sinh sống.
+
 Đại Việt sử ký toàn thư, ngoại kỷ, Quyển V chép là Dương Đình Nghệ kèm ghi chú: "Cương mục ghi Dương Diên Nghệ, người Ái Châu, tức Thanh Hóa.
+
 Dựa vào phân bố mật độ dòng họ Dương trên khắp cả nước chúng ta thấy vùng có mật độ cao và có phân bố chuẩn là ở Thanh Hóa. Dựa vào các chú dẫn về Ái Châu trong các tư liệu cổ sử của chúng ta có thể thấy rõ vùng quê của Dương Đình Nghệ là xã Thiệu Dương thuộc Thanh Hóa.
+
 Xa Thiệu Dương 48.66%
 Xa Tho The 11.88%
 Xa Thieu Toan 11.39%
@@ -6044,6 +6067,7 @@ Xa Thieu Khanh 7.69%
 Xa Nga Hung 7.38%
 Xa Thieu Long 6.64%
 Phuong Ham Rong 6.25%
+
 Dựa vào xác suất gặp họ Đinh, 
 Hoa Binh Tan Lac Xa Phu Vinh 79.91%
 Ninh Binh Nho Quan Xa Cuc Phuong 63.66%
@@ -6066,8 +6090,11 @@ Ninh Binh Gia Vien Xa Gia Lap 27.37%
 Ninh Binh Hoa Lu Xa Ninh Khang 27.3%
 Ninh Binh Gia Vien Xa Gia Minh 27.15%
 Hoa Binh Mai Chau Xa Tan Mai 26.87%
+
 Chúng ta nhận thấy nguồn gốc của Họ Đinh là ở ven hồ thủy điện Hòa Bình. Nơi phát tích là xã Phú Ninh, huyện Tân Lạc, Hòa Bình. Sau đó họ Đinh đã phát triển dần về phía biển tới Xã Cúc Phương huyện Nho Quan thuộc Ninh Bình dọc theo con sông Bôi, và xã Thành Yên huyện Thạch Thành tỉnh Thanh Hóa dọc theo con sông Bưởi.  
+
 Như vậy họ Đinh chẳng những là người bản xứ mà còn là những cư dân rất cổ ở khu vực.
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 dinh_sff <- dat_sff %>% mutate(prop.dinh=(sum(subset(., Ho=="Đinh")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Đinh")
@@ -10744,6 +10771,49 @@ ggplot() + geom_sf() + geom_sf(data=ma_plotf, aes(fill=songuoi_km), color=NA) +
 
 ## Mã
 
+Bí mật 2000 năm về cột Đồng Trụ của Mã Viện.
+
+Đồng bằng Bắc Bộ có đặc trưng văn hóa Gò Đống. Khi bị được phù sa bồi lấp, các gò đống lớn dần, khoảng nước giữa các gò hẹp lại biến thành các con sông ngoằn nghèo, và văn hóa Gò Đống chuyển sang văn hóa Làng Xã. Chế độ phụ hệ duy trì quy tắc đặt họ cho con theo họ bố. Do có đặc tính văn hóa Làng Xã mà độ ổn định dòng họ rất cao. Mật độ dòng họ theo không gian sống có dạng phân bố chuẩn. Như vậy các sự kiện xảy ra trong lịch sử nhiều nghìn năm về trước sẽ được phản ánh qua phân bố của các dòng họ. 
+
+Năm 42, Hán Quang Vũ Đế lệnh cho các quận Trường Sa, Hợp Phố chuẩn bị xe thuyền, sửa đường và trữ lương; phong Mã Viện đã 58 tuổi làm Phục ba tướng quân, Lưu Long làm Phó tướng, Đoàn Chí làm Lâu Thuyền tướng quân sang đánh đất Giao Chỉ. 
+
+Quân Hán huy động 2000 thuyền xe và 20 nghìn quân. Trong đó 8000 quân lấy từ các quận Trường Sa, Quế Dương, Linh Lăng, và 12000 quân lấy ở bộ Giao Chỉ. Đội quân này gồm toàn người Hoa Nam, quen thuộc thủy thổ phương Nam. Khi đến Hợp Phố thì Đoàn Chí chết bệnh nên Mã Viện thống suất toàn quân tiến theo ven biển, ngược sông Bạch Đằng tới sông Lục Đầu rồi vào đất Giao Chỉ, đi thẳng tới Lãng Bạc.
+
+Quân Hán tiến đến Long Biên, Tây Vu, và Lãng Bạc ở phía đông Cổ Loa. Hai Bà Trưng từ Mê Linh qua Cổ Loa xuống Lãng Bạc đón đánh quân Hán. 
+Sau trận Lãng Bạc, Trưng Vương phải thu quân về giữ Cổ Loa một thời gian rồi phải lui về Mê Linh, sau đó chạy sang Cấm Khê. Tại Cấm Khê, quân của Hai Bà tiếp tục bị đánh bại. Quân Hán chém hơn nghìn người, bắt hàng hơn 2 vạn quân khởi nghĩa.
+
+Theo Mã Viện truyện, quân Mã Viện truy sát tới Cấm Khê thì chém được cả Trưng Trắc lẫn Trưng Nhị rồi đem đầu về Lạc Dương.
+
+Sau khi chiếm lại quận Giao Chỉ, Mã Viện đem theo hơn 20000 binh sĩ cùng hơn 2000 lâu thuyền lớn nhỏ tiếp tục tiến vào Cửu Chân đánh Đô Dương là tướng của Bà Trưng.
+Thủy Kinh Chú chép: "tháng 10 năm 19 hiệu Kiến Vũ, năm 43, Mã Viện tiến quân vào quận Cửu Chân ở miền Nam, đến huyện Vô Công, tướng giặc đầu hàng, lại tiến vào huyện Dư Phát. Cừ súy là Chu Bá bỏ quận mà vào rừng sâu... Mã Viện lại chia binh làm 2 đạo, 1 đạo vào huyện Vô Biên, 1 đạo đến huyện Cư Phong. Phàm tướng giặc không hàng đều bị chém đầu đến mấy trăm người." 
+
+Sách Hậu Hán Thư (quyển 54) chép “Viện đáo Giao Chỉ, lập đồng trụ vi Hán chi cực gián dã”, nghĩa là : “Mã Viện đến Giao Chỉ, dựng cột đồng làm bờ cõi cùng cực của nhà Hán”.
+
+Sách Thủy Kinh soạn thời Tam Quốc (khoảng năm 220-265) chép “Sông Uất Thủy lại chảy về phía nam, từ huyện Thọ Linh chảy vào biển. Ngày xưa Mã Văn Uyên (tức Mã Viện) chất đá làm bờ đê đến sông ngách Tượng Phố, dựng cột kim tiêu làm biên giới của vùng cực nam…
+
+'Tiên' của Du Ích Kỳ nói: Mã Văn Uyên dựng hai cột đồng ở bờ bắc Lâm Ấp, có 10 gia đình binh lính sót lại không trở về, ở bờ nam Thọ Linh, đối mặt với cột đồng. Tất cả đều lấy họ là Mã, tự kết hôn với nhau, nay có 200 hộ. Người Giao Châu cho họ là người lưu ngụ, nên gọi là Mã lưu. Ngôn ngữ ăn uống còn giống với người Hoa. Núi sông dời đổi, cột đồng nay lại ở trong biển, chính nhờ vào những người dân này mà biết được chỗ xưa của cột đồng”. (Thủy kinh chú sớ,…sđd, tr. 395). 
+
+Dựa trên thông tin vào thế kỷ thứ 6 có 200 hộ dân họ Mã sống ở vùng Mã Viện chôn cột Đồng Trụ, chúng ta có thể nhận thấy những hộ dân này sống thành một làng ở khu vực phía nam Thanh Hóa. Sử dụng dữ liệu thống kê dân số chúng ta có thể tính ra mật độ xác suất gặp người dân mang họ Mã ở từng làng trong cả nước. Sau đây là liệt kê kết quả tính cho khu vực gần với xã Nga Thạch.
+
+Sau đây là phân bố xác suất người họ Mã.
+
+Nga Thạch  27.07% (1306 họ Mã) 
+Nga Tân    5.49%  (361 họ Mã) 
+Quang Văn  1.87% (93 họ Mã) 
+Tế Nông      1.14%  (61 họ Mã) 
+Yên Giang    1.33% (52 họ Mã) 
+Châu Lộc    1.22%  (39 họ Mã) 
+Nga Trung   0.81% (33 họ Mã)  
+
+Chúng ta có thể nhận thấy ở xã Nga Thạch mật độ người mang họ Mã rất cao. Cứ 3 người gặp ở đây thì có 1 người mang họ Mã. Xã Nga Thạch là ở bờ bắc ven sông Lèn. Phần bờ nam sông Lèn gần như không có người mang họ Mã sinh sống.
+
+Theo thư tịch cổ, đầu Công nguyên cửa Thần Phù 神符海口 (còn gọi Thần Đầu 神投) nằm trên đường hành quân của Mã Viện. Tháng 11 năm 43 (SCN), sau khi tiêu diệt xong Bà Trưng, Mã Viện đưa 20 nghìn quân cùng 2 nghìn tàu thuyền vào Cửu Chân (Thanh Hóa nay) tiến đánh Đông Dương bằng đường thủy và đường bộ. Cánh quân bộ bị chặn đứng ở vùng núi Tam Điệp. Cánh quân thủy bị chao đảo trước sóng to, gió lớn của biển Thần Đầu (Thần Phù). Mã Viện phải sai quân đào sông qua dãy núi đá vùng này mà thư tịch cổ gọi là Tạc Khẩu.
+
+Vào cuối thế kỷ thứ X, khi Đinh Tiên Hoàng vừa mới mất (năm 979), Đinh Toàn lên ngôi, Lê Hoàn là nhiếp chính. Phò mã Ngô Nhật Khánh cùng quân Chiêm Thành tiến ra Hoa Lư đánh nhà Đinh, nhưng vừa tới cửa Tiểu Khang (cửa Thần Phù) thì bị gió bão đánh chìm. Ngô Nhật Khánh chết đuối, chúa Chiêm may mắn thoát nạn.
+
+Tỷ lệ tăng dân số ổn định trong suốt thời gian từ đầu Công Nguyên cho tới khi Pháp sang là 1‰. Thời gian sau khi Pháp sang tỷ lệ tăng dân số cao hơn. Năm 1802, Nguyễn Ánh diệt Tây Sơn, lập ra nhà Nguyễn, nước Đại Việt có 5780000 người. Thống kê dân số vào năm 1999 là 80 triệu. Trong khoảng từ 1800 tới 1999, tỷ lệ tăng dân số khoảng 1.3%. Trên trang thông tin chính thức của xã Nga Thạch dân số của xã tính đến năm 1999 là 5292 người. Do việc lấy chồng và di cư nên chúng ta ước tính có khoảng 10000 mang họ Mã ở xã Nga Thạch. Vào năm 1800 số cư dân mang họ Mã ở trong vùng Nga Thạch là 750 người. Vào thế kỷ thứ 6  số người mang họ Mã ở trong xã Nga Thạch là 220 người. Con số này cũng tương đối gần với số liệu có trong Thủy Kinh Chú. 
+
+Kết hợp thông tin từ các cổ thư, thông tin về xác suất gặp người mang họ Mã, chúng ta có thể khẳng định Mã Viện quả là có trồng cột Đồng Trụ, và khu vực trồng cột này được xác định là ở trong khu vực bờ bắc sông Lèn và quanh vùng Nga Thạch, nơi có mật độ cao cư dân mang họ Mã cao.
 
 
 ```{r, warning=FALSE, message=FALSE, lazy=FALSE}
