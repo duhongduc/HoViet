@@ -1,7 +1,7 @@
 ---
 title: "Họ Việt"
 author: "Duc Du, Nguyen Le Anh"
-date: '`r format(Sys.time(), "%d %B, %Y")`'
+# date: '`r format(Sys.time(), "%d %B, %Y")`'
 output: lazyhtml_document
 editor_options: 
   chunk_output_type: inline
@@ -10880,6 +10880,38 @@ ggplot() + geom_sf() + geom_sf(data=ma2_plotf, aes(fill=songuoi_km), color=NA) +
 ```
 
 ## Mạc
+
+Nhà Mạc 莫.
+
+Theo thống kê dân số năm 2013 thì số dân mang họ 莫 ở Trung Quốc là khoảng 2.34 triệu người, chiếm khoảng 0.18%. Khoảng 71% số người mang họ Mạc 莫 sống ở vùng Quảng Tây, Quảng Đông và Quý Châu. Vào thời nhà Minh, họ Mạc 莫 ở Trung Quốc có khoảng 100 nghìn người. Khi ấy họ Mạc 莫 chiếm khoảng 87% tổng dân số Quảng Tây, Quảng Đông, Chiết Giang và Giang Tô. 
+
+Ở Việt Nam, theo điều tra dân số năm 2019, số người mang họ Mạc chiếm 0.1% tổng dân số cả nước, tức 100 nghìn người. 
+
+Xét mật độ phân bố mật độ cũng như xác suất gặp người mang họ Mạc ở Việt Nam, chúng ta không nhận thấy có sự liên tục từ biên giới, nối tiếp với dòng họ Mạc của Trung Quốc. Như thế khả năng rất cao, nếu họ Mạc của Việt Nam có liên quan tới họ Mạc ở Trung Quốc thì cũng là dân di cư theo đường biển như nhà Trần. Họ Mạc được cho là bắt nguồn từ vùng duyên hải Hưng Yên và Hải Phòng. 
+
+Ở phía bắc tổ họ nhà Mạc là Mạc Đĩnh Chi 莫挺之 (1272 - 1346). Vào năm 1287, Mạc Đĩnh Chi đã theo hàng quân Nguyên nhưng sau khi đánh thắng quân Nguyên, ông vẫn được Nhà Trần trọng dụng bổ làm quan đại thần. Ở phương nam tổ họ Mạc là Mạc Cửu. Mạc Cửu là một thương gia người Hoa có công cai quản và khai khẩn Miền Tây Nam Bộ Việt Nam, rồi dâng cho chúa Nguyễn.
+
+Thời đại nhà Mạc 莫 được coi là bắt đầu vào tháng 6 năm 1527, khi Mạc Đăng Dung ép vua Lê Cung Hoàng nhường ngôi và sau đó giết. 
+
+Vào năm 1529, Nguyễn Kim tướng nhà Lê Sơ chạy sang Ai Lao lập căn cứ chống Mạc. Năm 1533, đưa con vua Chiêu Tông là Lê Ninh đưa lên ngôi tại Ai Lao, tức Lê Trang Tông. Bắt đầu Lê Trung Hưng (Nôm 茹黎中興, Hán 黎中興朝) từ năm 1533 –1789.
+
+Năm 1540 Mạc Đăng Dung lên biên giới xin quy phục nhà Minh. Năm 1545, Nguyễn Kim chết, con rể là Trịnh Kiểm nắm quyền. Vào năm 1558, sau khi thấy con cả của Nguyễn Kim là Nguyễn Uông bị Trịnh Kiểm giết hại, con thứ là Nguyễn Hoàng bèn xin vào nam trấn thủ Thuận Hóa rồi Quảng Nam vào năm 1570. 
+
+Trịnh Tùng nguyên là con trai thứ hai của Trịnh Kiểm. Sau khi Trịnh Kiểm qua đời năm 1569, Trịnh Tùng nổi dậy đánh đuổi anh trai mình là Trịnh Cối, đoạt lấy toàn bộ quyền hành của Nam triều. Vào cuối năm 1592 liên minh Lê-Trịnh do Trịnh Tùng chỉ huy đánh bại Mạc Toàn. Năm 1592 Trịnh Tùng chiếm được Thăng Long. Tàn dư quân nhà Mạc khấy đảo vùng Gia Lâm và cát cứ ở Cao Bằng. Năm năm 1593, Trịnh Tùng giết cha con Mạc Mậu Hợp. 
+
+Trịnh Tùng cho triệu Nguyễn Hoàng ra bắc để cùng đánh dẹp dư đảng họ Mạc. Vào năm 1600, lo sợ bị Trịnh Tùng triệt hạ, Nguyễn Hoàng bỏ trốn về Nam. Năm 1613, con Nguyễn Hoàng là Nguyễn Phúc Nguyên lên thay trấn thủ Thuận Hóa rồi Quảng Nam, bắt đầu thực hiện ý định ly khai.
+
+Trịnh Tráng là con trai thứ hai của Trịnh Tùng. Do người anh cả của ông là Trịnh Túc mất sớm, nên Trịnh Tráng nối nghiệp Trịnh Tùng. Ông cậu Nguyễn Hoàng ở phía nam muốn giữ hòa khí với Trịnh Tùng, nên đã gả con gái là Nguyễn Thị Ngọc Tú cho Trịnh Tráng. 
+
+Năm 1627, với lý do Nguyễn Phúc Nguyên có hành động chống đối, Trịnh Tráng nhân danh vua Lê Thần Tông mang quân Nam tiến. Cuộc chiến giữa họ Trịnh và họ Nguyễn bùng nổ. Từ năm 1627 đến 1672, hai họ Trịnh và Nguyễn đánh nhau 7 lần, trong đó 6 lần họ Trịnh đánh vào nam, 1 lần họ Nguyễn đánh ra bắc. Sau 7 lần xung đột bất phân thắng bại, hai họ ngưng chiến, lấy sông Gianh làm ranh giới. Phía bắc sông Gianh thuộc chính quyền vua Lê-chúa Trịnh gọi là Đàng Ngoài, phía nam sông Gianh thuộc chúa Nguyễn gọi là Đàng Trong. 
+
+Nhờ có sự bảo trợ của nhà Minh mà Mạc Kính Chỉ, Mạc Kính Cung, Mạc Kính Khoan, Mạc Kính Vũ cắt cứ ở Cao Bằng tiếp tục chống lại nhà Hậu Lê thời kỳ Trung Hưng cho tới tận năm 1677. Các chúa Bầu họ Vũ ở Tuyên Quang, liên kết với họ Mạc chống nhà Lê. Họ Vũ còn chiếm giữ Tuyên Quang thêm 100 năm sau mới bị dẹp hẳn.
+
+Mặc dù ở phía nam quân Nguyễn Ánh vẫn còn quấy rối, nhưng vào năm 1786, Nguyễn Huệ đưa quân ra bắc đánh dẹp họ Trịnh. Vào năm 1786, Nguyễn Huệ diệt Trịnh Khải. Vua Hiển Tông phong cho Nguyễn Huệ là Nguyên soái Phù chính Dực vận Uy quốc công, sau đó gả con gái thứ 21 là công chúa Lê Ngọc Hân cho Nguyễn Huệ. 
+Tháng 8 năm 1786 Lê Hiển Tông mất. Nguyễn Huệ đồng ý với lời khuyên của Lê Ngọc Hân, đưa Duy Khiêm là cháu đích tôn của vua Lê Hiển Tông lên ngôi vua, với niên hiệu là Lê Chiêu Thống. Vào năm 1788, Lê Chiêu Thống sang cầu viện nhà Thanh đánh Nguyễn Huệ. Vào năm 1789, Nguyễn Huệ lên ngôi hoàng đế, tức là vua Quang Trung, mang quân ra bắc đánh tan quân Thanh, Chiêu Thống bỏ chạy theo quân Thanh về Trung Quốc.
+
+Nhà Hậu Lê chính thức mất năm 1789, trước sau tồn tại 356 năm, chỉ có 6 năm gián đoạn, là triều đại quân chủ dài nhất trong lịch sử Việt Nam.
+
 
 ```{r, warning=FALSE, message=FALSE, lazy = TRUE}
 mac_sff <- dat_sff %>% mutate(prop.mac=(sum(subset(., Ho=="Mạc")[, "songuoi"])/sum(songuoi))*100) %>% filter(Ho=="Mạc")
