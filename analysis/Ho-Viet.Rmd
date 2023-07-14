@@ -1075,7 +1075,7 @@ data_ho_top200 <- data_ho_top200 %>%
          "Cả nước (%)"=pro.pop)
 ```
 
-```{r, fig.width=49, fig.height=33}
+```{r, fig.width=33, fig.height=49}
 mycolor <- function(x) {
   output <- ifelse(x == 0, "#FFFFFF",
                    ifelse(x < 1, "#6baed6",
@@ -1089,8 +1089,7 @@ mycolor <- function(x) {
 mytab_cum <- function(label) {
   ft <- flextable(data_ho_top200) %>%
     fontsize(size = 7, part = "all") %>%
-    set_caption(caption = label) %>%
-    set_table_properties(width=1, layout = "autofit")
+    set_caption(caption = label)
 
 h_header <- max( dim_pretty(ft, part = "header")$widths)
 
@@ -1099,7 +1098,7 @@ ft %>%
   valign(valign = "center", part = "header") %>%
   height(height = h_header * 0.8, part = "header") %>%
   hrule(i = 1, rule = "exact", part = "all") %>%
-  width(width = 49)
+  width(width = 33)
 }
 
 mytab_cum(label = NULL)
